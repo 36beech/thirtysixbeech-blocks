@@ -28,3 +28,30 @@ function create_block_thirtysixbeech_blocks_block_init() {
 	wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
 }
 add_action( 'init', 'create_block_thirtysixbeech_blocks_block_init' );
+
+add_filter('block_categories_all', function ($categories, $post) {
+    $custom_categories = [
+        [
+            'slug'  => 'thirtysixbeech-content',
+            'title' => __('36Beech: Content', 'thirtysixbeech-blocks'),
+            'icon'  => null,
+        ],
+        [
+            'slug'  => 'thirtysixbeech-layout',
+            'title' => __('36Beech: Layout', 'thirtysixbeech-blocks'),
+            'icon'  => null,
+        ],
+        [
+            'slug'  => 'thirtysixbeech-template',
+            'title' => __('36Beech: Template Blocks', 'thirtysixbeech-blocks'),
+            'icon'  => null,
+        ],
+        [
+            'slug'  => 'thirtysixbeech-graphic-elements',
+            'title' => __('36Beech: Graphic Elements', 'thirtysixbeech-blocks'),
+            'icon'  => null,
+        ],
+    ];
+
+    return array_merge($custom_categories, $categories);
+}, 10, 2);
