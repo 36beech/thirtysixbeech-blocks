@@ -11,7 +11,10 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks, InspectorControls } from "@wordpress/block-editor";
+import { PanelBody, ToolbarButton, SelectControl, RangeControl, ToggleControl } from "@wordpress/components";
+import { justifyLeft, justifyCenter, justifyRight, justifySpaceBetween } from "@wordpress/icons";
+import { justifyTop, justifyCenterVertical, justifyBottom, justifyStretch } from "@wordpress/icons";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -19,6 +22,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
+import './editor.scss';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -28,10 +32,12 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
-
-import { Section } from '@shared/react/Section';
 export default function Edit() {
+	const classes = ['flex'];
+
 	return (
-		<Section tag="article">Howdy</Section>
+		<div { ...useBlockProps({ className: classes.join(' ') }) }>
+			{ __( 'Flexbox – hello from the editor!', 'flexbox' ) }
+		</div>
 	);
 }

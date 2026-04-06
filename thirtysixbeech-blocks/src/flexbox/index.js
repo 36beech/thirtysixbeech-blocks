@@ -18,7 +18,8 @@ import './style.scss';
  * Internal dependencies
  */
 import Edit from './edit';
-import save from './save';
+import Save from "./save";
+import { ReactComponent as Icon } from "./icon.svg";
 import metadata from './block.json';
 
 /**
@@ -31,9 +32,6 @@ registerBlockType( metadata.name, {
 	 * @see ./edit.js
 	 */
 	edit: Edit,
-
-	/**
-	 * @see ./save.js
-	 */
-	save,
+  save: Save,
+  icon: <Icon />,
 } );

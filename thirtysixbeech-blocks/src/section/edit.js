@@ -31,11 +31,12 @@ import './editor.scss';
  */
 import { Section } from '@shared/react/Section';
 export default function Edit({ attributes, setAttributes }) {
-	console.log(attributes);
 	return (
 		<div { ...useBlockProps() }>
 			<Section>
-				<InnerBlocks />
+				<div className="tsb-inner-blocks">
+					<InnerBlocks />
+				</div>
 			</Section>
 		</div>
 	);

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/flexbox",
+  "version": "0.1.0",
+  "title": "Flexbox",
+  "category": "thirtysixbeech-content",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "spacing": {
+      "padding": false,
+      "margin": ["top", "bottom"],
+      "units": ["px", "em", "rem"],
+      "blockGap": ["horizontal"]
+    }
+  },
+  "attributes": {
+    "justifyContent": {
+      "type": "string",
+      "default": "justify-start"
+    },
+    "alignItems": {
+      "type": "string",
+      "default": "items-start"
+    },
+    "breakpoint": {
+      "type": "string",
+      "default": "md"
+    },
+    "gap": {
+      "type": "string",
+      "default": "sm"
+    },
+    "reverse": {
+      "type": "boolean",
+      "default": false
+    },
+    "evenColumns": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "providesContext": {
+    "thirtysixbeech/gap": "gap",
+    "thirtysixbeech/evenColumns": "evenColumns"
+  },
+  "textdomain": "flexbox",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

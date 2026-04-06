@@ -55,3 +55,29 @@ add_filter('block_categories_all', function ($categories, $post) {
 
     return array_merge($custom_categories, $categories);
 }, 10, 2);
+
+/**
+ * Enqueue front end styles
+ */
+function thirtysixbeech_blocks_enqueue_styles() {
+    wp_enqueue_style(
+        'thirtysixbeech-blocks',
+        plugin_dir_url( __FILE__ ) . 'build/assets/css/main.css',
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'build/assets/css/main.css' )
+    );
+    }
+add_action( 'wp_enqueue_scripts', 'thirtysixbeech_blocks_enqueue_styles' );
+
+/**
+ * Enqueue editor styles
+ */
+function thirtysixbeech_blocks_enqueue_shared_block_styles() {
+	wp_enqueue_style(
+		'thirtysixbeech-blocks-shared',
+		plugin_dir_url( __FILE__ ) . 'build/assets/css/editor.css',
+		array(),
+		filemtime( plugin_dir_path( __FILE__ ) . 'build/assets/css/editor.css' )
+	);
+}
+add_action( 'enqueue_block_assets', 'thirtysixbeech_blocks_enqueue_shared_block_styles' );
