@@ -45,6 +45,16 @@ $align-values: (
 	}
 }
 
+.tsb-grid {
+	display: grid;
+
+	@for $i from 2 through 12 {
+		&-cols-#{$i} {
+			grid-template-columns: repeat(#{$i}, 1fr);
+		}
+	}
+}
+
 @each $name, $value in $justify-values {
 	.tsb-j-#{$name} {
 		justify-content: $value;
@@ -72,26 +82,38 @@ $align-values: (
 			}
 		}
 
-		.#{$breakpoint}\:tsb-flex {
-			display: flex;
-			&-row {
-				flex-direction: row;
+		.#{$breakpoint}\: {
+			&tsb-flex {
+				display: flex;
+				&-row {
+					flex-direction: row;
+				}
+
+				&-row-r {
+					flex-direction: row-reverse;
+				}
+
+				&-col {
+					flex-direction: column;
+				}
+
+				&-col-r {
+					flex-direction: column-reverse;
+				}
+
+				&-1 {
+					flex: 1 1 0;
+				}
 			}
 
-			&-row-r {
-				flex-direction: row-reverse;
-			}
+			&tsb-grid {
+				display: grid;
 
-			&-col {
-				flex-direction: column;
-			}
-
-			&-col-r {
-				flex-direction: column-reverse;
-			}
-
-			&-1 {
-				flex: 1 1 0;
+				@for $i from 2 through 12 {
+					&-cols-#{$i} {
+						grid-template-columns: repeat(#{$i}, 1fr);
+					}
+				}
 			}
 		}
 	}
