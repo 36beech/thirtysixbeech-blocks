@@ -39,6 +39,10 @@ $align-values: (
 	&-col-r {
 		flex-direction: column-reverse;
 	}
+
+	&-1 {
+		flex: 1 1 0;
+	}
 }
 
 @each $name, $value in $justify-values {
@@ -84,6 +88,10 @@ $align-values: (
 
 			&-col-r {
 				flex-direction: column-reverse;
+			}
+
+			&-1 {
+				flex: 1 1 0;
 			}
 		}
 	}

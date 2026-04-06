@@ -3,6 +3,6 @@
   padding: 10px 0;
 }
 
-.wp-block-thirtysixbeech-blocks-section {
+:root :where(.is-layout-flow) > .block-editor-block-list__block {
   margin-block-start: 0;
 }

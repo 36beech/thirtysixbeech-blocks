@@ -4,6 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
 import { __ } from "@wordpress/i18n";
+import { useEffect } from "react";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -57,6 +58,8 @@ import {
 	alignment,
 } from "@shared/flex-grid-classes";
 
+import { wpPresetToCssVar } from "@shared/util";
+
 export default function Edit({ attributes, setAttributes }) {
 	const {
 		evenColumns,
@@ -64,11 +67,36 @@ export default function Edit({ attributes, setAttributes }) {
 		justifyContent = "tsb-j-start",
 		alignItems = "tsb-a-start",
 		breakpoint = "md",
-		gap = "sm",
+		blockGap,
+		style,
 	} = attributes;
+	const currentBlockGap = style?.spacing?.blockGap;
 
-	const innerClasses = [flexClasses[breakpoint], "tsb-inner-blocks", justifyContent, alignItems];
-	if( reverse ) innerClasses.push( 'tsb-flex-row-r' );
+	console.log(currentBlockGap, blockGap);
+
+	useEffect(() => {
+		if (currentBlockGap !== blockGap) {
+			setAttributes({
+				blockGap: currentBlockGap,
+			});
+		}
+	}, [currentBlockGap, blockGap, setAttributes]);
+
+	const innerClasses = [
+		flexClasses[breakpoint],
+		"tsb-inner-blocks",
+		justifyContent,
+		alignItems,
+	];
+	if (reverse) innerClasses.push("tsb-flex-row-r");
+
+	const blockProps = useBlockProps({
+		className: innerClasses.join(" "),
+		style: {
+			marginLeft: wpPresetToCssVar(blockGap?.left)
+		}
+	});
+	console.log(blockProps);
 
 	return (
 		<>
@@ -148,8 +176,8 @@ export default function Edit({ attributes, setAttributes }) {
 					</Stack>
 				</PanelBody>
 			</InspectorControls>
-			<div {...useBlockProps( { className: innerClasses.join(" ") })}>
-					<InnerBlocks />
+			<div {...blockProps}>
+				<InnerBlocks />
 			</div>
 		</>
 	);

@@ -11,16 +11,10 @@
   "supports": {
     "html": false,
     "spacing": {
-      "padding": false,
+      "padding": true,
       "margin": ["top", "bottom"],
       "units": ["px", "em", "rem"],
       "blockGap": ["horizontal"]
-    },
-    "layout": {
-      "allowSwitching": false,
-      "default": {
-        "type": "constrained"
-      }
     }
   },
   "attributes": {
@@ -36,9 +30,8 @@
       "type": "string",
       "default": "md"
     },
-    "gap": {
-      "type": "string",
-      "default": "sm"
+    "blockGap": {
+      "type": "string"
     },
     "reverse": {
       "type": "boolean",
@@ -50,8 +43,8 @@
     }
   },
   "providesContext": {
-    "thirtysixbeech/gap": "gap",
-    "thirtysixbeech/evenColumns": "evenColumns"
+    "thirtysixbeech/evenColumns": "evenColumns",
+    "thirtysixbeech/blockGap": "blockGap"
   },
   "textdomain": "flexbox",
   "editorScript": "file:./index.js",
