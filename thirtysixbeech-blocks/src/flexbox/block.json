@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "thirtysixbeech-blocks/flexbox",
   "version": "0.1.0",
-  "title": "Flexbox",
+  "title": "Stack",
   "category": "thirtysixbeech-content",
   "icon": "smiley",
   "description": "Example block scaffolded with Create Block tool.",
@@ -26,11 +26,11 @@
   "attributes": {
     "justifyContent": {
       "type": "string",
-      "default": "justify-start"
+      "default": "tsb-j-start"
     },
     "alignItems": {
       "type": "string",
-      "default": "items-start"
+      "default": "tsb-a-start"
     },
     "breakpoint": {
       "type": "string",

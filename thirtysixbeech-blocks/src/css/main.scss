@@ -1,43 +1,90 @@
+$breakpoints: (
+	sm: 640px,
+	md: 768px,
+	lg: 1024px,
+	xl: 1280px,
+);
+
+$justify-values: (
+	start: flex-start,
+	end: flex-end,
+	center: center,
+	between: space-between,
+	around: space-around,
+);
+
+$align-values: (
+	start: flex-start,
+	end: flex-end,
+	center: center,
+	stretch: stretch,
+);
+
+// Base classes
 .tsb-flex {
 	display: flex;
-}
 
-.tsb-j {
-	&-start {
-		justify-content: flex-start;
+	&-row {
+		flex-direction: row;
 	}
 
-	&-end {
-		justify-content: flex-end;
+	&-row-r {
+		flex-direction: row-reverse;
 	}
 
-	&-center {
-		justify-content: center;
+	&-col {
+		flex-direction: column;
 	}
 
-	&-between {
-		justify-content: space-between;
-	}
-
-	&-around {
-		justify-content: space-around;
+	&-col-r {
+		flex-direction: column-reverse;
 	}
 }
 
-.tsb-a {
-	&-start {
-		align-items: flex-start;
+@each $name, $value in $justify-values {
+	.tsb-j-#{$name} {
+		justify-content: $value;
 	}
+}
 
-	&-end {
-		align-items: flex-end;
+@each $name, $value in $align-values {
+	.tsb-a-#{$name} {
+		align-items: $value;
 	}
+}
 
-	&-center {
-		align-items: center;
-	}
+// Responsive classes
+@each $breakpoint, $size in $breakpoints {
+	@media (min-width: $size) {
+		@each $name, $value in $justify-values {
+			.#{$breakpoint}\:tsb-j-#{$name} {
+				justify-content: $value;
+			}
+		}
 
-	&-stretch {
-		align-items: stretch;
+		@each $name, $value in $align-values {
+			.#{$breakpoint}\:tsb-a-#{$name} {
+				align-items: $value;
+			}
+		}
+
+		.#{$breakpoint}\:tsb-flex {
+			display: flex;
+			&-row {
+				flex-direction: row;
+			}
+
+			&-row-r {
+				flex-direction: row-reverse;
+			}
+
+			&-col {
+				flex-direction: column;
+			}
+
+			&-col-r {
+				flex-direction: column-reverse;
+			}
+		}
 	}
 }
