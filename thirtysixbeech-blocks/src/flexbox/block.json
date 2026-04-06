@@ -15,6 +15,12 @@
       "margin": ["top", "bottom"],
       "units": ["px", "em", "rem"],
       "blockGap": ["horizontal"]
+    },
+    "layout": {
+      "allowSwitching": false,
+      "default": {
+        "type": "constrained"
+      }
     }
   },
   "attributes": {

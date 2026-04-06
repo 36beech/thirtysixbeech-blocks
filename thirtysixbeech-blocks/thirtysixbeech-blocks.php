@@ -66,13 +66,20 @@ function thirtysixbeech_blocks_enqueue_styles() {
         array(),
         filemtime( plugin_dir_path( __FILE__ ) . 'build/assets/css/main.css' )
     );
-    }
+}
 add_action( 'wp_enqueue_scripts', 'thirtysixbeech_blocks_enqueue_styles' );
 
 /**
  * Enqueue editor styles
  */
 function thirtysixbeech_blocks_enqueue_shared_block_styles() {
+    wp_enqueue_style(
+        'thirtysixbeech-blocks',
+        plugin_dir_url( __FILE__ ) . 'build/assets/css/main.css',
+        array(),
+        filemtime( plugin_dir_path( __FILE__ ) . 'build/assets/css/main.css' )
+    );
+
 	wp_enqueue_style(
 		'thirtysixbeech-blocks-shared',
 		plugin_dir_url( __FILE__ ) . 'build/assets/css/editor.css',

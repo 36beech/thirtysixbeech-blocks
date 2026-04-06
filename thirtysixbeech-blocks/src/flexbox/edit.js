@@ -32,12 +32,13 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
-	const classes = ['flex'];
-
+export default function Edit( { attributes, setAttributes } ) {
+  const { evenColumns, reverse, justifyContent = "justify-start", alignItems = "items-start", breakpoint = "md", gap = "sm" } = attributes;
 	return (
-		<div { ...useBlockProps({ className: classes.join(' ') }) }>
-			{ __( 'Flexbox – hello from the editor!', 'flexbox' ) }
+		<div { ...useBlockProps() }>
+			<div className='tsb-flex tsb-inner-blocks'>
+				<InnerBlocks />
+			</div>
 		</div>
 	);
 }
