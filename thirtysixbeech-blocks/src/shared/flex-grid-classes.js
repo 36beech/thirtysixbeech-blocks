@@ -1,4 +1,10 @@
-import { justifyLeft, justifyCenter, justifyRight, justifySpaceBetween, justifyTop, justifyCenterVertical, justifyBottom, justifyStretch } from "@wordpress/icons";
+import { justifyLeft, justifyCenter, justifyRight, justifySpaceBetween, justifyTop, justifyCenterVertical, justifyBottom, justifyStretch, mobile, tablet, desktop  } from "@wordpress/icons";
+
+export const breakpoints = [
+	{ label: "Mobile", value: "all", icon: mobile },
+	{ label: "Tablet", value: "md", icon: tablet },
+	{ label: "Desktop", value: "lg", icon: desktop },
+];
 
 export const justifySpaceAround = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

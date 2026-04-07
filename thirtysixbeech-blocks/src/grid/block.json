@@ -4,7 +4,7 @@
   "name": "thirtysixbeech-blocks/grid",
   "version": "0.1.0",
   "title": "Grid",
-  "category": "thirtysixbeech-content",
+  "category": "thirtysixbeech-layout",
   "icon": "smiley",
   "description": "Example block scaffolded with Create Block tool.",
   "example": {},
@@ -13,7 +13,8 @@
     "spacing": {
       "padding": false,
       "margin": ["top", "bottom"],
-      "units": ["px", "em", "rem"]
+      "units": ["px", "em", "rem"],
+      "blockGap": ["horizontal"]
     }
   },
   "attributes": {

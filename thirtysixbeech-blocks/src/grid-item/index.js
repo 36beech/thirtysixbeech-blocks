@@ -12,14 +12,15 @@ import { registerBlockType } from "@wordpress/blocks";
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
+import "./style.scss";
 
 /**
  * Internal dependencies
  */
 import Edit from "./edit";
 import Save from "./save";
-import { ReactComponent as Icon } from "./icon.svg";
 import metadata from "./block.json";
+import { ReactComponent as Icon } from "./icon.svg";
 
 /**
  * Every block starts by registering a new block type definition.
@@ -32,5 +33,9 @@ registerBlockType(metadata.name, {
    */
   edit: Edit,
   save: Save,
-  icon: <Icon />,
+  icon: (
+    <div className="">
+      <Icon className="grid-item-icon" />
+    </div>
+  ),
 });

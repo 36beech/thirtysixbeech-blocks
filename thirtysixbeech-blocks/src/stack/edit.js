@@ -26,14 +26,8 @@ import {
 } from "@wordpress/components";
 
 import { Stack } from "@wordpress/ui";
-
-import { mobile, tablet, desktop } from "@wordpress/icons";
-
-const breakpoints = [
-	{ label: "Mobile", value: "all", icon: mobile },
-	{ label: "Tablet", value: "md", icon: tablet },
-	{ label: "Desktop", value: "lg", icon: desktop },
-];
+import { breakpoints } from "@shared/flex-grid-classes";
+import { Breakpoints } from "@shared/react";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -93,8 +87,8 @@ export default function Edit({ attributes, setAttributes }) {
 	const blockProps = useBlockProps({
 		className: innerClasses.join(" "),
 		style: {
-			marginLeft: wpPresetToCssVar(blockGap?.left)
-		}
+			marginLeft: wpPresetToCssVar(blockGap?.left),
+		},
 	});
 	console.log(blockProps);
 
@@ -157,7 +151,15 @@ export default function Edit({ attributes, setAttributes }) {
 							</Stack>
 						</BaseControl>
 
-						<BaseControl label="Breakpoints">
+						<Breakpoints
+							label="Breakpoints"
+							value={breakpoint}
+							onClick={() => {
+								console.log("hi");
+							}}
+						/>
+
+						{/* <BaseControl label="Breakpoints">
 							<Stack alignment="center">
 								{breakpoints.map((item) => (
 									<ToolbarButton
@@ -172,7 +174,7 @@ export default function Edit({ attributes, setAttributes }) {
 									/>
 								))}
 							</Stack>
-						</BaseControl>
+						</BaseControl> */}
 					</Stack>
 				</PanelBody>
 			</InspectorControls>

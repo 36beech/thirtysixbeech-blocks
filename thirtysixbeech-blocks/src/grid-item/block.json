@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/grid-item",
+  "version": "0.1.0",
+  "title": "Grid Item",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "colSpan": {
+      "type": "integer",
+      "default": 2
+    },
+    "colStart": {
+      "type": "integer",
+      "default": 0
+    },
+    "rowSpan": {
+      "type": "integer",
+      "default": 0
+    },
+    "rowStart": {
+      "type": "integer",
+      "default": 0
+    }
+  },
+  "textdomain": "grid-item",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js",
+  "parent": ["thirtysixbeech-blocks/grid"]
+}

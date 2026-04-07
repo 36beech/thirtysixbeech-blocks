@@ -1,8 +1,58 @@
+$breakpoints: (
+	sm: 640px,
+	md: 768px,
+	lg: 1024px,
+	xl: 1280px,
+);
+
 .tsb-inner-blocks {
 	border: 1px dotted rgba(127, 127, 127, 0.5);
-  padding: 10px 0;
+	padding: 10px 0;
 }
 
 :root :where(.is-layout-flow) > .block-editor-block-list__block {
-  margin-block-start: 0;
+	margin-block-start: 0;
+}
+
+// Setting inner blocks in the editor
+.tsb-flex,
+.tsb-grid {
+	> .block-editor-inner-blocks {
+		&,
+		> .block-editor-block-list__layout {
+			display: contents;
+		}
+	}
+}
+
+@each $breakpoint, $size in $breakpoints {
+	@media (min-width: $size) {
+		.#{$breakpoint}\: {
+			&tsb-flex,
+			&tsb-grid {
+				> .block-editor-inner-blocks {
+					&,
+					> .block-editor-block-list__layout {
+						display: contents;
+					}
+				}
+			}
+		}
+	}
+}
+
+@each $breakpoint, $size in $breakpoints {
+	@media (max-width: #{$size - 1}) {
+		.#{$breakpoint}\: {
+			&tsb-flex,
+			&tsb-grid {
+				> .block-editor-inner-blocks {
+					&,
+					> .block-editor-block-list__layout {
+						display: contents;
+					}
+				}
+			}
+		}
+	}
 }
