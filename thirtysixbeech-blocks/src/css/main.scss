@@ -78,8 +78,10 @@ $align-values: (
 	height: 100%;
 }
 
-.z-0 {
-	z-index: 0;
+@for $i from 0 through 10 {
+	.z-#{$i * 10} {
+		z-index: #{$i * 10};
+	}
 }
 
 @include each-breakpoint() using ($breakpoint, $size) {

@@ -51,7 +51,7 @@ export default function Edit({ attributes, setAttributes }) {
           <RangeControl label={__("Row Start", "thirysix-beech")} value={rowStart} onChange={(value) => setAttributes({ rowStart: value || 0 })} min={0} max={12 - rowSpan} />
         </PanelBody>
       </InspectorControls>
-      <div {...useBlockProps({ className: [colSpanClasses[colSpan - 1], colStartClasses[colStart]].join(" ") })} style={style}>
+      <div {...useBlockProps({ className: [colSpanClasses[colSpan - 1], colStartClasses[colStart]].join(" "), style: style })}>
         <InnerBlocks />
       </div>
     </>

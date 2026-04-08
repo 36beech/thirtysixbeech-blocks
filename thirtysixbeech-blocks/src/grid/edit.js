@@ -74,11 +74,11 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 			<div
 				{...useBlockProps({
-					className: `relative`,
+					className: `tsb-rel`,
 				})}
 			>
 				<div
-					className={[gridClasses, "relative z-10"].join(" ")}
+					className={[gridClasses, "tsb-rel z-10"].join(" ")}
 					style={{ gap: blockGap }}
 				>
 					<InnerBlocks allowedBlocks={["thirtysixbeech-blocks/grid-item"]} />
