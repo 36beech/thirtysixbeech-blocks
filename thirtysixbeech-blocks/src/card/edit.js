@@ -49,7 +49,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 	return (
 		<div className={className.join(" ")} style={styles}>
 			<div {...blockProps}>
-				<div className="card-image">
+				<div className="card-image" style={{ aspectRatio: "5 / 3" }}>
 					<MediaSelector
 						value={imageId}
 						onSelect={(item) => {

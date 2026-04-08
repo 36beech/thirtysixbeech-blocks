@@ -1,5 +1,6 @@
 import { MediaUploadCheck, MediaUpload } from "@wordpress/block-editor";
 import { useImage } from "./useImage";
+import { ReactComponent as UploadIcon } from "@shared/icons/image-upload.svg";
 
 export const MediaSelector = ({ className, value, onSelect }) => {
 	const image = useImage(value);
@@ -14,8 +15,11 @@ export const MediaSelector = ({ className, value, onSelect }) => {
 				<MediaUpload
 					onSelect={onSelect}
 					render={({ open }) => (
-						<button className={``} onClick={open}>
-							Upload
+						<button className={`media-upload-button ${sourceUrl ? '' : 'media-upload-button-no-image '}tsb-abs z-10 w-full h-full top-0 left-0 bg-transparent border-0`} onClick={open}>
+							<div className="media-upload-icon">
+								<UploadIcon />
+							</div>
+							<span className="sr-only">Upload</span>
 						</button>
 					)}
 				/>

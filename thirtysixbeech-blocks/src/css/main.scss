@@ -20,6 +20,10 @@ $align-values: (
 	stretch: stretch,
 );
 
+* {
+	box-sizing: border-box;
+}
+
 @mixin each-breakpoint($breakpoints-map: $breakpoints) {
 	@each $breakpoint, $size in $breakpoints-map {
 		@media (min-width: $size) {
@@ -50,6 +54,15 @@ $align-values: (
 	}
 }
 
+.sr-only {
+  position:absolute ;
+  left: -10000px;
+  width: 1px;
+  height:px ;
+  top: auto;
+  overflow: hidden;
+}
+
 .tsb-rel {
 	position: relative;
 }
@@ -76,6 +89,14 @@ $align-values: (
 
 .h-full {
 	height: 100%;
+}
+
+.bg-transparent {
+	background-color: transparent;
+}
+
+.border-0 {
+	border: 0;
 }
 
 @for $i from 0 through 10 {
