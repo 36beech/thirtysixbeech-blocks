@@ -144,6 +144,14 @@ $align-values: (
 	}
 }
 
+.tsb-cover{
+	object-fit: cover
+}
+
+.tsb-contain {
+	object-fit: contain;
+}
+
 @include generate-grid-columns();
 
 @each $name, $value in $justify-values {

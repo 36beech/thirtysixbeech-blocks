@@ -63,7 +63,6 @@ export default function Edit({ attributes, setAttributes }) {
 		style,
 	} = attributes;
 	const currentBlockGap = wpPresetToCssVar(style?.spacing?.blockGap?.left);
-	console.log("Stack",blockGap);
 
 	useEffect(() => {
 		setAttributes({ blockGap: currentBlockGap });

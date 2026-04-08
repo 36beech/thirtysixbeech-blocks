@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +11,8 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from "@wordpress/block-editor";
+import { MediaSelector } from "@shared/react";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -19,7 +20,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import "./editor.scss";
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -30,11 +31,10 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes, context }) {
-	console.log(context);
+	const { imageId } = attributes;
+
 	const blockGap = context["thirtysixbeech/blockGap"] || 0;
 	const evenColumns = context["thirtysixbeech/evenColumns"] || false;
-
-	console.log("Card", blockGap);
 
 	const className = [];
 	if (evenColumns) className.push("tsb-flex-1");
@@ -42,15 +42,30 @@ export default function Edit({ attributes, setAttributes, context }) {
 	const styles = {
 		paddingLeft: blockGap,
 		paddingRight: blockGap,
-	}
+	};
 
 	const blockProps = useBlockProps();
 
 	return (
 		<div className={className.join(" ")} style={styles}>
-		<div { ...blockProps }>
-			{ __( 'Card – hello from the editor!', 'card' ) }
-		</div>
+			<div {...blockProps}>
+				<div className="card-image">
+					<MediaSelector
+						value={imageId}
+						onSelect={(item) => {
+							setAttributes({
+								imageId: item.id,
+							});
+						}}
+					/>
+				</div>
+				<div className="card-body">
+					<div className="tsb-inner-blocks">
+						<InnerBlocks />
+					</div>
+				</div>
+				<div className="card-footer"></div>
+			</div>
 		</div>
 	);
 }
