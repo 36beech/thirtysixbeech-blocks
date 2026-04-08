@@ -17,8 +17,8 @@ import {
 	InspectorControls,
 } from "@wordpress/block-editor";
 import { PanelBody } from "@wordpress/components";
-import { mobile, tablet, desktop } from "@wordpress/icons";
 import { Breakpoints } from "@shared/react";
+import { wpPresetToCssVar } from "@shared/util";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -36,13 +36,11 @@ import "./editor.scss";
  *
  * @return {Element} Element to render.
  */
-const breakpointOptions = [
-	{ label: "Mobile", value: "mobile", icon: mobile },
-	{ label: "Tablet", value: "tablet", icon: tablet },
-	{ label: "Desktop", value: "desktop", icon: desktop },
-];
 
 export default function Edit({ attributes, setAttributes }) {
+	console.log(attributes);
+	const blockGap = wpPresetToCssVar(attributes?.style?.spacing?.blockGap?.left);
+	console.log(blockGap);
 	const { breakpoint } = attributes;
 
 	let breakpointClass;
@@ -67,8 +65,10 @@ export default function Edit({ attributes, setAttributes }) {
 				<PanelBody title={__("Grid Options", "thirtysix-beech")}>
 					<Breakpoints
 						label="Breakpoints"
-            value={breakpoint}
-						onClick={() => {console.log('hi')}}
+						value={breakpoint}
+						onClick={() => {
+							console.log("hi");
+						}}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -77,7 +77,10 @@ export default function Edit({ attributes, setAttributes }) {
 					className: `relative`,
 				})}
 			>
-				<div className={[gridClasses, "relative z-10"].join(" ")}>
+				<div
+					className={[gridClasses, "relative z-10"].join(" ")}
+					style={{ gap: blockGap }}
+				>
 					<InnerBlocks allowedBlocks={["thirtysixbeech-blocks/grid-item"]} />
 				</div>
 				<div
@@ -85,6 +88,7 @@ export default function Edit({ attributes, setAttributes }) {
 						gridClasses,
 						"tsb-abs top-0 left-0 w-full h-full z-0",
 					].join(" ")}
+					style={{ gap: blockGap }}
 				>
 					{Array.from({ length: 12 }).map((_, i) => (
 						<div key={i} className="column-indicator"></div>

@@ -22,16 +22,16 @@
  * @returns {string} A valid CSS value or CSS variable reference
  */
 
-export const wpPresetToCssVar = (value) => {
-	if (typeof value !== "string" || !value.trim()) {
-		return "";
+export const wpPresetToCssVar = ( value ) => {
+	if ( typeof value !== "string" || !value.trim() ) {
+		return null;
 	}
 
-	if (!value.startsWith("var:preset|")) {
+	if ( !value.startsWith( "var:preset|" ) ) {
 		return value;
 	}
 
-	const parts = value.split("|");
+	const parts = value.split( "|" );
 
 	if (parts.length !== 3) {
 		return value;
