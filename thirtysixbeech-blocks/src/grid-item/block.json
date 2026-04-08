@@ -4,7 +4,7 @@
   "name": "thirtysixbeech-blocks/grid-item",
   "version": "0.1.0",
   "title": "Grid Item",
-  "category": "widgets",
+  "category": "thirtysixbeech-layout",
   "icon": "smiley",
   "description": "Example block scaffolded with Create Block tool.",
   "example": {},

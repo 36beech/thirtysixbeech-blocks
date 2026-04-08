@@ -38,9 +38,7 @@ import "./editor.scss";
  */
 
 export default function Edit({ attributes, setAttributes }) {
-	console.log(attributes);
 	const blockGap = wpPresetToCssVar(attributes?.style?.spacing?.blockGap?.left);
-	console.log(blockGap);
 	const { breakpoint } = attributes;
 
 	let breakpointClass;

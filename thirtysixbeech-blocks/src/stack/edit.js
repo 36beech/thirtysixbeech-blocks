@@ -26,7 +26,7 @@ import {
 } from "@wordpress/components";
 
 import { Stack } from "@wordpress/ui";
-import { breakpoints } from "@shared/flex-grid-classes";
+import { wpPresetToCssVar } from "@shared/util";
 import { Breakpoints } from "@shared/react";
 
 /**
@@ -52,8 +52,6 @@ import {
 	alignment,
 } from "@shared/flex-grid-classes";
 
-import { wpPresetToCssVar } from "@shared/util";
-
 export default function Edit({ attributes, setAttributes }) {
 	const {
 		evenColumns,
@@ -64,17 +62,12 @@ export default function Edit({ attributes, setAttributes }) {
 		blockGap,
 		style,
 	} = attributes;
-	const currentBlockGap = style?.spacing?.blockGap;
-
-	console.log(currentBlockGap, blockGap);
+	const currentBlockGap = wpPresetToCssVar(style?.spacing?.blockGap?.left);
+	console.log("Stack",blockGap);
 
 	useEffect(() => {
-		if (currentBlockGap !== blockGap) {
-			setAttributes({
-				blockGap: currentBlockGap,
-			});
-		}
-	}, [currentBlockGap, blockGap, setAttributes]);
+		setAttributes({ blockGap: currentBlockGap });
+	}, [currentBlockGap]);
 
 	const innerClasses = [
 		flexClasses[breakpoint],
@@ -84,13 +77,12 @@ export default function Edit({ attributes, setAttributes }) {
 	];
 	if (reverse) innerClasses.push("tsb-flex-row-r");
 
-	const blockProps = useBlockProps({
-		className: innerClasses.join(" "),
-		style: {
-			marginLeft: wpPresetToCssVar(blockGap?.left),
-		},
-	});
-	console.log(blockProps);
+	const blockProps = useBlockProps();
+
+	const innerStyles = {
+		marginLeft: `calc( ${blockGap} * -1 )`,
+		marginRight: `calc( ${blockGap} * -1 )`,
+	};
 
 	return (
 		<>
@@ -158,28 +150,13 @@ export default function Edit({ attributes, setAttributes }) {
 								console.log("hi");
 							}}
 						/>
-
-						{/* <BaseControl label="Breakpoints">
-							<Stack alignment="center">
-								{breakpoints.map((item) => (
-									<ToolbarButton
-										icon={item.icon}
-										label={item.label}
-										isPressed={breakpoint === item.value}
-										onClick={() =>
-											setAttributes({
-												breakpoint: item.value,
-											})
-										}
-									/>
-								))}
-							</Stack>
-						</BaseControl> */}
 					</Stack>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
+				<div className={innerClasses.join(" ")} style={innerStyles}>
 				<InnerBlocks />
+				</div>
 			</div>
 		</>
 	);

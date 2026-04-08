@@ -4,7 +4,7 @@
   "name": "thirtysixbeech-blocks/stack",
   "version": "0.1.0",
   "title": "Stack",
-  "category": "thirtysixbeech-content",
+  "category": "thirtysixbeech-layout",
   "icon": "smiley",
   "description": "Example block scaffolded with Create Block tool.",
   "example": {},
