@@ -11,7 +11,7 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InnerBlocks } from "@wordpress/block-editor";
+import { useBlockProps, InnerBlocks, RichText } from "@wordpress/block-editor";
 import { MediaSelector } from "@shared/react";
 
 /**
@@ -31,12 +31,12 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes, context }) {
-	const { imageId } = attributes;
+	const { imageId, tags } = attributes;
 
 	const blockGap = context["thirtysixbeech/blockGap"] || 0;
 	const evenColumns = context["thirtysixbeech/evenColumns"] || false;
 
-	const className = [];
+	const className = ["tsb-rel"];
 	if (evenColumns) className.push("tsb-flex-1");
 
 	const styles = {
@@ -57,6 +57,13 @@ export default function Edit({ attributes, setAttributes, context }) {
 								imageId: item.id,
 							});
 						}}
+					/>
+				</div>
+				<div className="tsb-abs top-0 left-0 z-20">
+					<RichText 
+						placeholder="Tags" 
+						value={tags}
+						onChange={( newValue) => setAttributes({ tags: newValue } )}
 					/>
 				</div>
 				<div className="card-body">

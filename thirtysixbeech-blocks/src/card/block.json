@@ -11,6 +11,9 @@
   "attributes": {
     "imageId": {
       "type": "number"
+    },
+    "tags": {
+      "type": "string"
     }
   },
   "supports": {
