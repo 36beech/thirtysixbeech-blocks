@@ -35,16 +35,9 @@
       "type": "boolean", 
       "default": true 
     },
-    "style": {
-      "type": "object",
-      "default": {
-        "spacing": {
-          "padding": {
-            "top": "2rem",
-            "bottom": "2rem"
-          }
-        }
-      }
+    "semanticTag": {
+      "type": "string",
+      "default": "section"
     }
   },
   "providesContext": {

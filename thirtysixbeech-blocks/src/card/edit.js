@@ -62,8 +62,8 @@ export default function Edit({ attributes, setAttributes, context }) {
 				<div className="tsb-abs top-0 left-0 z-20">
 					<RichText 
 						placeholder="Tags" 
-						value={tags}
-						onChange={( newValue) => setAttributes({ tags: newValue } )}
+						value={tags[0]}
+						onChange={( newValue) => setAttributes({ tags: [newValue] } )}
 					/>
 				</div>
 				<div className="card-body">

@@ -11,12 +11,8 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import {
-	useBlockProps,
-	InnerBlocks,
-	BlockControls,
-} from "@wordpress/block-editor";
-import { ToolbarGroup, ToolbarButton } from "@wordpress/components";
+import { useBlockProps, InnerBlocks } from "@wordpress/block-editor";
+import { MediaSelector } from "@shared/react";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -34,21 +30,26 @@ import "./editor.scss";
  *
  * @return {Element} Element to render.
  */
-import { Section } from "@shared/react/Section";
-export default function Edit({ attributes, setAttributes }) {
-	const { semanticTag } = attributes;
+export default function Edit({ attributes, setAttributes, context }) {
+	const { imageId } = attributes;
+	const allowedBlocks = ["core/heading", "core/paragraph", "core/buttons"];
 	return (
-		<>
-			<BlockControls>
-				<ToolbarGroup></ToolbarGroup>
-			</BlockControls>
-			<div {...useBlockProps()}>
-				<Section tag={semanticTag}>
-					<div className="tsb-inner-blocks">
-						<InnerBlocks />
-					</div>
-				</Section>
+		<div {...useBlockProps()}>
+			<div className="tsb-hero-image">
+				<MediaSelector
+					value={imageId}
+					onSelect={(item) => {
+						setAttributes({
+							imageId: item.id,
+						});
+					}}
+				/>
 			</div>
-		</>
+			<div className="tsb-hero-content">
+				<div className="tsb-inner-blocks">
+					<InnerBlocks allowedBlocks={allowedBlocks} />
+				</div>
+			</div>
+		</div>
 	);
 }
