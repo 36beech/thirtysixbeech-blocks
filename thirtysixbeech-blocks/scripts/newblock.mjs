@@ -46,6 +46,7 @@ const blockJsonFile = join(blockDir, "block.json");
 if (existsSync(blockJsonFile)) {
   let blockJson = JSON.parse(readFileSync(blockJsonFile, "utf8"));
   blockJson.title = blockTitle; // Keep full name as title
+  blockJson.category = "thirtysixbeech-content";
   writeFileSync(blockJsonFile, JSON.stringify(blockJson, null, 2), "utf8");
   console.log(`✔ Updated ${blockJsonFile} with title "${blockTitle}"`);
 }

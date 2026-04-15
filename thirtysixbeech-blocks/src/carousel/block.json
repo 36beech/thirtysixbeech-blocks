@@ -1,0 +1,77 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/carousel",
+  "version": "0.1.0",
+  "title": "Carousel",
+  "category": "thirtysixbeech-content",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "spacing": {
+      "padding": ["top", "bottom"],
+      "margin": ["top", "bottom"],
+      "units": ["px", "em", "rem"]
+    },
+    "color": {
+      "background": true,
+      "gradients": true,
+      "link": false,
+      "text": true
+    }
+  },
+  "attributes": {
+    "showControls": {
+      "type": "boolean",
+      "default": true
+    },
+    "autoPlay": {
+      "type": "boolean",
+      "default": false
+    },
+    "autoPlayDelay": {
+      "type": "number",
+      "default": 5000
+    },
+    "sliderSpeed": {
+      "type": "number",
+      "default": 1000
+    },
+    "showPeek": {
+      "type": "boolean",
+      "default": true
+    },
+    "showOverflow": {
+      "type": "boolean",
+      "default": true
+    },
+    "slidesPerPage": {
+      "type": "number",
+      "default": 2
+    },
+    "slidesPerPageT": {
+      "type": "number",
+      "default": 2
+    },
+    "slidesPerPageM": {
+      "type": "number",
+      "default": 2
+    },
+    "opacity": {
+      "type": "number",
+      "default": 100
+    }
+  },
+  "providesContext": {
+    "thirtysixbeech/slidesPerPage": "slidesPerPage",
+    "thirtysixbeech/showPeek": "showPeek"
+  },
+  "textdomain": "carousel",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}
