@@ -20,7 +20,6 @@ import {
 import {
 	PanelBody,
 	ToolbarButton,
-	RangeControl,
 	ToggleControl,
 	BaseControl,
 } from "@wordpress/components";

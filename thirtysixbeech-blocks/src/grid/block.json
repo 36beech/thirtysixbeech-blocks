@@ -14,13 +14,21 @@
       "padding": false,
       "margin": ["top", "bottom"],
       "units": ["px", "em", "rem"],
-      "blockGap": ["horizontal"]
+      "blockGap": [ "horizontal", "vertical" ]
     }
   },
   "attributes": {
     "breakpoint": {
       "type": "string",
       "default": "tablet"
+    },
+    "reverse": {
+      "type": "boolean",
+      "default": false
+    },
+    "alignItems": {
+      "type": "string",
+      "default": "tsb-a-start"
     }
   },
   "textdomain": "grid",

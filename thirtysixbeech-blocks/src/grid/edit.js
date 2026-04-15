@@ -16,9 +16,17 @@ import {
 	useBlockProps,
 	InspectorControls,
 } from "@wordpress/block-editor";
-import { PanelBody } from "@wordpress/components";
+import { Stack } from "@wordpress/ui";
+import {
+	PanelBody,
+	ToggleControl,
+	ToolbarButton,
+	BaseControl,
+} from "@wordpress/components";
 import { Breakpoints } from "@shared/react";
 import { wpPresetToCssVar } from "@shared/util";
+
+import { alignment } from "@shared/flex-grid-classes";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -38,36 +46,68 @@ import "./editor.scss";
  */
 
 export default function Edit({ attributes, setAttributes }) {
-	const blockGap = wpPresetToCssVar(attributes?.style?.spacing?.blockGap?.left);
-	const { breakpoint } = attributes;
+	const blockGapX = wpPresetToCssVar(attributes?.style?.spacing?.blockGap?.left);
+	const blockGapY = wpPresetToCssVar(attributes?.style?.spacing?.blockGap?.top);
+	const { breakpoint, reverse, alignItems = "tsb-a-start" } = attributes;
 
-	let breakpointClass;
+	const breakpointClass = [];
 
 	switch (breakpoint) {
 		case "mobile":
-			breakpointClass = "max-sm:tsb-flex max-sm:tsb-flex-col sm:tsb-grid";
+			breakpointClass.push("max-sm:tsb-flex max-sm:tsb-flex-col sm:tsb-grid");
+			if (reverse) breakpointClass.push("sm:tsb-rtl");
 			break;
 		case "tablet":
 		default:
-			breakpointClass = "max-md:tsb-flex max-md:tsb-flex-col md:tsb-grid";
+			breakpointClass.push("max-md:tsb-flex max-md:tsb-flex-col md:tsb-grid");
+			if (reverse) breakpointClass.push("md:tsb-rtl");
 			break;
 		case "desktop":
-			breakpointClass = "max-lg:tsb-flex max-lg:tsb-flex-col lg:tsb-grid";
+			breakpointClass.push("max-lg:tsb-flex max-lg:tsb-flex-col lg:tsb-grid");
+			if (reverse) breakpointClass.push("lg:tsb-rtl");
 			break;
 	}
 
-	const gridClasses = breakpointClass + " tsb-grid-cols-12 tsb-grid-wrapper";
+	const gridClasses = [...breakpointClass, "tsb-grid-cols-12 tsb-grid-wrapper"];
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__("Grid Options", "thirtysix-beech")}>
-					<Breakpoints
-						label="Breakpoints"
-						value={breakpoint}
-						onClick={() => {
-							console.log("hi");
-						}}
-					/>
+					<Stack direction="column">
+						<Breakpoints
+							label="Breakpoints"
+							value={breakpoint}
+							onClick={() => {
+								console.log("hi");
+							}}
+						/>
+						<BaseControl label="Align Items">
+							<Stack alignment="center">
+								{alignment.map((item) => (
+									<ToolbarButton
+										icon={item.icon}
+										label={item.label}
+										isPressed={alignItems === item.value}
+										onClick={() =>
+											setAttributes({
+												alignItems: item.value,
+											})
+										}
+									/>
+								))}
+							</Stack>
+						</BaseControl>
+						<ToggleControl
+							label={__("Reverse Horizontally", "thirtysix-beech")}
+							checked={reverse}
+							help={__("Reverse Direction", "thirtysix-beech")}
+							onChange={(newValue) => {
+								setAttributes({
+									reverse: newValue,
+								});
+							}}
+						/>
+					</Stack>
 				</PanelBody>
 			</InspectorControls>
 			<div
@@ -76,17 +116,17 @@ export default function Edit({ attributes, setAttributes }) {
 				})}
 			>
 				<div
-					className={[gridClasses, "tsb-rel z-10"].join(" ")}
-					style={{ gap: blockGap }}
+					className={[...gridClasses, "tsb-rel z-10"].join(" ")}
+					style={{ columnGap: blockGapX, rowGap: blockGapY }}
 				>
 					<InnerBlocks allowedBlocks={["thirtysixbeech-blocks/grid-item"]} />
 				</div>
 				<div
 					className={[
-						gridClasses,
+						...gridClasses,
 						"tsb-abs top-0 left-0 w-full h-full z-0",
 					].join(" ")}
-					style={{ gap: blockGap }}
+					style={{ columnGap: blockGapX, rowGap: blockGapY }}
 				>
 					{Array.from({ length: 12 }).map((_, i) => (
 						<div key={i} className="column-indicator"></div>
