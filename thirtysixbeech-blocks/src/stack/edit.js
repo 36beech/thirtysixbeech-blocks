@@ -26,7 +26,7 @@ import {
 
 import { Stack } from "@wordpress/ui";
 import { wpPresetToCssVar } from "@shared/util";
-import { Breakpoints } from "@shared/react";
+import { Breakpoints, AlignItems } from "@shared/react";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -48,7 +48,6 @@ import "./editor.scss";
 import {
 	flexClasses,
 	justification,
-	alignment,
 } from "@shared/flex-grid-classes";
 
 export default function Edit({ attributes, setAttributes }) {
@@ -124,22 +123,14 @@ export default function Edit({ attributes, setAttributes }) {
 							</Stack>
 						</BaseControl>
 
-						<BaseControl label="Align Items">
-							<Stack alignment="center">
-								{alignment.map((item) => (
-									<ToolbarButton
-										icon={item.icon}
-										label={item.label}
-										isPressed={alignItems === item.value}
-										onClick={() =>
-											setAttributes({
-												alignItems: item.value,
-											})
-										}
-									/>
-								))}
-							</Stack>
-						</BaseControl>
+						<AlignItems
+							value={alignItems}
+							onClick={(newValue) =>
+								setAttributes({
+									alignItems: newValue,
+								})
+							}
+						/>
 
 						<Breakpoints
 							label="Breakpoints"
@@ -153,7 +144,7 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 			<div {...blockProps}>
 				<div className={innerClasses.join(" ")} style={innerStyles}>
-				<InnerBlocks />
+					<InnerBlocks />
 				</div>
 			</div>
 		</>

@@ -23,7 +23,7 @@ import {
 	ToolbarButton,
 	BaseControl,
 } from "@wordpress/components";
-import { Breakpoints } from "@shared/react";
+import { Breakpoints, AlignItems } from "@shared/react";
 import { wpPresetToCssVar } from "@shared/util";
 
 import { alignment } from "@shared/flex-grid-classes";
@@ -81,22 +81,14 @@ export default function Edit({ attributes, setAttributes }) {
 								console.log("hi");
 							}}
 						/>
-						<BaseControl label="Align Items">
-							<Stack alignment="center">
-								{alignment.map((item) => (
-									<ToolbarButton
-										icon={item.icon}
-										label={item.label}
-										isPressed={alignItems === item.value}
-										onClick={() =>
-											setAttributes({
-												alignItems: item.value,
-											})
-										}
-									/>
-								))}
-							</Stack>
-						</BaseControl>
+						<AlignItems
+							value={alignItems}
+							onClick={(newValue) =>
+								setAttributes({
+									alignItems: newValue,
+								})
+							}
+						/>
 						<ToggleControl
 							label={__("Reverse Horizontally", "thirtysix-beech")}
 							checked={reverse}
@@ -116,7 +108,7 @@ export default function Edit({ attributes, setAttributes }) {
 				})}
 			>
 				<div
-					className={[...gridClasses, "tsb-rel z-10"].join(" ")}
+					className={[...gridClasses, alignItems,  "tsb-rel z-10"].join(" ")}
 					style={{ columnGap: blockGapX, rowGap: blockGapY }}
 				>
 					<InnerBlocks allowedBlocks={["thirtysixbeech-blocks/grid-item"]} />
