@@ -125,6 +125,7 @@ export default function Edit({ attributes, setAttributes }) {
 					className={[
 						...gridClasses,
 						"tsb-abs top-0 left-0 w-full h-full z-0",
+						"tsb-grid-backdrop"
 					].join(" ")}
 					style={{ columnGap: blockGapX, rowGap: blockGapY }}
 				>

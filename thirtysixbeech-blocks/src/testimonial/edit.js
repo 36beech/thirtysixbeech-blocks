@@ -32,34 +32,14 @@ import "./editor.scss";
 
 const famousQuotes = [
 	{
-		quote: "The only thing we have to fear is fear itself.",
-		author: "Franklin D. Roosevelt",
-		title: "32nd President of the United States",
+		quote: "You must do the thing you think you cannot do.",
+		author: "Eleanor Roosevelt",
+		title: "Diplomat",
 	},
 	{
-		quote: "I think, therefore I am.",
-		author: "René Descartes",
-		title: "Philosopher and Mathematician",
-	},
-	{
-		quote: "That's one small step for man, one giant leap for mankind.",
-		author: "Neil Armstrong",
-		title: "Astronaut",
-	},
-	{
-		quote: "In the beginning God created the heavens and the earth.",
-		author: "The Bible",
-		title: "Religious Text",
-	},
-	{
-		quote: "To be, or not to be, that is the question.",
-		author: "William Shakespeare",
-		title: "Playwright and Poet",
-	},
-	{
-		quote: "I have a dream.",
-		author: "Martin Luther King Jr.",
-		title: "Civil Rights Leader",
+		quote: "Stay hungry, stay foolish.",
+		author: "Stewart Brand",
+		title: "Writer",
 	},
 	{
 		quote: "The unexamined life is not worth living.",
@@ -67,26 +47,94 @@ const famousQuotes = [
 		title: "Philosopher",
 	},
 	{
-		quote: "Stay hungry, stay foolish.",
-		author: "Steve Jobs",
-		title: "Co-founder of Apple",
+		quote:
+			"Success is liking yourself, liking what you do, and liking how you do it.",
+		author: "Maya Angelou",
+		title: "Poet",
+	},
+	{
+		quote: "That's one small step for man, one giant leap for mankind.",
+		author: "Neil Armstrong",
+		title: "Astronaut",
+	},
+	{
+		quote:
+			"I am no longer accepting the things I cannot change. I am changing the things I cannot accept.",
+		author: "Angela Davis",
+		title: "Activist",
+	},
+	{
+		quote: "To be, or not to be, that is the question.",
+		author: "William Shakespeare",
+		title: "Playwright",
+	},
+	{
+		quote: "The function of freedom is to free someone else.",
+		author: "Yuri Kochiyama",
+		title: "Activist",
+	},
+	{
+		quote: "Remember that you are all people and that all people are you.",
+		author: "Joy Harjo",
+		title: "Poet",
+	},
+	{
+		quote:
+			"The most difficult thing is the decision to act, the rest is merely tenacity.",
+		author: "Amelia Earhart",
+		title: "Aviator",
+	},
+	{
+		quote: "I think, therefore I am.",
+		author: "René Descartes",
+		title: "Philosopher",
+	},
+	{
+		quote: "Well-behaved women seldom make history.",
+		author: "Laurel Thatcher Ulrich",
+		title: "Historian",
+	},
+	{
+		quote: "The only thing we have to fear is fear itself.",
+		author: "Franklin D. Roosevelt",
+		title: "U.S. President",
 	},
 	{
 		quote: "It always seems impossible until it's done.",
 		author: "Nelson Mandela",
-		title: "Former President of South Africa",
+		title: "Political Leader",
+	},
+	{
+		quote: "I have a dream.",
+		author: "Martin Luther King Jr.",
+		title: "Civil Rights Leader",
 	},
 	{
 		quote: "Do what you can, with what you have, where you are.",
 		author: "Theodore Roosevelt",
-		title: "26th President of the United States",
+		title: "U.S. President",
 	},
+	{
+    quote: "People have to learn to hate, and if they can learn to hate, they can be taught to love.",
+    author: "Coretta Scott King",
+    title: "Civil Rights Leader"
+  },
+  {
+    quote: "I raise up my voice—not so I can shout, but so that those without a voice can be heard.",
+    author: "Malala Yousafzai",
+    title: "Activist"
+  },
+  {
+    quote: "You can't use up creativity. The more you use, the more you have.",
+    author: "Maya Angelou",
+    title: "Poet"
+  }
 ];
 
-const i = Math.floor(Math.random() * 10);
-
+const i = Math.floor(Math.random() * 19);
 export default function Edit({ attributes, setAttributes }) {
 	const { quote, author, authorTitle } = attributes;
+
 	return (
 		<blockquote {...useBlockProps()}>
 			<div className="tsb-quote-text">
@@ -98,20 +146,23 @@ export default function Edit({ attributes, setAttributes }) {
 			</div>
 			<div className="tsb-quote-author">
 				<span className="tsb-quote-author--name">
-				<RichText
-					placeholder={famousQuotes[i].author}
-					value={author}
-					allowedFormats={[]}
-					multiline={false}
-					onChange={(newValue) => setAttributes({ author: newValue })}
-				/></span><span className="tsb-quote-author--title">
-				<RichText
-					placeholder={famousQuotes[i].title}
-					value={authorTitle}
-					allowedFormats={[]}
-					multiline={false}
-					onChange={(newValue) => setAttributes({ authorTitle: newValue })}
-				/></span>
+					<RichText
+						placeholder={famousQuotes[i].author}
+						value={author}
+						allowedFormats={[]}
+						multiline={false}
+						onChange={(newValue) => setAttributes({ author: newValue })}
+					/>
+				</span>
+				<span className="tsb-quote-author--title">
+					<RichText
+						placeholder={famousQuotes[i].title}
+						value={authorTitle}
+						allowedFormats={[]}
+						multiline={false}
+						onChange={(newValue) => setAttributes({ authorTitle: newValue })}
+					/>
+				</span>
 			</div>
 		</blockquote>
 	);

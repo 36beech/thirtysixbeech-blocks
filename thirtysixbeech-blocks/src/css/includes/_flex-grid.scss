@@ -1,3 +1,22 @@
 .wp-block-thirtysixbeech-blocks-grid-item {
 	direction: ltr;
 }
+
+.tsb-grid-backdrop {
+	opacity: 0;
+	transition: all 0.3s;
+}
+
+.column-indicator {
+  background-color: currentColor;
+}
+
+.wp-block-thirtysixbeech-blocks-grid {
+	&.is-selected,
+	&.has-child-selected,
+	&:hover {
+		.tsb-grid-backdrop {
+			opacity: 0.1;
+		}
+	}
+}
