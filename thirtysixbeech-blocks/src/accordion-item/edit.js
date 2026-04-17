@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +11,8 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { InnerBlocks, useBlockProps, RichText } from "@wordpress/block-editor";
+import { ReactComponent as Carat } from "./carat.svg";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -19,7 +20,7 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import "./editor.scss";
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -29,11 +30,22 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+export default function Edit({ attributes, setAttributes, context }) {
+	const { summary } = attributes;
+
 	return (
-		<details { ...useBlockProps() }>
-			<summary>details</summary>
-			<div>
+		<details {...useBlockProps()}>
+			<summary className="tsb-accordion-summary">
+				<span>
+					<RichText
+						value={summary}
+						onChange={(newVal) => setAttributes({ summary: newVal })}
+						placeholder="Accordion Item Title"
+					/>
+				</span>
+				<Carat class="tsb-accordion-summary-carat" />
+			</summary>
+			<div className="tsb-accordion-content">
 				<div class="tsb-inner-blocks">
 					<InnerBlocks />
 				</div>

@@ -1,0 +1,23 @@
+.tsb-accordion-summary {
+	background-color: #222;
+	color: #fff;
+	display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+	.wp-block-thirtysixbeech-blocks-accordion-item:open & {
+		background-color: #557;
+	}
+}
+
+.tsb-accordion-summary-carat {
+	width: 1.0625rem;
+	height: 0.625rem;
+  fill: currentColor;
+  transform: scaleY(-1);
+  transition: all 0.3s;
+
+  .wp-block-thirtysixbeech-blocks-accordion-item:open & {
+    transform: scaleY(1);
+  }
+}
