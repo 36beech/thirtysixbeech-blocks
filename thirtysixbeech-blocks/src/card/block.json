@@ -15,6 +15,10 @@
     "tags": {
       "type": "array",
       "default": []
+    },
+    "variant": {
+      "type": "string",
+      "default": "vertical"
     }
   },
   "supports": {

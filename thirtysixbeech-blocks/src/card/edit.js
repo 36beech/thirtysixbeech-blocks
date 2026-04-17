@@ -41,7 +41,7 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes, context }) {
-	const { imageId, tags } = attributes;
+	const { imageId, tags, variant } = attributes;
 
 	const blockGap = context["thirtysixbeech/blockGap"] || 0;
 	const evenColumns = context["thirtysixbeech/evenColumns"] || false;
@@ -54,19 +54,45 @@ export default function Edit({ attributes, setAttributes, context }) {
 		paddingRight: blockGap,
 	};
 
-	const blockProps = useBlockProps();
+	const blockStyles = [];
+	if (variant === "horizontal") blockStyles.push("tsb-card-horizontal");
+	const blockProps = useBlockProps({ className: blockStyles.join(" ") });
 
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__("Cards Options", "thirtysix-beech")}>
 					<BaseControl label={__("Variant", "thirtysix-beech")}>
-						<Stack justify="center" gap="md">
-							<Button style={{ height: "56px" }}>
-								<VerticalIcon style={{ width: "40px", height: "40px" }} />
+						<Stack justify="start" gap="md">
+							<Button
+								style={{ height: "56px" }}
+								variant={variant === "vertical" ? null : "outline"}
+								tone="neutral"
+								onClick={() => setAttributes({ variant: "vertical" })}
+								aria-pressed={variant === "vertical"}
+							>
+								<VerticalIcon
+									style={{
+										width: "40px",
+										height: "40px",
+										fill: "currentColor",
+									}}
+								/>
 							</Button>
-							<Button style={{ height: "56px" }} variant="outline" tone="neutral">
-								<HorizontalIcon style={{ width: "40px", height: "40px" }} />
+							<Button
+								style={{ height: "56px" }}
+								variant={variant === "horizontal" ? null : "outline"}
+								tone="neutral"
+								onClick={() => setAttributes({ variant: "horizontal" })}
+								aria-pressed={variant === "horizontal"}
+							>
+								<HorizontalIcon
+									style={{
+										width: "40px",
+										height: "40px",
+										fill: "currentColor",
+									}}
+								/>
 							</Button>
 						</Stack>
 					</BaseControl>
@@ -74,7 +100,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 			</InspectorControls>
 			<div className={className.join(" ")} style={styles}>
 				<div {...blockProps}>
-					<div className="card-image" style={{ aspectRatio: "5 / 3" }}>
+					<div className="tsb-card-image">
 						<MediaSelector
 							value={imageId}
 							onSelect={(item) => {
@@ -84,19 +110,19 @@ export default function Edit({ attributes, setAttributes, context }) {
 							}}
 						/>
 					</div>
-					<div className="tsb-abs top-0 left-0 z-20">
+					<div className="tsb-abs top-0 left-0 z-20 tsb-card-tag">
 						<RichText
 							placeholder="Tags"
 							value={tags[0]}
 							onChange={(newValue) => setAttributes({ tags: [newValue] })}
 						/>
 					</div>
-					<div className="card-body">
+					<div className="tsb-card-body">
 						<div className="tsb-inner-blocks">
 							<InnerBlocks />
 						</div>
 					</div>
-					<div className="card-footer"></div>
+					{/* <div className="tsb-card-footer"></div> */}
 				</div>
 			</div>
 		</>
