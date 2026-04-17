@@ -11,8 +11,18 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InnerBlocks, RichText } from "@wordpress/block-editor";
+import {
+	useBlockProps,
+	InnerBlocks,
+	RichText,
+	InspectorControls,
+} from "@wordpress/block-editor";
+import { PanelBody, BaseControl } from "@wordpress/components";
+import { Stack, Button } from "@wordpress/ui";
 import { MediaSelector } from "@shared/react";
+
+import { ReactComponent as VerticalIcon } from "./cards_vertical.svg";
+import { ReactComponent as HorizontalIcon } from "./cards_horizontal.svg";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -47,32 +57,48 @@ export default function Edit({ attributes, setAttributes, context }) {
 	const blockProps = useBlockProps();
 
 	return (
-		<div className={className.join(" ")} style={styles}>
-			<div {...blockProps}>
-				<div className="card-image" style={{ aspectRatio: "5 / 3" }}>
-					<MediaSelector
-						value={imageId}
-						onSelect={(item) => {
-							setAttributes({
-								imageId: item.id,
-							});
-						}}
-					/>
-				</div>
-				<div className="tsb-abs top-0 left-0 z-20">
-					<RichText 
-						placeholder="Tags" 
-						value={tags[0]}
-						onChange={( newValue) => setAttributes({ tags: [newValue] } )}
-					/>
-				</div>
-				<div className="card-body">
-					<div className="tsb-inner-blocks">
-						<InnerBlocks />
+		<>
+			<InspectorControls>
+				<PanelBody title={__("Cards Options", "thirtysix-beech")}>
+					<BaseControl label={__("Variant", "thirtysix-beech")}>
+						<Stack justify="center" gap="md">
+							<Button>
+								<VerticalIcon style={{ width: "40px", height: "40px" }} />
+							</Button>
+							<Button variant="outline" tone="neutral">
+								<HorizontalIcon style={{ width: "40px", height: "40px" }} />
+							</Button>
+						</Stack>
+					</BaseControl>
+				</PanelBody>
+			</InspectorControls>
+			<div className={className.join(" ")} style={styles}>
+				<div {...blockProps}>
+					<div className="card-image" style={{ aspectRatio: "5 / 3" }}>
+						<MediaSelector
+							value={imageId}
+							onSelect={(item) => {
+								setAttributes({
+									imageId: item.id,
+								});
+							}}
+						/>
 					</div>
+					<div className="tsb-abs top-0 left-0 z-20">
+						<RichText
+							placeholder="Tags"
+							value={tags[0]}
+							onChange={(newValue) => setAttributes({ tags: [newValue] })}
+						/>
+					</div>
+					<div className="card-body">
+						<div className="tsb-inner-blocks">
+							<InnerBlocks />
+						</div>
+					</div>
+					<div className="card-footer"></div>
 				</div>
-				<div className="card-footer"></div>
 			</div>
-		</div>
+		</>
 	);
 }

@@ -20,8 +20,6 @@ import { Stack } from "@wordpress/ui";
 import {
 	PanelBody,
 	ToggleControl,
-	ToolbarButton,
-	BaseControl,
 } from "@wordpress/components";
 import { Breakpoints, AlignItems } from "@shared/react";
 import { wpPresetToCssVar } from "@shared/util";
