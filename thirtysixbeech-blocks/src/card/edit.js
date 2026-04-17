@@ -62,10 +62,10 @@ export default function Edit({ attributes, setAttributes, context }) {
 				<PanelBody title={__("Cards Options", "thirtysix-beech")}>
 					<BaseControl label={__("Variant", "thirtysix-beech")}>
 						<Stack justify="center" gap="md">
-							<Button>
+							<Button style={{ height: "56px" }}>
 								<VerticalIcon style={{ width: "40px", height: "40px" }} />
 							</Button>
-							<Button variant="outline" tone="neutral">
+							<Button style={{ height: "56px" }} variant="outline" tone="neutral">
 								<HorizontalIcon style={{ width: "40px", height: "40px" }} />
 							</Button>
 						</Stack>
