@@ -5,7 +5,7 @@ on:
       - dev
 jobs:
   build-and-deploy-blocks-plugin:
-    runs-on: ubuntu-latesta
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: thirtysixbeech-blocks
