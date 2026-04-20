@@ -15,7 +15,8 @@
 		"start": "wp-scripts start --blocks-manifest",
     "build:css": "npx sass src/css:build/assets/css",
     "start:css": "npx sass --watch src/css:build/assets/css",
-		"nb": "node scripts/newblock.mjs"
+		"nb": "node scripts/newblock.mjs",
+    "package": "./package.sh"
 	},
 	"dependencies": {
 		"@wordpress/block-editor": "latest",
