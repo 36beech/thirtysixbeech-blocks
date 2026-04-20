@@ -47,7 +47,9 @@ $align-values: (
 		.#{$prefix}col-span-#{$i} {
 			grid-column: span #{$i} / span #{$i};
 		}
+	}
 
+	@for $i from $min through $max {
 		.#{$prefix}col-start-#{$i} {
 			grid-column-start: #{$i};
 		}
