@@ -84,8 +84,8 @@ export default function Edit({ attributes, setAttributes }) {
 					<RangeControl
 						label={__("Column Start", "thirysix-beech")}
 						value={colStart}
-						onChange={(value) => setAttributes({ colStart: value || 0 })}
-						min={0}
+						onChange={(value) => setAttributes({ colStart: value || 1 })}
+						min={1}
 						max={12 - colSpan}
 					/>
 					<hr />
@@ -109,7 +109,7 @@ export default function Edit({ attributes, setAttributes }) {
 				{...useBlockProps({
 					className: [
 						colSpanClasses[colSpan - 1],
-						colStartClasses[colStart],
+						colStartClasses[colStart - 1],
 					].join(" "),
 					style: style,
 				})}
