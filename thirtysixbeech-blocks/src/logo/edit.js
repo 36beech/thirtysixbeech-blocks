@@ -16,13 +16,10 @@ import {
 	BlockControls,
 	MediaUploadCheck,
 	MediaUpload,
+	InspectorControls,
 } from "@wordpress/block-editor";
-import {
-	ToolbarGroup,
-	ToolbarButton,
-	ToolbarItem,
-} from "@wordpress/components";
-import { Icon, mobile, desktop } from "@wordpress/icons";
+import { ToolbarGroup, ToolbarButton, PanelBody} from "@wordpress/components";
+import { mobile, desktop } from "@wordpress/icons";
 
 import { useState } from "react";
 import { ReactComponent as LogoIcon } from "./icon.svg";
@@ -75,10 +72,24 @@ const UploadLogo = ({ value, buttonLabel = "Desktop", onSelect }) => {
 };
 
 export default function Edit({ attributes, setAttributes }) {
-	const { desktopLogo, mobileLogo } = attributes;
+	const { desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth } =
+		attributes;
 	const [activeLogo, setActiveLogo] = useState("desktop");
 	return (
 		<>
+			<InspectorControls>
+				<PanelBody title={__("Logo Options", "thirtysix-beech")}>
+					{desktopLogoWidth}
+
+					{/* <HeightControl
+						label="Mobile Logo Width"
+						value={mobileLogoWidth}
+						onChange={(value) => {
+							setAttributes({ mobileLogoWidth: value });
+						}}
+					/> */}
+				</PanelBody>
+			</InspectorControls>
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
@@ -95,7 +106,6 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</ToolbarGroup>
 			</BlockControls>
-
 			<div {...useBlockProps()}>
 				{activeLogo === "desktop" ? (
 					<UploadLogo

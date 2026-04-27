@@ -13,7 +13,9 @@
   },
   "attributes": {
     "desktopLogo": { "type": "number", "default": null },
-    "mobileLogo": { "type": "number", "default": null }
+    "mobileLogo": { "type": "number", "default": null },
+    "desktopLogoWidth": { "type": "string", "default": "170px" },
+    "mobileLogoWidth": { "type": "string", "default": "36px" }
   },
   "textdomain": "logo",
   "editorScript": "file:./index.js",
