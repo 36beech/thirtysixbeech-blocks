@@ -18,7 +18,6 @@ import {
 } from "@wordpress/block-editor";
 import {
 	ToolbarGroup,
-	ToolbarButton,
 	ToolbarDropdownMenu,
 } from "@wordpress/components";
 
@@ -39,14 +38,6 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 import { Section } from "@shared/react/Section";
-
-import {
-	more,
-	arrowLeft,
-	arrowRight,
-	arrowUp,
-	arrowDown,
-} from "@wordpress/icons";
 
 export default function Edit({ attributes, setAttributes }) {
 	const { semanticTag } = attributes;

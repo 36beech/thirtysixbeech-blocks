@@ -13,16 +13,17 @@
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start --blocks-manifest",
-    "build:css": "npx sass src/css:build/assets/css",
-    "start:css": "npx sass --watch src/css:build/assets/css",
+		"build:css": "npx sass src/css:build/assets/css",
+		"start:css": "npx sass --watch src/css:build/assets/css",
 		"nb": "node scripts/newblock.mjs",
-    "package": "./package.sh"
+		"package": "./package.sh"
 	},
 	"dependencies": {
 		"@wordpress/block-editor": "latest",
 		"@wordpress/blocks": "latest",
 		"@wordpress/i18n": "latest",
-    "sass": "^1.99.0"
+		"@wordpress/ui": "^0.11.0",
+		"sass": "^1.99.0"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^32.0.0"
