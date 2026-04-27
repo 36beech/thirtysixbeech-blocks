@@ -16,7 +16,11 @@ import {
 	InnerBlocks,
 	BlockControls,
 } from "@wordpress/block-editor";
-import { ToolbarGroup, ToolbarButton } from "@wordpress/components";
+import {
+	ToolbarGroup,
+	ToolbarButton,
+	ToolbarDropdownMenu,
+} from "@wordpress/components";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -35,12 +39,70 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 import { Section } from "@shared/react/Section";
+
+import {
+	more,
+	arrowLeft,
+	arrowRight,
+	arrowUp,
+	arrowDown,
+} from "@wordpress/icons";
+
 export default function Edit({ attributes, setAttributes }) {
 	const { semanticTag } = attributes;
+
+	const TAGS = [
+		{
+			key: "section",
+			icon: "<section />",
+			label: __("Section", "thitysixbeech-blocks"),
+		},
+		{
+			key: "header",
+			icon: "<header />",
+			label: __("Header", "thirtysixbeech-blocks"),
+		},
+		{
+			key: "footer",
+			icon: "<footer />",
+			label: __("Footer", "thirtysixbeech-blocks"),
+		},
+		{
+			key: "article",
+			icon: "<article />",
+			label: __("Article", "thirtysixbeech-blocks"),
+		},
+		{
+			key: "div",
+			icon: "<div />",
+			label: __("Div", "thirtysixbeech-blocks"),
+		},
+	];
+
+	const options = TAGS.map(({ key, icon, label }) => ({
+		icon: <div style={{width: "96px", textAlign: "center"}}><code>{icon}</code></div>,
+		title: label,
+		onClick: () => setAttributes({ semanticTag: key }),
+		isActive: semanticTag === key,
+	}));
+
+	const SelectedIcon = ({ tag }) => {
+		const match = TAGS.find((t) => t.key === tag) || TAGS[0];
+		return <code>{tag}</code>;
+	};
+
+	console.log(options);
 	return (
 		<>
 			<BlockControls>
-				<ToolbarGroup></ToolbarGroup>
+				<ToolbarGroup>
+					<ToolbarDropdownMenu
+						icon={ <SelectedIcon tag={semanticTag} /> }
+						label={__("HTML tag", "thirtysixbeech-blocks")}
+						text={(semanticTag || "section").toLowerCase()}
+						controls={options}
+					/>
+				</ToolbarGroup>
 			</BlockControls>
 			<div {...useBlockProps()}>
 				<Section tag={semanticTag}>
