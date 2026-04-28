@@ -22,3 +22,15 @@
 		color: #f8cd0f;
 	}
 }
+
+.wp-block-thirtysixbeech-blocks-grid,
+.wp-block-thirtysixbeech-blocks-stack {
+  > div {
+    > .block-editor-inner-blocks {
+      &,
+      > .block-editor-block-list__layout {
+        @apply contents;
+      }
+    }
+  }
+}

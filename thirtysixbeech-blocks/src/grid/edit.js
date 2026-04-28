@@ -52,21 +52,21 @@ export default function Edit({ attributes, setAttributes }) {
 
 	switch (breakpoint) {
 		case "mobile":
-			breakpointClass.push("max-sm:tsb-flex max-sm:tsb-flex-col sm:tsb-grid");
+			breakpointClass.push("max-sm:flex max-sm:flex-col sm:grid");
 			if (reverse) breakpointClass.push("sm:tsb-rtl");
 			break;
 		case "tablet":
 		default:
-			breakpointClass.push("max-md:tsb-flex max-md:tsb-flex-col md:tsb-grid");
+			breakpointClass.push("max-md:flex max-md:flex-col md:grid");
 			if (reverse) breakpointClass.push("md:tsb-rtl");
 			break;
 		case "desktop":
-			breakpointClass.push("max-lg:tsb-flex max-lg:tsb-flex-col lg:tsb-grid");
+			breakpointClass.push("max-lg:flex max-lg:flex-col lg:grid");
 			if (reverse) breakpointClass.push("lg:tsb-rtl");
 			break;
 	}
 
-	const gridClasses = [...breakpointClass, "tsb-grid-cols-12 tsb-grid-wrapper"];
+	const gridClasses = [...breakpointClass, "grid-cols-12 grid-wrapper"];
 	return (
 		<>
 			<InspectorControls>
@@ -102,11 +102,11 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 			<div
 				{...useBlockProps({
-					className: `tsb-rel`,
+					className: `relative`,
 				})}
 			>
 				<div
-					className={[...gridClasses, alignItems,  "tsb-rel z-10"].join(" ")}
+					className={[...gridClasses, alignItems,  "relative z-10"].join(" ")}
 					style={{ columnGap: blockGapX, rowGap: blockGapY }}
 				>
 					<InnerBlocks allowedBlocks={["thirtysixbeech-blocks/grid-item"]} />
@@ -114,8 +114,8 @@ export default function Edit({ attributes, setAttributes }) {
 				<div
 					className={[
 						...gridClasses,
-						"tsb-abs top-0 left-0 w-full h-full z-0",
-						"tsb-grid-backdrop"
+						"absolute top-0 left-0 w-full h-full z-0",
+						"grid-backdrop"
 					].join(" ")}
 					style={{ columnGap: blockGapX, rowGap: blockGapY }}
 				>

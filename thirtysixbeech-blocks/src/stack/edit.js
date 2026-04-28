@@ -54,8 +54,8 @@ export default function Edit({ attributes, setAttributes }) {
 	const {
 		evenColumns,
 		reverse,
-		justifyContent = "tsb-j-start",
-		alignItems = "tsb-a-start",
+		justifyContent = "justify-start",
+		alignItems = "items-start",
 		breakpoint = "md",
 		blockGap,
 		style,
@@ -72,7 +72,7 @@ export default function Edit({ attributes, setAttributes }) {
 		justifyContent,
 		alignItems,
 	];
-	if (reverse) innerClasses.push("tsb-flex-row-r");
+	if (reverse) innerClasses.push("flex-row");
 
 	const blockProps = useBlockProps();
 

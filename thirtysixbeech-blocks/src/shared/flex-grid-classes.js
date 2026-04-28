@@ -20,38 +20,38 @@ export const justifySpaceAround = (
 );
 
 const flexClasses = {
-	all: "tsb-flex",
-	sm: "sm:tsb-flex",
-	md: "md:tsb-flex",
-	lg: "lg:tsb-flex",
-	xl: "xl:tsb-flex",
+	all: "flex",
+	sm: "sm:flex",
+	md: "md:flex",
+	lg: "lg:flex",
+	xl: "xl:flex",
 };
 
 const justification = [
 	{
 		label: "Justify items left",
 		icon: justifyLeft,
-		value: "tsb-j-start",
+		value: "justify-start",
 	},
 	{
 		label: "Justify items center",
 		icon: justifyCenter,
-		value: "tsb-j-center",
+		value: "justify-center",
 	},
 	{
 		label: "Justify items right",
 		icon: justifyRight,
-		value: "tsb-j-end",
+		value: "justify-end",
 	},
 	{
 		label: "Justify items space between",
 		icon: justifySpaceBetween,
-		value: "tsb-j-between",
+		value: "justify-between",
 	},
 	{
 		label: "Justify items space around",
 		icon: justifySpaceAround,
-		value: "tsb-j-around",
+		value: "justify-around",
 	},
 ];
 
@@ -59,22 +59,22 @@ const alignment = [
 	{
 		label: "Align items top",
 		icon: justifyTop,
-		value: "tsb-a-start",
+		value: "items-start",
 	},
 	{
 		label: "Align items center",
 		icon: justifyCenterVertical,
-		value: "tsb-a-center",
+		value: "items-center",
 	},
 	{
 		label: "Align items bottom",
 		icon: justifyBottom,
-		value: "tsb-a-end",
+		value: "items-end",
 	},
 	{
 		label: "Align items stretch",
 		icon: justifyStretch,
-		value: "tsb-a-stretch",
+		value: "items-stretch",
 	},
 ];
 
