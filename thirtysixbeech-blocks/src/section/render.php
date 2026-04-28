@@ -11,7 +11,7 @@
  */
 
 $allowed_tags = [ 'section', 'header', 'footer', 'div', 'article' ];
-$raw_tag      = $attributes['tag'] ?? 'section';
+$raw_tag      = $attributes['semanticTag'] ?? 'section';
 $tag          = in_array( $raw_tag, $allowed_tags, true ) ? $raw_tag : 'section';
 ?>
 <<?php echo esc_attr( $tag ); ?> <?php echo get_block_wrapper_attributes(); ?>>

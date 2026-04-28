@@ -13,8 +13,8 @@
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start --blocks-manifest",
-		"build:css": "npx sass src/css:build/assets/css",
-		"start:css": "npx sass --watch src/css:build/assets/css",
+		"build:css": "postcss src/style.css -o build/assets/css/main.css && postcss src/editor.css -o build/assets/css/editor.css",
+    "watch:css": "postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch",
 		"nb": "node scripts/newblock.mjs",
 		"package": "./package.sh"
 	},
@@ -23,7 +23,10 @@
 		"@wordpress/blocks": "latest",
 		"@wordpress/i18n": "latest",
 		"@wordpress/ui": "^0.11.0",
-		"sass": "^1.99.0"
+		"sass": "^1.99.0",
+		"postcss": "^8.5.12",
+		"postcss-cli": "^11.0.1",
+		"@tailwindcss/postcss": "^4.2.4"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^32.0.0"

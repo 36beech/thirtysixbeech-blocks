@@ -11,12 +11,12 @@ export const MediaSelector = ({
 	const image = useImage(value);
 	const sourceUrl = image?.media_details?.sizes?.medium_large?.source_url;
 	console.log(value, image);
-	const classes = ["w-full h-full tsb-rel"];
+	const classes = ["w-full h-full relative"];
 	if (className) classes.push[className];
 	return (
 		<div className={classes.join(" ")}>
 			{sourceUrl && (
-				<img src={sourceUrl} className="w-full h-full tsb-cover tsb-rel z-0" />
+				<img src={sourceUrl} className="w-full h-full object-cover relative z-0" />
 			)}
 			<MediaUploadCheck>
 				<MediaUpload
@@ -25,12 +25,12 @@ export const MediaSelector = ({
 						<button
 							className={`media-upload-button ${
 								sourceUrl ? "" : "media-upload-button-no-image "
-							}tsb-abs z-10 w-full h-full top-0 left-0 bg-transparent border-0`}
+							}absolute z-10 w-full h-full top-0 left-0 bg-transparent border-0`}
 							onClick={open}
 						>
 							{showIcon && (
-								<div className="media-upload-icon">
-									<UploadIcon />
+								<div className="media-upload-icon w-20 h-20">
+									<UploadIcon className="w-full h-full" />
 								</div>
 							)}
 							<span className="sr-only">Upload</span>

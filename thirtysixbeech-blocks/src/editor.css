@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@source "./**/edit.js";
+@source "./**/editor.{css,scss}";
+
+.media-upload-button {
+  @apply flex  items-center justify-center text-white;
+
+	&-no-image {
+		background-color: rgba(0, 0, 0, 0.1);
+
+		.media-upload-icon {
+			width: 80px;
+			height: 80px;
+		}
+	}
+
+	&:hover,
+	&:focus,
+	&:focus-visible,
+	&:focus-within {
+		background-color: rgba(0, 0, 0, 0.2);
+		color: #f8cd0f;
+	}
+}
