@@ -36,5 +36,5 @@
 }
 
 .column-indicator {
-  @apply bg-[#F4F4F4];
+  @apply bg-gray-600 opacity-20;
 }
