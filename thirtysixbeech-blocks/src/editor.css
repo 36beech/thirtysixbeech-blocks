@@ -34,3 +34,7 @@
     }
   }
 }
+
+.column-indicator {
+  @apply bg-[#F4F4F4];
+}
