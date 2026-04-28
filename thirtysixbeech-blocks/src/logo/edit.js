@@ -18,7 +18,7 @@ import {
 	MediaUpload,
 	InspectorControls,
 } from "@wordpress/block-editor";
-import { ToolbarGroup, ToolbarButton, PanelBody} from "@wordpress/components";
+import { ToolbarGroup, ToolbarButton, PanelBody } from "@wordpress/components";
 import { mobile, desktop } from "@wordpress/icons";
 
 import { useState } from "react";
@@ -33,6 +33,7 @@ import { useImage } from "@shared/react/useImage";
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import "./editor.scss";
+import { DimensionSlider } from "../shared/react/DimensionSlider";
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -43,13 +44,16 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 
-const UploadLogo = ({ value, buttonLabel = "Desktop", onSelect }) => {
+const UploadLogo = ({ value, buttonLabel = "Desktop", width, onSelect }) => {
 	const logoImage = useImage(value);
 	console.log(logoImage);
 	return (
-		<div className="tsb-flex tsb-flex-col tsb-a-center" style={{ gap: "10px" }}>
+		<div
+			className="tsb-flex tsb-flex-col tsb-a-start tsb-rel"
+			style={{ gap: "10px" }}
+		>
 			{value ? (
-				<img src={logoImage?.source_url} />
+				<img src={logoImage?.source_url} style={{ width: width }} />
 			) : (
 				<LogoIcon style={{ width: "56px", height: "56px" }} />
 			)}
@@ -79,15 +83,16 @@ export default function Edit({ attributes, setAttributes }) {
 		<>
 			<InspectorControls>
 				<PanelBody title={__("Logo Options", "thirtysix-beech")}>
-					{desktopLogoWidth}
-
-					{/* <HeightControl
-						label="Mobile Logo Width"
+					<DimensionSlider
+						label={__("Desktop logo width")}
+						value={desktopLogoWidth}
+						onChange={(value) => setAttributes({ desktopLogoWidth: value })}
+					/>
+					<DimensionSlider
+						label={__("Mobile logo width")}
 						value={mobileLogoWidth}
-						onChange={(value) => {
-							setAttributes({ mobileLogoWidth: value });
-						}}
-					/> */}
+						onChange={(value) => setAttributes({ mobileLogoWidth: value })}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<BlockControls>
@@ -116,6 +121,7 @@ export default function Edit({ attributes, setAttributes }) {
 								desktopLogo: item.id,
 							});
 						}}
+						width={desktopLogoWidth}
 					/>
 				) : (
 					<UploadLogo
@@ -126,6 +132,7 @@ export default function Edit({ attributes, setAttributes }) {
 								mobileLogo: item.id,
 							});
 						}}
+						width={mobileLogoWidth}
 					/>
 				)}
 			</div>
