@@ -14,7 +14,7 @@ $hero_image = $image_id ? wp_get_attachment_image(
     $image_id,
     'medium',
     false,
-    ['class' => 'tsb-abs z-10 w-full h-full top-0 left-0 bg-transparent border-0', 'loading' => 'lazy', 'decoding' => 'async']
+    ['class' => 'z-10 w-full h-full top-0 left-0 bg-transparent border-0', 'loading' => 'lazy', 'decoding' => 'async']
   ) : "";
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
