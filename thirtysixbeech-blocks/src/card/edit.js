@@ -46,15 +46,15 @@ export default function Edit({ attributes, setAttributes, context }) {
 	const blockGap = context["thirtysixbeech/blockGap"] || 0;
 	const evenColumns = context["thirtysixbeech/evenColumns"] || false;
 
-	const className = ["tsb-rel"];
-	if (evenColumns) className.push("tsb-flex-1");
+	const className = ["relative"];
+	if (evenColumns) className.push("flex-1");
 
 	const styles = {
 		paddingLeft: blockGap,
 		paddingRight: blockGap,
 	};
 
-	const blockStyles = [];
+	const blockStyles = ["h-full"];
 	if (variant === "horizontal") blockStyles.push("tsb-card-horizontal");
 	const blockProps = useBlockProps({ className: blockStyles.join(" ") });
 
