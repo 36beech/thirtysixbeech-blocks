@@ -29,7 +29,7 @@ export const MediaSelector = ({
 							onClick={open}
 						>
 							{showIcon && (
-								<div className="media-upload-icon w-20 h-20">
+								<div className="media-upload-icon w-20 h-20 p-4 bg-white opacity-20 rounded-lg">
 									<UploadIcon className="w-full h-full" />
 								</div>
 							)}

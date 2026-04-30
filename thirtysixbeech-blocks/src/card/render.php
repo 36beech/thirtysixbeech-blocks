@@ -43,11 +43,11 @@ $card_image = $image_id ? wp_get_attachment_image(
 	"style" => implode( ";", $styles ),
 	"class" => implode( " ", $classes )
 ) ); ?>>
-	<div className="tsb-card-image">
+	<div class="tsb-card-image">
 		<?php echo $card_image; ?>
 	</div>
 	<?php if( ! empty( $tags ) ): ?>
-	<div className="tsb-card-tag">
+	<div class="tsb-card-tag">
 		<ul>
 		<?php foreach( $tags as $tag ): ?>
 			<li><?php echo $tag; ?></li>
@@ -55,7 +55,7 @@ $card_image = $image_id ? wp_get_attachment_image(
 		</ul>
 	</div>
 	<?php endif; ?>
-	<div className="tsb-card-body">
+	<div class="tsb-card-body">
 		<?php echo $content; ?>
 	</div>
 </div>

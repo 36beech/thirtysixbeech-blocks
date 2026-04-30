@@ -110,13 +110,15 @@ export default function Edit({ attributes, setAttributes, context }) {
 							}}
 						/>
 					</div>
-					<div className="tsb-abs top-0 left-0 z-20 tsb-card-tag">
-						<RichText
-							placeholder="Tags"
-							value={tags[0]}
-							onChange={(newValue) => setAttributes({ tags: [newValue] })}
-						/>
-					</div>
+					<ul className="tsb-abs top-0 left-0 z-20 tsb-card-tag">
+						<li>
+							<RichText
+								placeholder="Tags"
+								value={tags[0]}
+								onChange={(newValue) => setAttributes({ tags: [newValue] })}
+							/>
+						</li>
+					</ul>
 					<div className="tsb-card-body">
 						<div className="tsb-inner-blocks">
 							<InnerBlocks />
