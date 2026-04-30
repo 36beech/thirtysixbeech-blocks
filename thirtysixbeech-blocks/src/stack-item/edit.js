@@ -31,14 +31,18 @@ import "./editor.scss";
  */
 export default function Edit({ attributes, setAttributes, context }) {
 	const blockGap = context["thirtysixbeech/blockGap"] || 0;
+	console.log(blockGap);
 	const evenColumns = context["thirtysixbeech/evenColumns"] || false;
 
 	const className = [];
-	if (evenColumns) className.push("tsb-flex-1");
+	if (evenColumns) className.push("flex-1");
+
+	const style = {
+		padding: `0 ${blockGap}`
+	};
 
 	return (
-		<div {...useBlockProps({ className: className.join(" ") })}>
-			<p>blockGap: {blockGap}</p>
+		<div {...useBlockProps({ className: className.join(" "), style: style })}>
 			<div className="tsb-inner-blocks">
 				<InnerBlocks />
 			</div>

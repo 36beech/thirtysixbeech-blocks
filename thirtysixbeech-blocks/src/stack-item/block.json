@@ -3,19 +3,20 @@
   "apiVersion": 3,
   "name": "thirtysixbeech-blocks/stack-item",
   "version": "0.1.0",
-  "title": "stack-item",
-  "category": "widgets",
+  "title": "Stack Item",
+  "category": "thirtysixbeech-layout",
   "icon": "smiley",
   "description": "Example block scaffolded with Create Block tool.",
   "example": {},
   "supports": {
     "html": false
   },
-  "usesContext": ["thirtysixbeech/gap", "thirtysixbeech/evenColumns"],
+  "usesContext": ["thirtysixbeech/blockGap", "thirtysixbeech/evenColumns"],
   "textdomain": "stack-item",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
   "render": "file:./render.php",
-  "viewScript": "file:./view.js"
+  "viewScript": "file:./view.js",
+  "parent": ["thirtysixbeech-blocks/stack"]
 }

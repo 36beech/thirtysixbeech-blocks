@@ -9,7 +9,24 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+$gap = $block->context["thirtysixbeech/blockGap"];
+$even_columns = $block->context["thirtysixbeech/evenColumns"];
+
+$styles = array();
+$classes = array();
+
+if( $gap ) :
+	$styles[] = "margin-left: " . $gap;
+	$styles[] = "margin-right: " . $gap;
+endif;
+
+if( $even_columns ) :
+	$classes[] = "flex-1";
+endif;
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Stack Item – hello from a dynamic block!', 'stack-item' ); ?>
-</p>
+<div <?php echo get_block_wrapper_attributes( array( 
+	"style" => implode( ";", $styles ),
+	"class" => implode( " ", $classes )
+) ); ?>>
+	<?php echo $content; ?>
+</div>
