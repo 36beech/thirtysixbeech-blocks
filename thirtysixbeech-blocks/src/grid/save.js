@@ -1,8 +1,6 @@
-import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
+import { useBlockProps, useInnerBlocksProps, InnerBlocks } from "@wordpress/block-editor";
 
 export default function Save() {
-	const blockProps = useBlockProps.save();
-	const innerBlocksProps = useInnerBlocksProps.save(blockProps);
-
-	return <div {...innerBlocksProps} />;
+	useBlockProps.save();
+  return <InnerBlocks.Content />;
 }
