@@ -9,7 +9,29 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+$desktop_logo_id = $attributes["desktopLogo"];
+$desktop_logo = $desktop_logo_id ? wp_get_attachment_image(
+    $desktop_logo_id,
+    "medium",
+    false,
+    array(
+			"class" => "w-full block", 
+			"loading" => "lazy", 
+			"decoding" => "async"
+		)
+  ) : "";
+
+$block_attributes = array(
+	"style" => implode( ";", array(
+		"--desktop-logo-width: " . $attributes["desktopLogoWidth"],
+		"--mobile-logo-width: " . $attributes["mobileLogoWidth"]
+	) ),
+	"class" => implode( " ", array(
+		"w-(--mobile-logo-width)",
+		"md:w-(--desktop-logo-width)"
+	) ),
+);
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Logo – hello from a dynamic block!', 'logo' ); ?>
-</p>
+<div <?php echo get_block_wrapper_attributes( $block_attributes ); ?>>
+	<?php echo $desktop_logo; ?>
+</div>

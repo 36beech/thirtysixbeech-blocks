@@ -15,7 +15,8 @@
     "desktopLogo": { "type": "number", "default": null },
     "mobileLogo": { "type": "number", "default": null },
     "desktopLogoWidth": { "type": "string", "default": "170px" },
-    "mobileLogoWidth": { "type": "string", "default": "36px" }
+    "mobileLogoWidth": { "type": "string", "default": "36px" },
+    "link": { "type": "string" }
   },
   "textdomain": "logo",
   "editorScript": "file:./index.js",

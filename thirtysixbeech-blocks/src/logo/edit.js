@@ -17,6 +17,7 @@ import {
 	MediaUploadCheck,
 	MediaUpload,
 	InspectorControls,
+	LinkControl,
 } from "@wordpress/block-editor";
 import { ToolbarGroup, ToolbarButton, PanelBody } from "@wordpress/components";
 import { mobile, desktop } from "@wordpress/icons";
@@ -95,7 +96,7 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<BlockControls>
+			{/* <BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
 						label={__("Set Mobile Logo")}
@@ -110,9 +111,8 @@ export default function Edit({ attributes, setAttributes }) {
 						onClick={() => setActiveLogo("desktop")}
 					/>
 				</ToolbarGroup>
-			</BlockControls>
+			</BlockControls> */}
 			<div {...useBlockProps()}>
-				{activeLogo === "desktop" ? (
 					<UploadLogo
 						value={desktopLogo}
 						buttonLabel="Desktop"
@@ -123,18 +123,6 @@ export default function Edit({ attributes, setAttributes }) {
 						}}
 						width={desktopLogoWidth}
 					/>
-				) : (
-					<UploadLogo
-						value={mobileLogo}
-						buttonLabel="Mobile"
-						onSelect={(item) => {
-							setAttributes({
-								mobileLogo: item.id,
-							});
-						}}
-						width={mobileLogoWidth}
-					/>
-				)}
 			</div>
 		</>
 	);
