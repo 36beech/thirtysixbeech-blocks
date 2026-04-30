@@ -33,5 +33,7 @@ $block_attributes = array(
 );
 ?>
 <div <?php echo get_block_wrapper_attributes( $block_attributes ); ?>>
-	<?php echo $desktop_logo; ?>
+	<a href="<?php echo get_home_url(); ?>" title="Return to <?php echo get_bloginfo( "name" ); ?> home" aria-label="Return to <?php echo get_bloginfo( "name" ); ?> home" >
+		<?php echo $desktop_logo; ?>
+	</a>
 </div>
