@@ -10,6 +10,17 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Carousel – hello from a dynamic block!', 'carousel' ); ?>
-</p>
+<div <?php echo get_block_wrapper_attributes( array( "class" => "swiper" )); ?>>
+	<div class="swiper-wrapper">
+		<?php echo $content; ?>
+	</div>
+	  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <!-- If we need scrollbar -->
+  <div class="swiper-scrollbar"></div>
+</div>
