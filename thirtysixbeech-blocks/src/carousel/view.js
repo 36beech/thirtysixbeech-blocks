@@ -8,8 +8,7 @@ const carousels = document.querySelectorAll(
 );
 carousels.forEach((carousel) => {
 	const { carouselSettings } = carousel.dataset;
-  const carouselSettingsParsed = JSON.parse(carouselSettings);
-	console.log(carouselSettingsParsed);
+  const carouselSettingsParsed = carouselSettings ? JSON.parse(carouselSettings) : {};
 
   const swiper = new Swiper(carousel, {
 	modules: [Pagination, Autoplay],
