@@ -35,7 +35,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 
 	return (
 		<details {...useBlockProps()}>
-			<summary className="tsb-accordion-summary">
+			<summary className="tsb-accordion-summary flex justify-between">
 				<span>
 					<RichText
 						value={summary}
@@ -43,7 +43,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 						placeholder="Accordion Item Title"
 					/>
 				</span>
-				<Carat class="tsb-accordion-summary-carat" />
+				<Carat className="tsb-accordion-summary-carat w-4.25 h-2.5" />
 			</summary>
 			<div className="tsb-accordion-content">
 				<div class="tsb-inner-blocks">

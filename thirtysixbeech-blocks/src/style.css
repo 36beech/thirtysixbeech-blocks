@@ -3,3 +3,11 @@
 @import "tailwindcss/utilities.css";
 
 @source "./**/*.{js,jsx,php}" not "./**/edit.js";
+
+.tsb-accordion-summary-carat {
+  @apply -scale-y-100 transition-all duration-300;
+
+  .wp-block-thirtysixbeech-blocks-accordion-item:open & {
+    @apply scale-y-100;
+  }
+}
