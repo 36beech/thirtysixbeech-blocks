@@ -1,23 +1,15 @@
 import Swiper from "swiper";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 
-const swiper = new Swiper('.swiper', {
-
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-  },
-
-  // Navigation arrows
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-
-  // And if we need scrollbar
-  scrollbar: {
-    el: '.swiper-scrollbar',
-  },
+const swiper = new Swiper(".wp-block-thirtysixbeech-blocks-carousel", {
+	modules: [Pagination],
+	loop: true,
+	pagination: {
+		el: ".swiper-pagination",
+		clickable: true,
+	},
 });
 
 console.log(swiper);
