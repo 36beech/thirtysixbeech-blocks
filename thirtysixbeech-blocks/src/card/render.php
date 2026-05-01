@@ -9,8 +9,8 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
-$gap = $block->context["thirtysixbeech/blockGap"];
-$even_columns = $block->context["thirtysixbeech/evenColumns"];
+$gap = $block->context["thirtysixbeech/blockGap"] ?? null;
+$even_columns = $block->context["thirtysixbeech/evenColumns"] ?? null;
 
 $styles = array();
 $classes = array( "tsb-card" );
