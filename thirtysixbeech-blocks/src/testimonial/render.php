@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
@@ -9,7 +10,18 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Testimonial – hello from a dynamic block!', 'testimonial' ); ?>
-</p>
+<blockquote <?php echo get_block_wrapper_attributes(); ?>>
+	<q class="tsb-quote-text">
+		<?php echo $attributes["quote"]; ?>
+	</q>
+	<div class="tsb-quote-author">
+		<span class="tsb-quote-author--name">
+			<?php echo $attributes["author"]; ?>
+		</span>
+		<span class="tsb-quote-author--title">
+			<?php echo $attributes["authorTitle"]; ?>
+		</span>
+	</div>
+</blockquote>
