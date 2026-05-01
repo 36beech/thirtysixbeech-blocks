@@ -93,6 +93,7 @@ export default function Edit({ attributes, setAttributes }) {
 								value={autoPlayDelay}
 								min={0}
 								max={10000}
+								step={100}
 								onChange={(value) => setAttributes({ autoPlayDelay: value })}
 							/>
 						)}
