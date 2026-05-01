@@ -29,7 +29,6 @@ if( ! empty( $carousel_settings ) ) :
 endif;
 
 ?>
-<pre><?php print_r($attributes); ?></pre>
 <div <?php echo get_block_wrapper_attributes( $block_attributes ); ?>>
 	<div class="swiper-wrapper">
 		<?php echo $content; ?>
