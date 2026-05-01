@@ -38,3 +38,7 @@
 .column-indicator {
   @apply bg-gray-600 opacity-20;
 }
+
+.tsb-inner-blocks {
+	@apply p-4 border border-dashed border-slate-200;
+}

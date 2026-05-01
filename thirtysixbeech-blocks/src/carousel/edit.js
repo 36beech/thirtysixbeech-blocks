@@ -108,7 +108,7 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 			<div {...useBlockProps()}>
 				<div className="tsb-inner-blocks">
-					<InnerBlocks />
+					<InnerBlocks allowedBlocks={["thirtysixbeech-blocks/carousel-slide"]} />
 				</div>
 			</div>
 		</>
