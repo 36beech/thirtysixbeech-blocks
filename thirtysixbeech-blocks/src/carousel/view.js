@@ -11,5 +11,3 @@ const swiper = new Swiper(".wp-block-thirtysixbeech-blocks-carousel", {
 		clickable: true,
 	},
 });
-
-console.log(swiper);
