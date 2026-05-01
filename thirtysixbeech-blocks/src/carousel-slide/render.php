@@ -9,10 +9,8 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+
 ?>
-<div <?php echo get_block_wrapper_attributes( array( "class" => "swiper" )); ?>>
-	<div class="swiper-wrapper">
-		<?php echo $content; ?>
-	</div>
-  <div class="swiper-pagination"></div>
+<div <?php echo get_block_wrapper_attributes( array( "class" => "swiper-slide" )); ?>>
+	<?php echo $content; ?>
 </div>
