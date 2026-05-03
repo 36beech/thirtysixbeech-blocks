@@ -1,0 +1,30 @@
+{
+	"name": "contact-form",
+	"version": "0.1.0",
+	"description": "Example block scaffolded with Create Block tool.",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --blocks-manifest && postcss src/style.css -o build/assets/css/main.css && postcss src/editor.css -o build/assets/css/editor.css",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --blocks-manifest && postcss src/style.css -o build/assets/css/main.css && postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch",
+		"build:css": "postcss src/style.css -o build/assets/css/main.css && postcss src/editor.css -o build/assets/css/editor.css",
+		"watch:css": "postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch"
+	},
+	"dependencies": {
+		"@tailwindcss/postcss": "^4.2.4",
+		"postcss": "^8.5.13",
+		"postcss-cli": "^11.0.1",
+		"@wordpress/block-editor": "latest",
+		"@wordpress/blocks": "latest",
+		"@wordpress/i18n": "latest"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^32.1.0"
+	}
+}
