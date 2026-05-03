@@ -14,7 +14,8 @@
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start --blocks-manifest && postcss src/style.css -o build/assets/css/main.css && postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch",
 		"build:css": "postcss src/style.css -o build/assets/css/main.css && postcss src/editor.css -o build/assets/css/editor.css",
-		"watch:css": "postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch"
+		"watch:css": "postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch",
+		"package": "./package.sh"
 	},
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.2.4",

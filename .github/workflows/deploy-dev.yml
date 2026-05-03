@@ -35,3 +35,32 @@ jobs:
           local-dir: ./thirtysixbeech-blocks/dist/thirtysixbeech-blocks/
           server-dir: /abc15930.sg-host.com/public_html/wp-content/plugins/thirtysixbeech-blocks/
           protocol: ftp
+  build-and-deploy-contact-form:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: contact-form
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Install Node.js and Dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+
+      - run: npm install
+
+      - name: 🔨 Build and package ThirtySix Beech Blocks plugin
+        run: npm run package
+
+      - name: 🚀 Deploy Blocks plugin via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.DEV_FTP_SERVER }}
+          username: ${{ secrets.DEV_FTP_USERNAME }}
+          password: ${{ secrets.DEV_FTP_PASSWORD }}
+          local-dir: ./contact-form/dist/contact-form/
+          server-dir: /abc15930.sg-host.com/public_html/wp-content/plugins/contact-form/
+          protocol: ftp
