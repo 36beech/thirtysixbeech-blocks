@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Contact Form
+ * Plugin Name:       Thirtysixbeech Contact Form
  * Description:       A simple contact form for Wordpress
  * Version:           0.1.0
  * Requires at least: 6.8
