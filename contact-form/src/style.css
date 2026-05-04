@@ -3,3 +3,12 @@
 @import "tailwindcss/utilities.css";
 
 @source "./**/*.{js,jsx,php}" not "./**/edit.js";
+
+.contact-form {
+  .contact-form-label,
+	input[type="text"],
+	input[type="email"],
+	textarea {
+		@apply block w-full;
+	}
+}
