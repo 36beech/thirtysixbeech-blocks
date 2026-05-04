@@ -29,6 +29,9 @@ function create_block_contact_form_block_init() {
 }
 add_action( 'init', 'create_block_contact_form_block_init' );
 
+add_filter( 'wp_mail_from_name', function () {
+    return get_bloginfo( 'name' ); // uses your site's name
+} );
 
 /**
  * Register the REST API route on plugin load.
