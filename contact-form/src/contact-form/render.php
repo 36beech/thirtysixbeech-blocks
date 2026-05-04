@@ -6,8 +6,8 @@
 $id = uniqid();
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
-  <form>
-    <div class="contact-form flex flex-col gap-5">
+  <form id="<?php echo $id; ?>-contact-form" class="contact-form" action="/wp-json/contact-form/v1/submit" method="POST">
+    <div class="flex flex-col gap-5">
       <div>
         <label class="contact-form-label" for="<?php echo $id; ?>-name">Your name</label>
         <input id="<?php echo $id; ?>-name" type="text" name="name" />
