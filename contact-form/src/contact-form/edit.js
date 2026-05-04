@@ -11,7 +11,9 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
+import { PanelBody, TextControl } from "@wordpress/components";
+import { useEntityProp } from "@wordpress/core-data";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,10 +31,28 @@ import "./editor.scss";
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+export default function Edit({ attributes, setAttributes }) {
+	const { toAddress } = attributes;
+	const [adminEmail] = useEntityProp("root", "site", "email");
 	return (
-		<div {...useBlockProps()}>
+		<>
+			<InspectorControls>
+				<PanelBody title={__("Contact Form Options", "thirtysix-beech")}>
+					<TextControl
+						label={__("To Email", "thirtysix-beech")}
+						type="email"
+						value={toAddress}
+						placeholder={adminEmail}
+						help={__(
+							"The form will default to the Administration Email Address.",
+						)}
+						onChange={(newValue) => setAttributes({ toAddress: newValue })}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div {...useBlockProps()}>
 				<h2 className="text-center">Contact form</h2>
-		</div>
+			</div>
+		</>
 	);
 }
