@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/icon-card",
+  "version": "0.1.0",
+  "title": "Icon Card",
+  "category": "thirtysixbeech-content",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "cardText": {
+      "type": "string",
+      "default": ""
+    },
+    "cardIcon": {
+      "type": "number"
+    }
+  },
+  "textdomain": "icon-card",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}
