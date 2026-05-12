@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/image-and-text",
+  "version": "0.1.0",
+  "title": "Image and Text",
+  "category": "thirtysixbeech-content",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "link": false,
+      "text": true
+    },
+    "spacing": {
+      "padding": ["top", "bottom"],
+      "margin": ["top", "bottom"],
+      "units": ["px", "em", "rem"]
+    },
+    "shadow": true
+  },
+  "attributes": {
+    "stinger": {
+      "type": "string"
+    },
+    "imageId": {
+      "type": "number"
+    }
+  },
+  "textdomain": "image-and-text",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}
