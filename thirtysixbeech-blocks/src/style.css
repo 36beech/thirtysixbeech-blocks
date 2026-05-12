@@ -12,6 +12,13 @@
   }
 }
 
+.grid-reverse {
+  direction: rtl;
+}
+
+.grid-reverse .wp-block-thirtysixbeech-blocks-grid-item {
+  direction: ltr;
+}
 /* .swiper {
   width: 600px;
   height: 300px;

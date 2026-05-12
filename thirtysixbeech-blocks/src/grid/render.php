@@ -9,9 +9,19 @@ $breakpoint_classes = array(
 	"tablet" => "max-md:flex max-md:flex-col md:grid",
 	"desktop" => "max-lg:flex max-lg:flex-col lg:grid"
 );
+
+$grid_classes = array( $breakpoint_classes[$breakpoint] );
+
+if( ! empty( $attributes["alignItems"] ) ) :
+	$grid_classes[] = $attributes["alignItems"];
+endif;
+
+if( ! empty( $attributes["reverse"] ) ) :
+	$grid_classes[] = "grid-reverse";
+endif;
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
-	<div class="<?php echo $breakpoint_classes[$breakpoint]; ?> grid-cols-12 gap-5 <?php echo $attributes["alignItems"]; ?>">
+	<div class="<?php echo implode( " " , $grid_classes ); ?> grid-cols-12 gap-5">
 		<?php echo $content; ?>
 	</div>
 </div>
