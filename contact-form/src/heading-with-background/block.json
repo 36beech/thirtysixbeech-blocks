@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/heading-with-background",
+  "version": "0.1.0",
+  "title": "Heading with Background",
+  "category": "thirtysixbeech-content",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "spacing": {
+      "padding": ["top", "bottom"],
+      "margin": ["top", "bottom"],
+      "units": ["px", "em", "rem"]
+    }
+  },
+  "attributes": {
+    "textContent": {
+      "type": "string"
+    }
+  },
+  "textdomain": "heading-with-background",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}

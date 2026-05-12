@@ -1,3 +1,9 @@
 @import "tailwindcss";
 @source "./**/edit.js";
-@source "./**/editor.{css,scss}";	
+@source "./**/editor.{css,scss}";
+
+.wp-block-thirtysixbeech-blocks-heading-with-background {
+	.block-editor-plain-text {
+		text-transform: uppercase;
+	}
+}
