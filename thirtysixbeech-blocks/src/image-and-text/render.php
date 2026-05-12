@@ -20,13 +20,13 @@ $card_image = $image_id ? wp_get_attachment_image(
 ) : "";
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
-	<div class="grid grid-cols-12 image-and-text-content">
-		<div class="col-span-8">
+	<div class="flex max-sm:flex-col sm:grid grid-cols-12">
+		<div class="col-span-6 md:col-span-7 lg:col-span-8 image-and-text-image">
 			<?php echo $card_image; ?>
 		</div>
-		<div class="col-span-4">
+		<div class="col-span-6 md:col-span-5 lg:col-span-4">
 			<div class="h-full flex flex-col">
-				<div class="image-and-text-stinger text-right">
+				<div class="image-and-text-stinger">
 					<?php echo $stinger; ?>
 				</div>
 				<div class="grow flex flex-col justify-center image-and-text-content">

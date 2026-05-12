@@ -35,7 +35,7 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<div {...useBlockProps()}>
 			<div className="grid grid-cols-12">
-				<div className="col-span-8">
+				<div className="col-span-6 md:col-span-7 lg:col-span-8 image-and-text-image">
 					<MediaSelector
 						value={imageId}
 						onSelect={(item) => {
@@ -45,7 +45,7 @@ export default function Edit({ attributes, setAttributes }) {
 						}}
 					/>
 				</div>
-				<div class="col-span-4">
+				<div class="col-span-6 md:col-span-5 lg:col-span-4">
 					<div className="h-full flex flex-col">
 						<div className="image-and-text-stinger text-right">
 							<PlainText
@@ -55,8 +55,8 @@ export default function Edit({ attributes, setAttributes }) {
 								onChange={(newValue) => setAttributes({ stinger: newValue })}
 							/>
 						</div>
-						<div className="grow flex flex-col justify-center">
-							<div className="tsb-inner-blocks">
+						<div className="grow flex flex-col justify-center image-and-text-content">
+							<div className="border border-dotted border-slate-200 py-4">
 								<InnerBlocks />
 							</div>
 						</div>

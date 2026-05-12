@@ -18,7 +18,7 @@
       "text": true
     },
     "spacing": {
-      "padding": ["top", "bottom"],
+      "padding": false,
       "margin": ["top", "bottom"],
       "units": ["px", "em", "rem"]
     },
