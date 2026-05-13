@@ -13,7 +13,14 @@
 $allowed_tags = [ 'section', 'header', 'footer', 'div', 'article' ];
 $raw_tag      = $attributes['semanticTag'] ?? 'section';
 $tag          = in_array( $raw_tag, $allowed_tags, true ) ? $raw_tag : 'section';
+
+$has_partial_background = $attributes["hasPartialBackground"] ?? false;
+$partial_background_color = $attributes["partialBackgroundColor"] ?? null;
+$partial_background_coverage = $attributes["partialBackgroundCoverage"] ?? 50;
 ?>
-<<?php echo esc_attr( $tag ); ?> <?php echo get_block_wrapper_attributes(); ?>>
-	<div><?php echo $content; ?></div>
+<<?php echo esc_attr( $tag ); ?> <?php echo get_block_wrapper_attributes( array( "class" => "relative" ) ); ?>>
+	<div class="relative z-10"><?php echo $content; ?></div>
+	<?php if($has_partial_background ): ?>
+	<div class="absolute w-full bottom-0 left-0 z-0" style="height: <?php echo $partial_background_coverage; ?>%; background: <?php echo $partial_background_color; ?>;"></div>
+	<?php endif; ?>
 </<?php echo esc_attr( $tag ); ?>>

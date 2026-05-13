@@ -98,6 +98,7 @@ export default function Edit({ attributes, setAttributes }) {
 	};
 
 	console.log("partialBackgroundColor", partialBackgroundColor);
+	console.log("hasPartialBackground",hasPartialBackground);
 
 	return (
 		<>
