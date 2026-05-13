@@ -11,20 +11,27 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 $image_id = $attributes["imageId"];
+$hero_tag = $attributes["heroTag"];
+$hero_title = $attributes["heroTitle"];
+$hero_description = $attributes["heroDescription"];
 $hero_image = $image_id ? wp_get_attachment_image(
 	$image_id,
 	'medium',
 	false,
-	['class' => 'z-10 w-full h-full top-0 left-0 bg-transparent border-0', 'loading' => 'lazy', 'decoding' => 'async']
+	['class' => 'w-full h-full object-cover relative z-0', 'loading' => 'lazy', 'decoding' => 'async']
 ) : "";
 
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
-	<div class="tsb-hero-image">
-		<?php echo $hero_image; ?>
-	</div>
-	<div class="tsb-hero-content">
-		<?php echo $content; ?>
-		<pre>
-	</div>
+	<div class="aspect-[1440/424] grid grid-cols-1 grid-rows-2"> 
+		<?php if ($hero_image): ?>
+		 <div class="relative z-0 row-start-1 row-span-2 col-start-1">
+			<?php echo $hero_image; ?>
+		</div>
+		<?php endif; ?>
+		<div class="row-start-2 col-start-1 relative z-10 is-layout-constrained has-global-padding self-end">
+			<div class="windows-hero-header">
+				<div class="windows-hero-header__tag"><?php echo $hero_tag; ?></div>
+			</div>
+		</div>
 </div>
