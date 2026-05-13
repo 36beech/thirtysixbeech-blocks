@@ -58,7 +58,7 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 			<header {...useBlockProps()}>
-				<div className="aspect-[1440/424] grid grid-cols-1 grid-rows-2">
+				<div className="lg:aspect-[1440/424] grid grid-cols-1 grid-rows-2">
 					{sourceUrl && (
 						<div className="relative z-0 row-start-1 row-span-2 col-start-1">
 							<img

@@ -23,15 +23,19 @@ $hero_image = $image_id ? wp_get_attachment_image(
 
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
-	<div class="aspect-[1440/424] grid grid-cols-1 grid-rows-2"> 
+	<div class="md:aspect-[1440/424] max-md:min-h-80 grid grid-cols-1 grid-rows-2"> 
 		<?php if ($hero_image): ?>
 		 <div class="relative z-0 row-start-1 row-span-2 col-start-1">
 			<?php echo $hero_image; ?>
 		</div>
 		<?php endif; ?>
 		<div class="row-start-2 col-start-1 relative z-10 is-layout-constrained has-global-padding self-end">
-			<div class="windows-hero-header">
-				<div class="windows-hero-header__tag"><?php echo $hero_tag; ?></div>
+			<div>
+				<div class="windows-hero-header">
+					<div class="windows-hero-header__tag"><?php echo $hero_tag; ?></div>
+					<h2 class="windows-hero-header__title"><?php echo $hero_title; ?></h2>
+					<div class="windows-hero-header__description"><?php echo $hero_description; ?></div>
+				</div>
 			</div>
 		</div>
 </div>
