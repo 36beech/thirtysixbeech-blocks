@@ -22,12 +22,25 @@ $images = array_map(fn($block) => wp_get_attachment_image(
 	false,
 	['class' => 'z-10 w-full h-full top-0 left-0 bg-transparent border-0', 'loading' => 'lazy', 'decoding' => 'async']
 ) ?? null, $child_blocks);
+
+
+
+$carousel_settings = array();
+
+if ($attributes["autoPlay"]) :
+	$carousel_settings["autoplay"] = array(
+		"delay" => $attributes["autoPlayDelay"],
+		"disableOnInteraction" => true,
+	);
+endif;
+
+$carousel_data = ! empty( $carousel_settings ) ? " data-carousel-settings='" . json_encode( $carousel_settings ) . "'" : "";
 ?>
 <div <?php echo get_block_wrapper_attributes(array("class" => "has-global-padding is-layout-constrained relative")); ?>>
 	<div class="grid grid-cols-12 gap-5">
-		<div class="col-span-12 md:col-span-6 lg:col-span-5">
+		<div class="col-span-12 md:col-span-6 lg:col-span-5 overflow-hidden">
 
-			<div class="homepage-carousel__text-slides">
+			<div class="homepage-carousel__text-slides"<?php echo $carousel_data; ?>>
 				<div class="swiper-wrapper">
 					<!-- content slides -->
 					<?php foreach ($child_blocks as $child_block) : ?>

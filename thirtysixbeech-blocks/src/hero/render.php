@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
@@ -11,17 +12,19 @@
  */
 $image_id = $attributes["imageId"];
 $hero_image = $image_id ? wp_get_attachment_image(
-    $image_id,
-    'medium',
-    false,
-    ['class' => 'z-10 w-full h-full top-0 left-0 bg-transparent border-0', 'loading' => 'lazy', 'decoding' => 'async']
-  ) : "";
+	$image_id,
+	'medium',
+	false,
+	['class' => 'z-10 w-full h-full top-0 left-0 bg-transparent border-0', 'loading' => 'lazy', 'decoding' => 'async']
+) : "";
+
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
 	<div class="tsb-hero-image">
 		<?php echo $hero_image; ?>
 	</div>
 	<div class="tsb-hero-content">
-		<?php echo $content; ?><pre>
+		<?php echo $content; ?>
+		<pre>
 	</div>
 </div>

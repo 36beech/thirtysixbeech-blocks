@@ -11,10 +11,16 @@ import "swiper/css/pagination";
 		const carousel = homepageCarousel.querySelector(
 			".homepage-carousel__text-slides",
 		);
-		console.log(carousel);
+
+		const { carouselSettings } = carousel.dataset;
+		const carouselSettingsParsed = carouselSettings
+			? JSON.parse(carouselSettings)
+			: {};
+
 		const swiper = new Swiper(carousel, {
 			modules: [Pagination, Autoplay],
 			loop: true,
+			...carouselSettingsParsed,
 		});
 	});
 })();

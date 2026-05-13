@@ -11,7 +11,13 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InnerBlocks } from "@wordpress/block-editor";
+import {
+	InnerBlocks,
+	useBlockProps,
+	InspectorControls,
+} from "@wordpress/block-editor";
+import { PanelBody, ToggleControl, RangeControl } from "@wordpress/components";
+import { Stack } from "@wordpress/ui";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,10 +35,44 @@ import "./editor.scss";
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+export default function Edit({ attributes, setAttributes }) {
+	const { autoPlay, autoPlayDelay } = attributes;
+
 	return (
-		<div {...useBlockProps()}>
-			<InnerBlocks allowedBlocks={["thirtysixbeech-blocks/hero"]} />
-		</div>
+		<>
+			<InspectorControls>
+				<PanelBody title={__("Carousel Options", "thirtysix-beech")}>
+					<Stack
+						direction="column"
+						style={{
+							margin: "1rem 0",
+							padding: "1rem 0",
+							borderBottom: "1px solid #656569",
+						}}
+					>
+						<ToggleControl
+							label={__("Auto Play", "thirtysix-beech")}
+							checked={autoPlay}
+							onChange={() => {
+								setAttributes({ autoPlay: !autoPlay });
+							}}
+						/>
+						{autoPlay && (
+							<RangeControl
+								label={__("Auto Play Delay", "thirtysix-beech")}
+								value={autoPlayDelay}
+								min={0}
+								max={10000}
+								step={100}
+								onChange={(value) => setAttributes({ autoPlayDelay: value })}
+							/>
+						)}
+					</Stack>
+				</PanelBody>
+			</InspectorControls>
+			<div {...useBlockProps()}>
+				<InnerBlocks allowedBlocks={["thirtysixbeech-blocks/hero"]} />
+			</div>
+		</>
 	);
 }

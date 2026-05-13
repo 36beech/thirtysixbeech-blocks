@@ -29,7 +29,7 @@
     },
     "autoPlay": {
       "type": "boolean",
-      "default": false
+      "default": true
     },
     "autoPlayDelay": {
       "type": "number",
