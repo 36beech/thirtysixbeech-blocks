@@ -8,16 +8,16 @@ import { Pagination, Autoplay } from "swiper/modules";
 		".wp-block-thirtysixbeech-blocks-hero-carousel",
 	);
 	homepageCarousels.forEach((homepageCarousel) => {
-		const carousel = homepageCarousel.querySelector(
-			".homepage-carousel__text-slides",
-		);
+		const carousel = homepageCarousel
+			.querySelector(".homepage-carousel__text-slides-container")
+			.querySelector(".homepage-carousel__text-slides");
 
 		const { carouselSettings } = carousel.dataset;
 		const carouselSettingsParsed = carouselSettings
 			? JSON.parse(carouselSettings)
 			: {};
 
-		const swiper = new Swiper(carousel, {
+		const textSwiper = new Swiper(carousel, {
 			modules: [Pagination, Autoplay],
 			loop: true,
 			pagination: {
@@ -26,5 +26,10 @@ import { Pagination, Autoplay } from "swiper/modules";
 			},
 			...carouselSettingsParsed,
 		});
+
+		const imageCarousel = homepageCarousel.querySelector(
+			".homepage-carousel__image-slides-container",
+		);
+		const imageSwiper = new Swiper(imageCarousel, { loop: true });
 	});
 })();
