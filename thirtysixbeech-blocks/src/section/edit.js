@@ -97,7 +97,8 @@ export default function Edit({ attributes, setAttributes }) {
 		return <code>{tag}</code>;
 	};
 
-	
+	console.log("partialBackgroundColor", partialBackgroundColor);
+
 	return (
 		<>
 			<InspectorControls>
@@ -108,10 +109,14 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={() =>
 							setAttributes({ hasPartialBackground: !hasPartialBackground })
 						}
+						__nextHasNoMarginBottom
 					></ToggleControl>
 					{hasPartialBackground && (
 						<>
-							<BaseControl label={__("Background Element Color")}>
+							<BaseControl
+								label={__("Background Element Color")}
+								__nextHasNoMarginBottom
+							>
 								<ColorSelector
 									value={partialBackgroundColor}
 									onChange={(color) => {
@@ -127,6 +132,7 @@ export default function Edit({ attributes, setAttributes }) {
 								onChange={(newValue) =>
 									setAttributes({ partialBackgroundCoverage: newValue })
 								}
+								__nextHasNoMarginBottom
 							/>
 						</>
 					)}
@@ -143,11 +149,20 @@ export default function Edit({ attributes, setAttributes }) {
 				</ToolbarGroup>
 			</BlockControls>
 			<div {...useBlockProps()}>
-				<Section tag={semanticTag}>
+				<Section tag={semanticTag} className="relative z-10">
 					<div className="tsb-inner-blocks">
 						<InnerBlocks />
 					</div>
 				</Section>
+				{hasPartialBackground && (
+					<div
+						className="absolute bottom-0 left-0 w-full"
+						style={{
+							height: `${partialBackgroundCoverage}%`,
+							background: partialBackgroundColor,
+						}}
+					></div>
+				)}
 			</div>
 		</>
 	);
