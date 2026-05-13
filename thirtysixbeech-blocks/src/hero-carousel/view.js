@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay, Controller } from "swiper/modules";
 // import "swiper/css";
 // import "swiper/css/pagination";
 
@@ -18,7 +18,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 			: {};
 
 		const textSwiper = new Swiper(carousel, {
-			modules: [Pagination, Autoplay],
+			modules: [Pagination, Autoplay, Controller],
 			loop: true,
 			pagination: {
 				el: ".swiper-pagination",
@@ -30,6 +30,12 @@ import { Pagination, Autoplay } from "swiper/modules";
 		const imageCarousel = homepageCarousel.querySelector(
 			".homepage-carousel__image-slides-container",
 		);
-		const imageSwiper = new Swiper(imageCarousel, { loop: true });
+		const imageSwiper = new Swiper(imageCarousel, {
+			modules: [Controller],
+			loop: true,
+		});
+
+		textSwiper.controller.control = imageSwiper;
+		imageSwiper.controller.control = textSwiper;
 	});
 })();
