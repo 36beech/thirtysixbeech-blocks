@@ -14,6 +14,18 @@
 	"attributes": {
 		"imageId": {
 			"type": "number"
+		},
+		"heroTag": {
+			"type": "string",
+			"default": ""
+		},
+		"heroTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"heroDescription": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"textdomain": "windows-hero",

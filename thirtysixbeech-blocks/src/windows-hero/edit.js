@@ -13,8 +13,8 @@ import { __ } from "@wordpress/i18n";
  */
 import {
 	useBlockProps,
-	InnerBlocks,
 	InspectorControls,
+	PlainText,
 } from "@wordpress/block-editor";
 import { PanelBody } from "@wordpress/components";
 import { MediaSelector } from "@shared/react";
@@ -37,8 +37,8 @@ import { useImage } from "@shared/react/useImage";
  *
  * @return {Element} Element to render.
  */
-export default function Edit({ attributes, setAttributes, context }) {
-	const { imageId } = attributes;
+export default function Edit({ attributes, setAttributes }) {
+	const { imageId, heroTag, heroTitle, heroDescription } = attributes;
 	const image = useImage(imageId);
 	const sourceUrl = image?.media_details?.sizes?.medium_large?.source_url;
 	return (
@@ -68,7 +68,26 @@ export default function Edit({ attributes, setAttributes, context }) {
 						</div>
 					)}
 					<div className="row-start-2 col-start-1 relative z-10 is-layout-constrained has-global-padding self-end">
-						<div>Hi?</div>
+						<div className="windows-hero-header">
+							<PlainText
+								className="windows-hero-header__tag border border-dotted border-slate-700 m-0"
+								value={heroTag}
+								placeholder="Great"
+								onChange={(newValue) => setAttributes({ heroTag: newValue })}
+							/>
+							<PlainText
+								className="windows-hero-header__title border border-dotted border-slate-700 m-0"
+								value={heroTitle}
+								placeholder="Series Title"
+								onChange={(newValue) => setAttributes({ heroTitle: newValue })}
+							/>
+							<PlainText
+								className="windows-hero-header__description border border-dotted border-slate-700 m-0"
+								value={heroDescription}
+								placeholder="Series Description"
+								onChange={(newValue) => setAttributes({ heroDescription: newValue })}
+							/>
+						</div>
 					</div>
 				</div>
 			</header>
