@@ -30,3 +30,20 @@
 .is-layout-constrained > .section-background-element {
 	@apply max-w-none;
 }
+
+.is-style-cover,
+.is-style-contain {
+	@apply w-full h-full;
+
+	img {
+		@apply w-full h-full;
+	}
+}
+
+.is-style-cover img {
+	@apply object-cover;
+}
+
+.is-style-contain img {
+	@apply object-contain;
+}

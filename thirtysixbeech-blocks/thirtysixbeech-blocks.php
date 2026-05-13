@@ -88,3 +88,24 @@ function thirtysixbeech_blocks_enqueue_shared_block_styles() {
 	);
 }
 add_action( 'enqueue_block_assets', 'thirtysixbeech_blocks_enqueue_shared_block_styles' );
+
+
+function thirtysixbeech_blocks_modify_block_styles()
+{
+    register_block_style(
+        'core/image',
+        array(
+            'name'  => 'cover',
+            'label' => __('Cover', 'renaissance-windows-and-doors'),
+        )
+    );
+    register_block_style(
+        'core/image',
+        array(
+            'name'  => 'contain',
+            'label' => __('Contain', 'renaissance-windows-and-doors'),
+        )
+    );
+}
+
+add_action('init', 'thirtysixbeech_blocks_modify_block_styles');
