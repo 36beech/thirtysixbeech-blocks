@@ -1,7 +1,7 @@
 import Swiper from "swiper";
 import { Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
+// import "swiper/css";
+// import "swiper/css/pagination";
 
 const carousels = document.querySelectorAll(
 	".wp-block-thirtysixbeech-blocks-carousel",

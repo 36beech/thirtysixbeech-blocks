@@ -1,7 +1,7 @@
 import Swiper from "swiper";
 import { Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
+// import "swiper/css";
+// import "swiper/css/pagination";
 
 (() => {
 	const homepageCarousels = document.querySelectorAll(
@@ -20,6 +20,10 @@ import "swiper/css/pagination";
 		const swiper = new Swiper(carousel, {
 			modules: [Pagination, Autoplay],
 			loop: true,
+			pagination: {
+				el: ".swiper-pagination",
+				clickable: true,
+			},
 			...carouselSettingsParsed,
 		});
 	});

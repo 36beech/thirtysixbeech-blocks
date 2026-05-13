@@ -36,11 +36,11 @@ endif;
 
 $carousel_data = ! empty( $carousel_settings ) ? " data-carousel-settings='" . json_encode( $carousel_settings ) . "'" : "";
 ?>
-<div <?php echo get_block_wrapper_attributes(array("class" => "has-global-padding is-layout-constrained relative")); ?>>
+<div <?php echo get_block_wrapper_attributes(array("class" => "has-global-padding is-layout-constrained")); ?>>
 	<div class="grid grid-cols-12 gap-5">
-		<div class="col-span-12 md:col-span-6 lg:col-span-5 overflow-hidden">
+		<div class="col-span-12 md:col-span-6 lg:col-span-5 homepage-carousel__text-slides-container">
 
-			<div class="homepage-carousel__text-slides"<?php echo $carousel_data; ?>>
+			<div class="homepage-carousel__text-slides overflow-hidden"<?php echo $carousel_data; ?>>
 				<div class="swiper-wrapper">
 					<!-- content slides -->
 					<?php foreach ($child_blocks as $child_block) : ?>
@@ -52,6 +52,7 @@ $carousel_data = ! empty( $carousel_settings ) ? " data-carousel-settings='" . j
 					<?php endforeach; ?>
 					<!-- content slides -->
 				</div>
+				<div class="swiper-pagination"></div>
 			</div>
 
 		</div>
