@@ -16,7 +16,7 @@ if (empty($block->parsed_block["innerBlocks"])) {
 }
 
 $child_blocks = $block->parsed_block["innerBlocks"];
-$images = array_map(fn($block) => wp_get_attachment_image(
+$images = array_map(fn($block) => wp_get_attachment_image(	
 	$block['attrs']['imageId'],
 	'medium',
 	false,
@@ -36,7 +36,7 @@ endif;
 
 $carousel_data = ! empty( $carousel_settings ) ? " data-carousel-settings='" . json_encode( $carousel_settings ) . "'" : "";
 ?>
-<header <?php echo get_block_wrapper_attributes(array("class" => "relative")); ?>>
+<header <?php echo get_block_wrapper_attributes(array("class" => "tsb-hero-carousel relative")); ?>>
 	<div class="has-global-padding is-layout-constrained relative z-10">
 		<div class="grid grid-cols-12 gap-5">
 			<div class="col-span-12 md:col-span-6 lg:col-span-5 homepage-carousel__text-slides-container">
@@ -59,7 +59,7 @@ $carousel_data = ! empty( $carousel_settings ) ? " data-carousel-settings='" . j
 			</div>
 		</div>
 	</div>
-	<div class="homepage-carousel__image-slides-container absolute top-0 left-0 w-full h-full bg-amber-100 z-0 m-0 overflow-hidden">
+	<div class="homepage-carousel__image-slides-container absolute top-0 left-0 w-full h-full z-0 m-0 overflow-hidden">
     <div class="swiper-wrapper">
 		  <?php foreach( $images as $image ) : ?>
 				<div class="swiper-slide homepage-carousel__image-slide">

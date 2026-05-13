@@ -34,8 +34,26 @@ export default function Edit({ attributes, setAttributes, context }) {
 	const { imageId } = attributes;
 	const allowedBlocks = ["core/heading", "core/paragraph", "core/buttons"];
 	return (
-		<div {...useBlockProps()}>
-			<div className="tsb-hero-image">
+		<div {...useBlockProps({ className: "tsb-hero-carousel relative" })}>
+			<div class="col-span-12 md:col-span-6 lg:col-span-5 homepage-carousel__text-slides-container relative z-10">
+				<div class="homepage-carousel__text-slides overflow-hidden">
+					<div className="tsb-inner-blocks">
+						<InnerBlocks allowedBlocks={allowedBlocks} />
+					</div>
+				</div>
+			</div>
+			<div class="homepage-carousel__image-slides-container absolute top-0 left-0 w-full h-full z-0 m-0 overflow-hidden">
+				<MediaSelector
+					value={imageId}
+					onSelect={(item) => {
+						setAttributes({
+							imageId: item.id,
+						});
+					}}
+				/>
+			</div>
+
+			{/* <div className="tsb-hero-image">
 				<MediaSelector
 					value={imageId}
 					onSelect={(item) => {
@@ -49,7 +67,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 				<div className="tsb-inner-blocks">
 					<InnerBlocks allowedBlocks={allowedBlocks} />
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }
