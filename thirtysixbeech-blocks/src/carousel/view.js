@@ -8,15 +8,17 @@ const carousels = document.querySelectorAll(
 );
 carousels.forEach((carousel) => {
 	const { carouselSettings } = carousel.dataset;
-  const carouselSettingsParsed = carouselSettings ? JSON.parse(carouselSettings) : {};
+	const carouselSettingsParsed = carouselSettings
+		? JSON.parse(carouselSettings)
+		: {};
 
-  const swiper = new Swiper(carousel, {
-	modules: [Pagination, Autoplay],
-	loop: true,
-	pagination: {
-		el: ".swiper-pagination",
-		clickable: true,
-	},
-	...carouselSettingsParsed
-});
+	const swiper = new Swiper(carousel, {
+		modules: [Pagination, Autoplay],
+		loop: true,
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+		...carouselSettingsParsed,
+	});
 });
