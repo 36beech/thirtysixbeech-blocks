@@ -15,10 +15,15 @@ import {
 	useBlockProps,
 	InnerBlocks,
 	BlockControls,
+	InspectorControls,
 } from "@wordpress/block-editor";
 import {
 	ToolbarGroup,
 	ToolbarDropdownMenu,
+	PanelBody,
+	ToggleControl,
+	BaseControl,
+	RangeControl,
 } from "@wordpress/components";
 
 /**
@@ -38,9 +43,15 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 import { Section } from "@shared/react/Section";
+import { ColorSelector } from "@shared/react";
 
 export default function Edit({ attributes, setAttributes }) {
-	const { semanticTag } = attributes;
+	const {
+		semanticTag,
+		hasPartialBackground,
+		partialBackgroundColor,
+		partialBackgroundCoverage,
+	} = attributes;
 
 	const TAGS = [
 		{
@@ -71,7 +82,11 @@ export default function Edit({ attributes, setAttributes }) {
 	];
 
 	const options = TAGS.map(({ key, icon, label }) => ({
-		icon: <div style={{width: "96px", textAlign: "center"}}><code>{icon}</code></div>,
+		icon: (
+			<div style={{ width: "96px", textAlign: "center" }}>
+				<code>{icon}</code>
+			</div>
+		),
 		title: label,
 		onClick: () => setAttributes({ semanticTag: key }),
 		isActive: semanticTag === key,
@@ -82,13 +97,45 @@ export default function Edit({ attributes, setAttributes }) {
 		return <code>{tag}</code>;
 	};
 
-	console.log(options);
+	
 	return (
 		<>
+			<InspectorControls>
+				<PanelBody title={__("Background Element")}>
+					<ToggleControl
+						label={__("Has background element")}
+						checked={hasPartialBackground}
+						onChange={() =>
+							setAttributes({ hasPartialBackground: !hasPartialBackground })
+						}
+					></ToggleControl>
+					{hasPartialBackground && (
+						<>
+							<BaseControl label={__("Background Element Color")}>
+								<ColorSelector
+									value={partialBackgroundColor}
+									onChange={(color) => {
+										setAttributes({ partialBackgroundColor: color });
+									}}
+								/>
+							</BaseControl>
+							<RangeControl
+								label={__("Background Element Percentage")}
+								value={partialBackgroundCoverage}
+								max={100}
+								min={0}
+								onChange={(newValue) =>
+									setAttributes({ partialBackgroundCoverage: newValue })
+								}
+							/>
+						</>
+					)}
+				</PanelBody>
+			</InspectorControls>
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
-						icon={ <SelectedIcon tag={semanticTag} /> }
+						icon={<SelectedIcon tag={semanticTag} />}
 						label={__("HTML tag", "thirtysixbeech-blocks")}
 						text={(semanticTag || "section").toLowerCase()}
 						controls={options}

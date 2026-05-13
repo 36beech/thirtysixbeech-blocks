@@ -38,6 +38,17 @@
     "semanticTag": {
       "type": "string",
       "default": "section"
+    },
+    "hasPartialBackground": {
+      "type": "boolean",
+      "default": false
+    },
+    "partialBackgroundColor": {
+      "type": "string"
+    },
+    "partialBackgroundCoverage": {
+      "type": "number",
+      "default": 50
     }
   },
   "providesContext": {
