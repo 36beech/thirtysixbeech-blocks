@@ -16,7 +16,7 @@
       "type": "string",
       "default": "facebook"
     },
-    "link": {
+    "socialLink": {
       "type": "string"
     }
   },

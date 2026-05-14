@@ -4,6 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
 import { __ } from "@wordpress/i18n";
+import { useState } from "react";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -12,7 +13,15 @@ import { __ } from "@wordpress/i18n";
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps, BlockControls } from "@wordpress/block-editor";
-import { ToolbarGroup, ToolbarDropdownMenu } from "@wordpress/components";
+import {
+	Popover,
+	TextControl,
+	ToolbarGroup,
+	ToolbarDropdownMenu,
+	ToolbarButton,
+} from "@wordpress/components";
+import { Stack, Button } from "@wordpress/ui";
+import { link, linkOff } from "@wordpress/icons";
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -42,7 +51,8 @@ const capFirst = (str) =>
 	String(str).charAt(0).toUpperCase() + String(str).slice(1);
 
 export default function Edit({ attributes, setAttributes }) {
-	const { socialIcon, link } = attributes;
+	const [isPopoverVisible, setIsPopoverVisible] = useState(false);
+	const { socialIcon, socialLink } = attributes;
 
 	const iconMap = [
 		{ name: "facebook", icon: FacebookIcon, color: "fill-[#1877F2]" },
@@ -73,11 +83,49 @@ export default function Edit({ attributes, setAttributes }) {
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarDropdownMenu
-						icon={<SocialIcon icon={currentIcon.icon} className={`w-6 h-6 mr-2`} />}
+						icon={
+							<SocialIcon icon={currentIcon.icon} className={`w-6 h-6 mr-2`} />
+						}
 						label={__("HTML tag", "thirtysixbeech-blocks")}
 						text={capFirst(socialIcon)}
 						controls={options}
 					/>
+					<ToolbarButton
+						icon={link}
+						label="Edit"
+						onClick={() => setIsPopoverVisible((prev) => !prev)}
+					/>
+					{isPopoverVisible && (
+						<Popover
+							position="bottom right"
+							onClose={() => setIsPopoverVisible(false)}
+						>
+							<div style={{ padding: "8px", width: "250px" }}>
+								<Stack align="end" justify="space-between" gap="sm">
+									<TextControl
+										__next40pxDefaultSize
+										__nextHasNoMarginBottom
+										label={__("Social Media URL")}
+										onChange={(newValue) =>
+											setAttributes({ socialLink: newValue })
+										}
+										placeholder="Enter URL"
+										value={socialLink}
+									/>
+									<div>
+										<Button
+											variant="minimal"
+											tone="neutral"
+											disabled={!socialLink}
+											onClick={() => setAttributes({ socialLink: "" })}
+										>
+											<Button.Icon icon={linkOff} />
+										</Button>
+									</div>
+								</Stack>
+							</div>
+						</Popover>
+					)}
 				</ToolbarGroup>
 			</BlockControls>
 			<div {...useBlockProps()}>
