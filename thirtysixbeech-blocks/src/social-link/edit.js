@@ -50,9 +50,15 @@ const SocialIcon = ({ icon: Icon, ...props }) => <Icon {...props} />;
 const capFirst = (str) =>
 	String(str).charAt(0).toUpperCase() + String(str).slice(1);
 
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, setAttributes, context }) {
 	const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 	const { socialIcon, socialLink } = attributes;
+
+	const blockGap = context["thirtysixbeech/blockGap"] || 0;
+
+	const style = {
+		padding: `0 ${blockGap}`,
+	};
 
 	const iconMap = [
 		{ name: "facebook", icon: FacebookIcon, color: "fill-[#1877F2]" },
@@ -128,8 +134,11 @@ export default function Edit({ attributes, setAttributes }) {
 					)}
 				</ToolbarGroup>
 			</BlockControls>
-			<div {...useBlockProps()}>
-				<SocialIcon icon={currentIcon.icon} className={`w-6 h-6 fill-current`} />
+			<div {...useBlockProps({ style: style })}>
+				<SocialIcon
+					icon={currentIcon.icon}
+					className={`w-6 h-6 fill-current`}
+				/>
 			</div>
 		</>
 	);

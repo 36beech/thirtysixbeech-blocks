@@ -31,7 +31,6 @@ import "./editor.scss";
  */
 export default function Edit({ attributes, setAttributes, context }) {
 	const blockGap = context["thirtysixbeech/blockGap"] || 0;
-	console.log(blockGap);
 	const evenColumns = context["thirtysixbeech/evenColumns"] || false;
 
 	const className = [];
