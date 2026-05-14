@@ -34,7 +34,7 @@ import { ReactComponent as BlueskyIcon } from "@shared/icons/bluesky.svg";
 import { ReactComponent as InstagramIcon } from "@shared/icons/instagram.svg";
 import { ReactComponent as LinkedinIcon } from "@shared/icons/linkedin.svg";
 import { ReactComponent as TiktokIcon } from "@shared/icons/tiktok.svg";
-import { ReactComponent as TwitterIcon } from "@shared/icons/x-twitter.svg";
+import { ReactComponent as TwitterIcon } from "@shared/icons/x.svg";
 import { ReactComponent as YoutubeIcon } from "@shared/icons/youtube.svg";
 
 /**
@@ -129,7 +129,7 @@ export default function Edit({ attributes, setAttributes }) {
 				</ToolbarGroup>
 			</BlockControls>
 			<div {...useBlockProps()}>
-				<SocialIcon icon={currentIcon.icon} className={`w-6 h-6`} />
+				<SocialIcon icon={currentIcon.icon} className={`w-6 h-6 fill-current`} />
 			</div>
 		</>
 	);
