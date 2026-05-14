@@ -109,3 +109,23 @@ function thirtysixbeech_blocks_modify_block_styles()
 }
 
 add_action('init', 'thirtysixbeech_blocks_modify_block_styles');
+
+function thirtysixbeech_blocks_inline_svg_sprite() {
+    static $done = false;
+
+    // Prevent double printing
+    if ( $done ) {
+        return;
+    }
+    $done = true;
+
+    $sprite_path = plugin_dir_path( __FILE__ ) . 'build/sprite.svg';
+
+    if ( file_exists( $sprite_path ) ) {
+        echo '<!-- SVG Sprite -->';
+        echo '<div class="sr-only">';
+        echo file_get_contents( $sprite_path ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '</div>';
+    }
+}
+add_action( 'wp_head', 'thirtysixbeech_blocks_inline_svg_sprite' );
