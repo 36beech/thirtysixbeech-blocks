@@ -11,15 +11,14 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from "@wordpress/block-editor";
-
+import { useBlockProps, BlockControls } from "@wordpress/block-editor";
+import { ToolbarGroup, ToolbarDropdownMenu } from "@wordpress/components";
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import "./editor.scss";
 
 import { ReactComponent as FacebookIcon } from "@shared/icons/facebook.svg";
 import { ReactComponent as BlueskyIcon } from "@shared/icons/bluesky.svg";
@@ -37,8 +36,14 @@ import { ReactComponent as YoutubeIcon } from "@shared/icons/youtube.svg";
  *
  * @return {Element} Element to render.
  */
+
+const SocialIcon = ({ icon: Icon, ...props }) => <Icon {...props} />;
+const capFirst = (str) =>
+	String(str).charAt(0).toUpperCase() + String(str).slice(1);
+
 export default function Edit({ attributes, setAttributes }) {
 	const { socialIcon, link } = attributes;
+
 	const iconMap = [
 		{ name: "facebook", icon: FacebookIcon, color: "fill-[#1877F2]" },
 		{ name: "bluesky", icon: BlueskyIcon, color: "fill-[#0085FF]" },
@@ -49,17 +54,35 @@ export default function Edit({ attributes, setAttributes }) {
 		{ name: "youtube", icon: YoutubeIcon, color: "fill-[#FF0000]" },
 	];
 
-	return (
-		<div {...useBlockProps()}>
-			{iconMap.map((icon) => {
-				const IconComponent = icon.icon;
+	const options = iconMap.map((icon) => {
+		return {
+			key: icon.name,
+			icon: () => (
+				<SocialIcon icon={icon.icon} className={`w-4 h-4 ${icon.color}`} />
+			),
+			title: capFirst(icon.name),
+			isActive: socialIcon === icon.name,
+			onClick: () => setAttributes({ socialIcon: icon.name }),
+		};
+	});
 
-				return (
-					<div key={icon.name}>
-						<IconComponent className={`w-6 h-6 ${icon.color}`} />
-					</div>
-				);
-			})}
-		</div>
+	const currentIcon = iconMap.find((icon) => icon.name === socialIcon);
+
+	return (
+		<>
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarDropdownMenu
+						icon={<SocialIcon icon={currentIcon.icon} className={`w-6 h-6 mr-2`} />}
+						label={__("HTML tag", "thirtysixbeech-blocks")}
+						text={capFirst(socialIcon)}
+						controls={options}
+					/>
+				</ToolbarGroup>
+			</BlockControls>
+			<div {...useBlockProps()}>
+				<SocialIcon icon={currentIcon.icon} className={`w-6 h-6`} />
+			</div>
+		</>
 	);
 }
