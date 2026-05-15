@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "thirtysixbeech-blocks/windows-hero",
+	"name": "thirtysixbeech-blocks/product-hero",
 	"version": "0.1.0",
-	"title": "Windows Hero",
+	"title": "Product Hero",
 	"category": "thirtysixbeech-content",
 	"icon": "smiley",
 	"description": "Example block scaffolded with Create Block tool.",
@@ -15,20 +15,20 @@
 		"imageId": {
 			"type": "number"
 		},
-		"heroTag": {
+		"productTag": {
 			"type": "string",
 			"default": ""
 		},
-		"heroTitle": {
+		"productTitle": {
 			"type": "string",
 			"default": ""
 		},
-		"heroDescription": {
+		"productDescription": {
 			"type": "string",
 			"default": ""
 		}
 	},
-	"textdomain": "windows-hero",
+	"textdomain": "product-hero",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

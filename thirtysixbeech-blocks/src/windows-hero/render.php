@@ -11,9 +11,9 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 $image_id = $attributes["imageId"];
-$hero_tag = $attributes["heroTag"];
-$hero_title = $attributes["heroTitle"];
-$hero_description = $attributes["heroDescription"];
+$hero_tag = $attributes["productTag"];
+$hero_title = $attributes["productTitle"];
+$hero_description = $attributes["productDescription"];
 $hero_image = $image_id ? wp_get_attachment_image(
 	$image_id,
 	'medium',
@@ -31,10 +31,10 @@ $hero_image = $image_id ? wp_get_attachment_image(
 		<?php endif; ?>
 		<div class="row-start-2 col-start-1 relative z-10 is-layout-constrained has-global-padding self-end">
 			<div>
-				<div class="windows-hero-header">
-					<div class="windows-hero-header__tag"><?php echo $hero_tag; ?></div>
-					<h2 class="windows-hero-header__title"><?php echo $hero_title; ?></h2>
-					<div class="windows-hero-header__description"><?php echo $hero_description; ?></div>
+				<div class="product-hero-header">
+					<div class="product-hero-header__tag"><?php echo $hero_tag; ?></div>
+					<h2 class="product-hero-header__title"><?php echo $hero_title; ?></h2>
+					<div class="product-hero-header__description"><?php echo $hero_description; ?></div>
 				</div>
 			</div>
 		</div>

@@ -79,13 +79,13 @@ export default function Edit({ attributes, setAttributes, context }) {
 						</div>
 						<div className="absolute top-0 left-0">
 							<PlainText
-								className="windows-hero-header__tag border border-dotted border-slate-700 m-0"
+								className="product-hero-header__tag border border-dotted border-slate-700 m-0"
 								value={productTag}
 								placeholder="Great"
 								onChange={(newValue) => setAttributes({ productTag: newValue })}
 							/>
 							<PlainText
-								className="windows-product-header__title border border-dotted border-slate-700 m-0"
+								className="product-header__title border border-dotted border-slate-700 m-0"
 								value={productTitle}
 								placeholder="Series Title"
 								onChange={(newValue) =>
@@ -93,7 +93,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 								}
 							/>
 							<PlainText
-								className="windows-product-header__description border border-dotted border-slate-700 m-0"
+								className="product-header__description border border-dotted border-slate-700 m-0"
 								value={productDescription}
 								placeholder="Series Description"
 								onChange={(newValue) =>

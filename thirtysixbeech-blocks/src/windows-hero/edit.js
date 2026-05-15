@@ -38,7 +38,7 @@ import { useImage } from "@shared/react/useImage";
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes }) {
-	const { imageId, heroTag, heroTitle, heroDescription } = attributes;
+	const { imageId, productTag, productTitle, productDescription } = attributes;
 	const image = useImage(imageId);
 	const sourceUrl = image?.media_details?.sizes?.medium_large?.source_url;
 	return (
@@ -68,24 +68,24 @@ export default function Edit({ attributes, setAttributes }) {
 						</div>
 					)}
 					<div className="row-start-2 col-start-1 relative z-10 is-layout-constrained has-global-padding self-end">
-						<div className="windows-hero-header">
+						<div className="product-hero-header">
 							<PlainText
-								className="windows-hero-header__tag border border-dotted border-slate-700 m-0"
-								value={heroTag}
+								className="product-hero-header__tag border border-dotted border-slate-700 m-0"
+								value={productTag}
 								placeholder="Great"
-								onChange={(newValue) => setAttributes({ heroTag: newValue })}
+								onChange={(newValue) => setAttributes({ productTag: newValue })}
 							/>
 							<PlainText
-								className="windows-hero-header__title border border-dotted border-slate-700 m-0"
-								value={heroTitle}
+								className="product-hero-header__title border border-dotted border-slate-700 m-0"
+								value={productTitle}
 								placeholder="Series Title"
-								onChange={(newValue) => setAttributes({ heroTitle: newValue })}
+								onChange={(newValue) => setAttributes({ productTitle: newValue })}
 							/>
 							<PlainText
-								className="windows-hero-header__description border border-dotted border-slate-700 m-0"
-								value={heroDescription}
+								className="product-hero-header__description border border-dotted border-slate-700 m-0"
+								value={productDescription}
 								placeholder="Series Description"
-								onChange={(newValue) => setAttributes({ heroDescription: newValue })}
+								onChange={(newValue) => setAttributes({ productDescription: newValue })}
 							/>
 						</div>
 					</div>
