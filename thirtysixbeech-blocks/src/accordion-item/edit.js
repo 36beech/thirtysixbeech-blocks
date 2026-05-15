@@ -46,7 +46,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 				<Carat className="tsb-accordion-summary-carat w-4.25 h-2.5" />
 			</summary>
 			<div className="tsb-accordion-content">
-				<div class="tsb-inner-blocks">
+				<div className="tsb-inner-blocks">
 					<InnerBlocks />
 				</div>
 			</div>
