@@ -24,11 +24,8 @@ $classes = array(
 	$attributes["reverse"] ? "flex-row-reverse" : "flex-row"
 );
 
-$styles = $attributes["blockGap"] ? array(
-	"margin-left: calc(" . $attributes["blockGap"] . " * -1)",
-	"margin-right: calc(" . $attributes["blockGap"] . " * -1)" 
-) : array();
+$styles = $attributes["blockGap"] ? "margin-left: calc(" . $attributes["blockGap"] . " * -1); margin-right: calc(" . $attributes["blockGap"] . " * -1);" : "";
 ?>
-<div <?php echo get_block_wrapper_attributes( array( "class" => implode( " ", $classes ), "style" => implode( ";", $styles ) ) ); ?>>
+<div <?php echo get_block_wrapper_attributes( array( "class" => implode( " ", $classes ), "style" => $styles ) ); ?>>
 	<?php echo $content; ?>
 </div>

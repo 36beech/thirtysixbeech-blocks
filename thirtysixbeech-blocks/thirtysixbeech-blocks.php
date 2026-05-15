@@ -129,3 +129,10 @@ function thirtysixbeech_blocks_inline_svg_sprite() {
     }
 }
 add_action( 'wp_head', 'thirtysixbeech_blocks_inline_svg_sprite' );
+
+
+function thirysixbeech_current_year() {
+    return date("Y");
+}
+
+add_shortcode('current_year', 'thirysixbeech_current_year');
