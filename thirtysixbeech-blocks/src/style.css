@@ -6,6 +6,7 @@
 @import "tailwindcss/utilities.css";
 
 @source "./**/*.{js,jsx,php}" not "./**/edit.js";
+@source inline("z-20");
 
 .tsb-accordion-summary-carat {
 	@apply -scale-y-100 transition-all duration-300;

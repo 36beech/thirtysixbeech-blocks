@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockType, createBlock } from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -12,42 +12,26 @@ import { registerBlockType, createBlock } from '@wordpress/blocks';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './style.scss';
+import "./style.scss";
 
 /**
  * Internal dependencies
  */
-import Edit from './edit';
+import Edit from "./edit";
 import Save from "./save";
 import { ReactComponent as Icon } from "./icon.svg";
-import metadata from './block.json';
+import metadata from "./block.json";
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType( metadata.name, {
+registerBlockType(metadata.name, {
 	/**
 	 * @see ./edit.js
 	 */
 	edit: Edit,
-  save: Save,
-  icon: <Icon />,
-	transforms: {
-		from: [
-			{
-				type: "block",
-				blocks: ["thirtysixbeech-blocks/windows-hero"],
-				transform: ({ imageId, heroTag, heroTitle, heroDescription }) => {
-					return createBlock("thirtysixbeech-blocks/product-hero", {
-						imageId,
-						productTag: heroTag,
-						productTitle: heroTitle,
-						productDescription: heroDescription,
-					});
-				},
-			},
-		],
-	},
-} );
+	save: Save,
+	icon: <Icon />,
+});
