@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
@@ -12,33 +13,61 @@
 $gap = $block->context["thirtysixbeech/blockGap"] ?? null;
 $even_columns = $block->context["thirtysixbeech/evenColumns"] ?? null;
 
-$styles = array();
-$classes = array( "tsb-card" );
+$image_id = $attributes["imageId"] ?? null;
+$product_tag = $attributes["productTag"] ?? null;
+$product_title = $attributes["productTitle"] ?? null;
+$product_description = $attributes["productDescription"] ?? null;
 
-if( $gap ) :
+$styles = array();
+$classes = array("tsb-card");
+
+if ($gap) :
 	$styles[] = "margin-left: " . $gap;
 	$styles[] = "margin-right: " . $gap;
 endif;
 
-if( $attributes["variant"] === "horizontal" ) :
-	$classes[] = "tsb-card-horizontal";
-endif;
-
-if( $even_columns ) :
+if ($even_columns) :
 	$classes[] = "flex-1";
 endif;
 
-$image_id = $attributes["imageId"];
-$tags = $attributes["tags"];
-
-$card_image = $image_id ? wp_get_attachment_image(
+$product_image = $image_id ? wp_get_attachment_image(
 	$image_id,
-	'full',
+	'medium',
 	false,
-	['class' => '', 'loading' => 'lazy', 'decoding' => 'async']
-) : "";
+	['class' => 'w-full h-full object-cover relative z-0', 'loading' => 'lazy', 'decoding' => 'async']
+) : null;
 
 ?>
+<div <?php echo get_block_wrapper_attributes(array(
+				"style" => implode(";", $styles),
+				"class" => implode(" ", $classes)
+			)); ?>>
+	<div class="max-md:flex max-md:flex-col md:grid grid-cols-12 gap-4">
+		<div class="relative col-span-7">
+			
+			<?php if ($product_image): ?>
+			<div class="h-full relative z-0">
+				<?php echo $product_image; ?>
+			</div>
+			<?php endif; ?>
+
+			<div class="absolute top-0 left-0 z-10">
+				<div class="product-hero-header">
+					<?php if( $product_tag ) : ?><div class="product-hero-header__tag"><?php echo $product_tag; ?></div><?php endif; ?>
+					<?php if( $product_tag ) : ?><h2 class="product-hero-header__title"><?php echo $product_title; ?></h2><?php endif; ?>
+					<?php if( $product_tag ) : ?><div class="product-hero-header__description"><?php echo $product_description; ?></div><?php endif; ?>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-span-5">
+			<?php echo $content; ?>
+		</div>
+	</div>
+</div>
+<?php
+/*
 <div <?php echo get_block_wrapper_attributes( array( 
 	"style" => implode( ";", $styles ),
 	"class" => implode( " ", $classes )
@@ -59,3 +88,4 @@ $card_image = $image_id ? wp_get_attachment_image(
 		<?php echo $content; ?>
 	</div>
 </div>
+*/

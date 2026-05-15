@@ -67,7 +67,7 @@ export default function Edit({ attributes, setAttributes, context }) {
 			<div {...blockProps}>
 				<div className="max-md:flex max-md:flex-col md:grid grid-cols-12 gap-4">
 					<div className="relative col-span-7">
-						<div className="h-full">
+						<div className="h-full relative z-0">
 							<MediaSelector
 								value={imageId}
 								onSelect={(item) => {
@@ -77,29 +77,33 @@ export default function Edit({ attributes, setAttributes, context }) {
 								}}
 							/>
 						</div>
-						<div className="absolute top-0 left-0">
-							<PlainText
-								className="product-hero-header__tag border border-dotted border-slate-700 m-0"
-								value={productTag}
-								placeholder="Great"
-								onChange={(newValue) => setAttributes({ productTag: newValue })}
-							/>
-							<PlainText
-								className="product-header__title border border-dotted border-slate-700 m-0"
-								value={productTitle}
-								placeholder="Series Title"
-								onChange={(newValue) =>
-									setAttributes({ productTitle: newValue })
-								}
-							/>
-							<PlainText
-								className="product-header__description border border-dotted border-slate-700 m-0"
-								value={productDescription}
-								placeholder="Series Description"
-								onChange={(newValue) =>
-									setAttributes({ productDescription: newValue })
-								}
-							/>
+						<div className="absolute top-0 left-0 z-10">
+							<div className="product-hero-header">
+								<PlainText
+									className="product-hero-header__tag border border-dotted border-slate-700 m-0"
+									value={productTag}
+									placeholder="Great"
+									onChange={(newValue) =>
+										setAttributes({ productTag: newValue })
+									}
+								/>
+								<PlainText
+									className="product-hero-header__title border border-dotted border-slate-700 m-0"
+									value={productTitle}
+									placeholder="Series Title"
+									onChange={(newValue) =>
+										setAttributes({ productTitle: newValue })
+									}
+								/>
+								<PlainText
+									className="product-hero-header__description border border-dotted border-slate-700 m-0"
+									value={productDescription}
+									placeholder="Series Description"
+									onChange={(newValue) =>
+										setAttributes({ productDescription: newValue })
+									}
+								/>
+							</div>
 						</div>
 					</div>
 					<div className="col-span-5">
