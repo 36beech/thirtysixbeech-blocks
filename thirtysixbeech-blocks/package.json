@@ -24,9 +24,9 @@
 		"@wordpress/blocks": "latest",
 		"@wordpress/i18n": "latest",
 		"@wordpress/ui": "^0.13.0",
-		"postcss": "^8.5.14",
+		"postcss": "^8.5.15",
 		"postcss-cli": "^11.0.1",
-		"sass": "^1.99.0",
+		"sass": "^1.100.0",
 		"swiper": "^12.1.4",
 		"svg-spritemap-webpack-plugin": "^5.1.4"
 	},

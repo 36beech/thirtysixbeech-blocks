@@ -17,8 +17,13 @@ $image_id = $attributes["imageId"] ?? null;
 $product_tag = $attributes["productTag"] ?? null;
 $product_title = $attributes["productTitle"] ?? null;
 $product_description = $attributes["productDescription"] ?? null;
+$image_padding = $attributes["imagePadding"] ?? 72;
+$image_padding_md = round( $image_padding / 2 );
 
-$styles = array();
+$styles = array(
+	"--card-image-padding: " . $image_padding . "px",
+	"--card-image-padding-md: " . $image_padding_md . "px",
+);
 $classes = array("tsb-card");
 
 if ($gap) :
@@ -43,7 +48,7 @@ $product_image = $image_id ? wp_get_attachment_image(
 				"class" => implode(" ", $classes)
 			)); ?>>
 	<div class="max-md:flex max-md:flex-col md:grid grid-cols-12 gap-4">
-		<div class="relative col-span-7">
+		<div class="relative col-span-7 md:pr-(--card-image-padding-md) lg:pr-(--card-image-padding)">
 			
 			<?php if ($product_image): ?>
 			<div class="h-full relative z-0">
