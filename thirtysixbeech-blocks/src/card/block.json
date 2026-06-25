@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/card",
+  "version": "0.1.0",
+  "title": "Card",
+  "category": "thirtysixbeech-content",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "attributes": {
+    "imageId": {
+      "type": "number"
+    },
+    "tags": {
+      "type": "array",
+      "default": []
+    },
+    "variant": {
+      "type": "string",
+      "default": "vertical"
+    }
+  },
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "gradients": true,
+      "link": false,
+      "text": true
+    },
+    "spacing": {
+      "padding": ["top", "bottom"],
+      "margin": ["top", "bottom"],
+      "units": ["px", "em", "rem"]
+    },
+    "shadow": true
+  },
+  "usesContext": [
+    "thirtysixbeech/blockGap", 
+    "thirtysixbeech/evenColumns"
+  ],
+  "textdomain": "card",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}

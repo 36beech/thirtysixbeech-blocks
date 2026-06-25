@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/stack",
+  "version": "0.1.0",
+  "title": "Stack",
+  "category": "thirtysixbeech-layout",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "spacing": {
+      "padding": true,
+      "margin": ["top", "bottom"],
+      "units": ["px", "em", "rem"],
+      "blockGap": ["horizontal"]
+    }
+  },
+  "attributes": {
+    "justifyContent": {
+      "type": "string",
+      "default": "tsb-j-start"
+    },
+    "alignItems": {
+      "type": "string",
+      "default": "tsb-a-start"
+    },
+    "breakpoint": {
+      "type": "string",
+      "default": "md"
+    },
+    "blockGap": {
+      "type": "string"
+    },
+    "reverse": {
+      "type": "boolean",
+      "default": false
+    },
+    "evenColumns": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "providesContext": {
+    "thirtysixbeech/evenColumns": "evenColumns",
+    "thirtysixbeech/blockGap": "blockGap"
+  },
+  "textdomain": "flexbox",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,37 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/windows-hero",
+	"version": "0.1.0",
+	"title": "Windows Hero",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"imageId": {
+			"type": "number"
+		},
+		"heroTag": {
+			"type": "string",
+			"default": ""
+		},
+		"heroTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"heroDescription": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "windows-hero",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}

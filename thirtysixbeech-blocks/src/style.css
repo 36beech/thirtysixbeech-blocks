@@ -1,0 +1,50 @@
+@import "swiper/css";
+@import "swiper/css/pagination";
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@source "./**/*.{js,jsx,php}" not "./**/edit.js";
+@source inline("z-20");
+
+.tsb-accordion-summary-carat {
+	@apply -scale-y-100 transition-all duration-300;
+
+	.wp-block-thirtysixbeech-blocks-accordion-item:open & {
+		@apply scale-y-100;
+	}
+}
+
+.grid-reverse {
+	direction: rtl;
+}
+
+.grid-reverse .wp-block-thirtysixbeech-blocks-grid-item {
+	direction: ltr;
+}
+
+.section-background-element {
+	@apply absolute w-full bottom-0 left-0 z-0;
+}
+
+.is-layout-constrained > .section-background-element {
+	@apply max-w-none;
+}
+
+.is-style-cover,
+.is-style-contain {
+	@apply w-full h-full;
+
+	img {
+		@apply w-full h-full;
+	}
+}
+
+.is-style-cover img {
+	@apply object-cover;
+}
+
+.is-style-contain img {
+	@apply object-contain;
+}

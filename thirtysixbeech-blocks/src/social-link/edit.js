@@ -1,0 +1,145 @@
+/**
+ * Retrieves the translation of text.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
+ */
+import { __ } from "@wordpress/i18n";
+import { useState } from "react";
+
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
+ */
+import { useBlockProps, BlockControls } from "@wordpress/block-editor";
+import {
+	Popover,
+	TextControl,
+	ToolbarGroup,
+	ToolbarDropdownMenu,
+	ToolbarButton,
+} from "@wordpress/components";
+import { Stack, Button } from "@wordpress/ui";
+import { link, linkOff } from "@wordpress/icons";
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+
+import { ReactComponent as FacebookIcon } from "@shared/icons/facebook.svg";
+import { ReactComponent as BlueskyIcon } from "@shared/icons/bluesky.svg";
+import { ReactComponent as InstagramIcon } from "@shared/icons/instagram.svg";
+import { ReactComponent as LinkedinIcon } from "@shared/icons/linkedin.svg";
+import { ReactComponent as TiktokIcon } from "@shared/icons/tiktok.svg";
+import { ReactComponent as TwitterIcon } from "@shared/icons/x.svg";
+import { ReactComponent as YoutubeIcon } from "@shared/icons/youtube.svg";
+
+/**
+ * The edit function describes the structure of your block in the context of the
+ * editor. This represents what the editor will render when the block is used.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
+ *
+ * @return {Element} Element to render.
+ */
+
+const SocialIcon = ({ icon: Icon, ...props }) => <Icon {...props} />;
+const capFirst = (str) =>
+	String(str).charAt(0).toUpperCase() + String(str).slice(1);
+
+export default function Edit({ attributes, setAttributes, context }) {
+	const [isPopoverVisible, setIsPopoverVisible] = useState(false);
+	const { socialIcon, socialLink } = attributes;
+
+	const blockGap = context["thirtysixbeech/blockGap"] || 0;
+
+	const style = {
+		padding: `0 ${blockGap}`,
+	};
+
+	const iconMap = [
+		{ name: "facebook", icon: FacebookIcon, color: "fill-[#1877F2]" },
+		{ name: "bluesky", icon: BlueskyIcon, color: "fill-[#0085FF]" },
+		{ name: "instagram", icon: InstagramIcon, color: "fill-[#E1306C]" },
+		{ name: "linkedin", icon: LinkedinIcon, color: "fill-[#0A66C2]" },
+		{ name: "tiktok", icon: TiktokIcon, color: "fill-[#69C9D0]" },
+		{ name: "x", icon: TwitterIcon, color: "fill-[#000000]" },
+		{ name: "youtube", icon: YoutubeIcon, color: "fill-[#FF0000]" },
+	];
+
+	const options = iconMap.map((icon) => {
+		return {
+			key: icon.name,
+			icon: () => (
+				<SocialIcon icon={icon.icon} className={`w-4 h-4 ${icon.color}`} />
+			),
+			title: capFirst(icon.name),
+			isActive: socialIcon === icon.name,
+			onClick: () => setAttributes({ socialIcon: icon.name }),
+		};
+	});
+
+	const currentIcon = iconMap.find((icon) => icon.name === socialIcon);
+
+	return (
+		<>
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarDropdownMenu
+						icon={
+							<SocialIcon icon={currentIcon.icon} className={`w-6 h-6 mr-2`} />
+						}
+						label={__("HTML tag", "thirtysixbeech-blocks")}
+						text={capFirst(socialIcon)}
+						controls={options}
+					/>
+					<ToolbarButton
+						icon={link}
+						label="Edit"
+						onClick={() => setIsPopoverVisible((prev) => !prev)}
+					/>
+					{isPopoverVisible && (
+						<Popover
+							position="bottom right"
+							onClose={() => setIsPopoverVisible(false)}
+						>
+							<div style={{ padding: "8px", width: "250px" }}>
+								<Stack align="end" justify="space-between" gap="sm">
+									<TextControl
+										__next40pxDefaultSize
+										__nextHasNoMarginBottom
+										label={__("Social Media URL")}
+										onChange={(newValue) =>
+											setAttributes({ socialLink: newValue })
+										}
+										placeholder="Enter URL"
+										value={socialLink}
+									/>
+									<div>
+										<Button
+											variant="minimal"
+											tone="neutral"
+											disabled={!socialLink}
+											onClick={() => setAttributes({ socialLink: "" })}
+										>
+											<Button.Icon icon={linkOff} />
+										</Button>
+									</div>
+								</Stack>
+							</div>
+						</Popover>
+					)}
+				</ToolbarGroup>
+			</BlockControls>
+			<div {...useBlockProps({ style: style })}>
+				<SocialIcon
+					icon={currentIcon.icon}
+					className={`w-6 h-6 fill-current`}
+				/>
+			</div>
+		</>
+	);
+}

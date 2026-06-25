@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@source "./**/edit.js";
+@source "./**/editor.{css,scss}";
+
+.media-upload-button {
+	@apply flex  items-center justify-center text-white;
+
+	&-no-image {
+		background-color: rgba(0, 0, 0, 0.1);
+
+		.media-upload-icon {
+			width: 80px;
+			height: 80px;
+		}
+	}
+
+	&:hover,
+	&:focus,
+	&:focus-visible,
+	&:focus-within {
+		background-color: rgba(0, 0, 0, 0.2);
+		color: #f8cd0f;
+	}
+}
+
+.wp-block-thirtysixbeech-blocks-grid,
+.wp-block-thirtysixbeech-blocks-stack {
+	> div {
+		> .block-editor-inner-blocks {
+			&,
+			> .block-editor-block-list__layout {
+				@apply contents;
+			}
+		}
+	}
+}
+
+.grid-backdrop {
+	@apply opacity-0  transition-all duration-300;
+}
+
+.column-indicator {
+	@apply bg-gray-600 opacity-10;
+}
+
+.tsb-inner-blocks {
+	@apply p-4 border border-dashed border-slate-200;
+}
+
+.wp-block-thirtysixbeech-blocks-grid {
+	&.is-selected,
+	&.has-child-selected,
+	&:hover {
+		.grid-backdrop {
+			@apply opacity-100;
+		}
+	}
+}
