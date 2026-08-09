@@ -189,3 +189,42 @@ function thirtysixbeech_blocks_get_logo_url( $type = 'logo', $size = 'full' ) {
 	$url = wp_get_attachment_image_url( $logo_id, $size );
 	return $url ? $url : '';
 }
+
+/**
+ * Renders a logo option as markup: inline (sanitized) SVG for SVG attachments,
+ * an <img> tag otherwise.
+ *
+ * @param string $type  Logo option key, e.g. 'logo', 'mobile_logo', 'footer_logo'.
+ * @param string $size  Image size to use for non-SVG attachments.
+ * @param string $class Extra class name(s) to add to the <img> tag, on top of
+ *                       the defaults (added, not replacing them). Has no
+ *                       effect on SVG attachments, which are rendered as-is.
+ * @param array  $attr  Extra <img> attributes for non-SVG attachments (merged over defaults).
+ * @return string Markup, or '' if no logo is set.
+ */
+function thirtysixbeech_blocks_get_logo_markup( $type = 'logo', $size = 'medium', $class = '', $attr = array() ) {
+	$logo_id = thirtysixbeech_blocks_get_logo_id( $type );
+
+	if ( ! $logo_id ) {
+		return '';
+	}
+
+	if ( thirtysixbeech_blocks_is_svg_attachment( $logo_id ) ) {
+		return thirtysixbeech_blocks_get_svg_markup( $logo_id );
+	}
+
+	$attr = wp_parse_args(
+		$attr,
+		array(
+			'class'    => 'w-full block',
+			'loading'  => 'lazy',
+			'decoding' => 'async',
+		)
+	);
+
+	if ( $class ) {
+		$attr['class'] = trim( $attr['class'] . ' ' . $class );
+	}
+
+	return wp_get_attachment_image( $logo_id, $size, false, $attr );
+}
