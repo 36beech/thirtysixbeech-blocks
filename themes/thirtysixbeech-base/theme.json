@@ -1,17 +1,25 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"$schema": "https://schemas.wp.org/wp/7.0/theme.json",
 	"version": 3,
 	"settings": {
 		"appearanceTools": true,
 		"color": {
 			"palette": [
-				{ "slug": "background", "color": "#ffffff", "name": "Background" },
-				{ "slug": "foreground", "color": "#111111", "name": "Foreground" }
+				{
+					"color": "#ffffff",
+					"name": "Background",
+					"slug": "background"
+				},
+				{
+					"color": "#111111",
+					"name": "Foreground",
+					"slug": "foreground"
+				}
 			]
 		},
 		"layout": {
-			"contentSize": "700px",
-			"wideSize": "1200px"
+			"contentSize": "1317px",
+			"wideSize": "1400px"
 		}
 	},
 	"styles": {
@@ -21,7 +29,15 @@
 		}
 	},
 	"templateParts": [
-		{ "name": "header", "title": "Header", "area": "header" },
-		{ "name": "footer", "title": "Footer", "area": "footer" }
+		{
+			"area": "header",
+			"name": "header",
+			"title": "Header"
+		},
+		{
+			"area": "footer",
+			"name": "footer",
+			"title": "Footer"
+		}
 	]
 }

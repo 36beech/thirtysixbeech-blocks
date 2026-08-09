@@ -44,38 +44,6 @@ import { DimensionSlider } from "../shared/react/DimensionSlider";
  *
  * @return {Element} Element to render.
  */
-
-const UploadLogo = ({ value, buttonLabel = "Desktop", width, onSelect }) => {
-	const logoImage = useImage(value);
-	console.log(logoImage);
-	return (
-		<div
-			className="tsb-flex tsb-flex-col tsb-a-start tsb-rel"
-			style={{ gap: "10px" }}
-		>
-			{value ? (
-				<img src={logoImage?.source_url} style={{ width: width }} />
-			) : (
-				<LogoIcon style={{ width: "56px", height: "56px" }} />
-			)}
-			<MediaUploadCheck>
-				<MediaUpload
-					onSelect={onSelect}
-					value={value}
-					render={({ open }) => (
-						<ToolbarButton
-							style={{ border: "1px solid #000000" }}
-							onClick={open}
-						>
-							{value ? "Replace" : "Upload"} {buttonLabel} Logo
-						</ToolbarButton>
-					)}
-				/>
-			</MediaUploadCheck>
-		</div>
-	);
-};
-
 export default function Edit({ attributes, setAttributes }) {
 	const { desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth } =
 		attributes;
@@ -96,33 +64,8 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			{/* <BlockControls>
-				<ToolbarGroup>
-					<ToolbarButton
-						label={__("Set Mobile Logo")}
-						icon={mobile}
-						isPressed={activeLogo === "mobile"}
-						onClick={() => setActiveLogo("mobile")}
-					/>
-					<ToolbarButton
-						label={__("Set Desktop Logo")}
-						icon={desktop}
-						isPressed={activeLogo === "desktop"}
-						onClick={() => setActiveLogo("desktop")}
-					/>
-				</ToolbarGroup>
-			</BlockControls> */}
 			<div {...useBlockProps()}>
-					<UploadLogo
-						value={desktopLogo}
-						buttonLabel="Desktop"
-						onSelect={(item) => {
-							setAttributes({
-								desktopLogo: item.id,
-							});
-						}}
-						width={desktopLogoWidth}
-					/>
+				<LogoIcon style={{ width: "56px", height: "56px" }} />
 			</div>
 		</>
 	);

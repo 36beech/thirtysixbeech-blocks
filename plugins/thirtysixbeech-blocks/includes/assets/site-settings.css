@@ -1,0 +1,13 @@
+.thirtysixbeech-logo-preview {
+	margin-bottom: 12px;
+	max-width: 300px;
+}
+
+.thirtysixbeech-logo-preview img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	padding: 4px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+}
