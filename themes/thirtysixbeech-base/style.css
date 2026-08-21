@@ -12,3 +12,8 @@ License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: thirtysixbeech-base
 */
+
+:root :where(.is-layout-flow) > * {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
