@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -18,7 +18,8 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
-
+import { MediaSelector } from '../shared/react/MediaSelector';
+import { Grid, GridItem } from '../shared/react/Grid';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -27,10 +28,23 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+export default function Edit({attributes, setAttributes}) {
+	const { backgroundImage } = attributes;
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Image Text – hello from the editor!', 'image-text' ) }
-		</p>
+		<Grid className="items-center">
+			<GridItem columnSpan={4}>
+				<InnerBlocks />
+			</GridItem>
+			<GridItem columnSpan={8}>
+				<MediaSelector 
+					value={backgroundImage} 
+					onSelect={(item) => {
+						setAttributes({
+							backgroundImage: item.id,
+						});
+					}}
+				/>
+			</GridItem>
+		</Grid>
 	);
 }

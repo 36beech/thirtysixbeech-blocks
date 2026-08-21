@@ -97,9 +97,6 @@ export default function Edit({ attributes, setAttributes }) {
 		return <code>{tag}</code>;
 	};
 
-	console.log("partialBackgroundColor", partialBackgroundColor);
-	console.log("hasPartialBackground",hasPartialBackground);
-
 	return (
 		<>
 			<InspectorControls>

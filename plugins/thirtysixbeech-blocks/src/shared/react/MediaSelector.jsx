@@ -10,7 +10,6 @@ export const MediaSelector = ({
 }) => {
 	const image = useImage(value);
 	const sourceUrl = image?.media_details?.sizes?.medium_large?.source_url;
-	console.log(value, image);
 	const classes = ["w-full h-full relative"];
 	if (className) classes.push[className];
 	return (

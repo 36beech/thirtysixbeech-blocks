@@ -23,14 +23,21 @@
  *
  * What it does, step by step:
  *   1. Runs `npx @wordpress/create-block` to scaffold src/<block-slug>.
- *   2. Overwrites block.json's title (create-block slugifies it) and sets
- *      the category to "thirtysixbeech-content".
+ *   2. Overwrites block.json's title (create-block slugifies it), sets the
+ *      category to "thirtysixbeech-content", and drops `viewScript` (see
+ *      step 6).
  *   3. Adds a default save.js if the variant didn't generate one, so the
  *      block has somewhere to serialize markup even for dynamic/hybrid use.
  *   4. Copies in a shared default icon.svg if the block doesn't have one.
  *   5. Patches index.js to import Save/Icon and wire them into
  *      registerBlockType() (save: Save, icon: <Icon />), without clobbering
  *      anything already customized there.
+ *   6. Strips create-block's boilerplate comment out of style.scss and
+ *      editor.scss, leaving just the empty `.wp-block-thirtysixbeech-blocks-<slug>`
+ *      rule to fill in.
+ *   7. Removes view.js's placeholder console.log (keeping its explanatory
+ *      comment). Combined with step 2 dropping `viewScript`, view.js is
+ *      scaffolded but not loaded on the front end until you opt back in.
  */
 import { spawnSync } from "node:child_process";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -75,6 +82,9 @@ const blockDir = `src/${blockSlug}`;
 const indexFile = join(blockDir, "index.js");
 const saveFile = join(blockDir, "save.js");
 const iconFile = join(blockDir, "icon.svg");
+const styleFile = join(blockDir, "style.scss");
+const editorStyleFile = join(blockDir, "editor.scss");
+const viewFile = join(blockDir, "view.js");
 
 /**
  * Step 1: Scaffold the block via the official @wordpress/create-block tool.
@@ -92,13 +102,15 @@ if (result.status !== 0) process.exit(result.status ?? 1);
  * "Hero Carousel" would otherwise come back as "Hero carousel"). Restore the
  * title exactly as typed, and force every block into the shared
  * "thirtysixbeech-content" category so blocks don't scatter across the
- * default WordPress categories.
+ * default WordPress categories. Also drops `viewScript`, since view.js
+ * shouldn't be enqueued on the front end by default (see step 6).
  */
 const blockJsonFile = join(blockDir, "block.json");
 if (existsSync(blockJsonFile)) {
   let blockJson = JSON.parse(readFileSync(blockJsonFile, "utf8"));
   blockJson.title = blockTitle; // Keep full name as title
   blockJson.category = "thirtysixbeech-content";
+  delete blockJson.viewScript;
   writeFileSync(blockJsonFile, JSON.stringify(blockJson, null, 2), "utf8");
   console.log(`✔ Updated ${blockJsonFile} with title "${blockTitle}"`);
 }
@@ -174,4 +186,36 @@ if (existsSync(indexFile)) {
   console.log(`✔ Updated ${indexFile}`);
 }
 
-console.log(`✅ Block scaffolded (${variant}) with save.js, icon.svg, and index.js updated.`);
+/**
+ * Step 5: create-block seeds style.scss/editor.scss with an explanatory
+ * comment plus an empty `.wp-block-thirtysixbeech-blocks-<slug>` rule.
+ * Drop the comment — leave just the bare rule, ready to fill in.
+ */
+const blockClass = `.wp-block-thirtysixbeech-blocks-${blockSlug}`;
+const emptyStyleTemplate = `${blockClass} {\n}\n`;
+
+for (const file of [styleFile, editorStyleFile]) {
+  if (existsSync(file)) {
+    writeFileSync(file, emptyStyleTemplate, "utf8");
+    console.log(`✔ Reset ${file}`);
+  }
+}
+
+/**
+ * Step 6: view.js ships with a placeholder `console.log(...)` (wrapped in
+ * eslint-disable/enable comments just to silence the no-console rule around
+ * it). Strip that out — keep the rest of the file's explanatory comment,
+ * since it's useful documentation for whoever adds real code here later.
+ * Paired with dropping `viewScript` in step 1b, view.js now exists but isn't
+ * enqueued on the front end until someone opts back in.
+ */
+if (existsSync(viewFile)) {
+  let view = readFileSync(viewFile, "utf8");
+  view = view.replace(/\/\*\s*eslint-disable\s+no-console\s*\*\/[\s\S]*?\/\*\s*eslint-enable\s+no-console\s*\*\/\n?/, "");
+  view = view.replace(/[ \t]+\n/g, "\n"); // drop the now-dangling trailing-whitespace line left behind
+  view = view.trimEnd() + "\n";
+  writeFileSync(viewFile, view, "utf8");
+  console.log(`✔ Removed console.log from ${viewFile}`);
+}
+
+console.log(`✅ Block scaffolded (${variant}) with save.js, icon.svg, index.js, style.scss, and editor.scss updated.`);
