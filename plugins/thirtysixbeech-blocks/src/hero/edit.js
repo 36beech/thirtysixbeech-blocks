@@ -32,37 +32,42 @@ import './editor.scss';
 
 import { MediaSelector } from '../shared/react/MediaSelector';
 const blockProps = {
-	className: "tsb-hero min-h-100 relative flex items-stretch"
+	className: "tsb-hero min-h-100 w-full relative flex items-stretch"
 };
 
 export default function Edit( { attributes, setAttributes } ) {
 	const { backgroundImage, heading, description } = attributes;
 	return (
 		<header { ...useBlockProps(blockProps) }>
-			<MediaSelector 
-				value={backgroundImage} 
-				onSelect={(item) => {
-					setAttributes({
-						backgroundImage: item.id,
-					});
-				}}
-				className="tsb-hero__image"
-			/>
-			<div className='is-layout-constrained w-full absolute left-0 bottom-0 z-10'>
-				<div>
-					<RichText
-						tagName='h1'
-						value={heading}
-						placeholder='Hero Heading'
-						onChange={(newValue) => setAttributes( { heading: newValue } ) }
-						className="tsb-hero__heading"
-					/>
-					<RichText
-						value={description}
-						placeholder='Hero description'
-						onChange={(newValue) => setAttributes( { description: newValue } ) }
-						className="tsb-hero__description"
-					/>
+  		<div className="tsb-hero relative z-0 w-full">
+				<div className="tsb-hero__image relative z-0">
+				<MediaSelector 
+					value={backgroundImage} 
+					onSelect={(item) => {
+						setAttributes({
+							backgroundImage: item.id,
+						});
+					}}
+					className="tsb-hero__image"
+				/>
+				</div>
+				<span className="tsb-hero__overlay absolute z-10 top-0 left-0 w-full h-full"></span>
+				<div className="tsb-hero__body  px-5 is-layout-constrained w-full absolute left-0 bottom-0 z-10">
+					<div>
+						<RichText
+							tagName='h2'
+							value={heading}
+							placeholder='Hero Heading'
+							onChange={(newValue) => setAttributes( { heading: newValue } ) }
+							className="tsb-hero__heading"
+						/>
+						<RichText
+							value={description}
+							placeholder='Hero description'
+							onChange={(newValue) => setAttributes( { description: newValue } ) }
+							className="tsb-hero__description"
+						/>
+					</div>
 				</div>
 			</div>
 		</header>
