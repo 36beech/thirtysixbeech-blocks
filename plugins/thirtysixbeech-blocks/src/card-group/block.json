@@ -11,6 +11,11 @@
   "supports": {
     "html": false
   },
+  "attributes": {
+    "columns": {
+      "type": "text"
+    }
+  },
   "textdomain": "card-group",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
