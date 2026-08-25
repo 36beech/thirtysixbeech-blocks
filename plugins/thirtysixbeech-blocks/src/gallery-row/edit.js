@@ -32,34 +32,33 @@ import { ColumnButton } from '../shared/react/ColumnButton';
  */
 export default function Edit({ attributes, setAttributes }) {
 	const {columns} = attributes;
-
 	if( !columns ) {
 		return (
 			<div { ...useBlockProps() }>
 				<h3 className="text-center mb-4">Please select the number of columns</h3>
 				<Grid>
+					<GridItem><ColumnButton columns={1} onClick={() => setAttributes({ columns: 1 })} /></GridItem>
+					<GridItem><ColumnButton columns="33/66" label={__("33/66")} onClick={() => setAttributes({ columns: 1 })} /></GridItem>
 					<GridItem><ColumnButton columns={2} onClick={() => setAttributes({ columns: 2 })} /></GridItem>
-					<GridItem><ColumnButton columns={3} onClick={() => setAttributes({ columns: 3 })} /></GridItem>
-					<GridItem><ColumnButton columns={4} onClick={() => setAttributes({ columns: 4 })} /></GridItem>
-					<GridItem><ColumnButton columns="flex" label={__("Flex Count")} onClick={() => setAttributes({ columns: "flex" })} /></GridItem>
+					<GridItem><ColumnButton columns="66/33" label={__("66/33")} onClick={() => setAttributes({ columns: 1 })} /></GridItem>
 				</Grid>
 			</div>
-		);
+		)
 	}
 
 	return (
 		<>
 			<InspectorControls>
-				<Panel header="Card Group Settings">
+				<Panel header="Gallery Row Settings">
 					<PanelBody>
 						<BaseControl
 							label={__("Number of columns")}
 						>
 							<div className="grid grid-cols-2 gap-2.5">
+								<div><ColumnButton columns={1} onClick={() => setAttributes({ columns: 1 })} size="small" /></div>
+								<div><ColumnButton columns="33/66" label={__("33/66")} onClick={() => setAttributes({ columns: 1 })} size="small" /></div>
 								<div><ColumnButton columns={2} onClick={() => setAttributes({ columns: 2 })} size="small" /></div>
-								<div><ColumnButton columns={3} onClick={() => setAttributes({ columns: 3 })} size="small" /></div>
-								<div><ColumnButton columns={4} onClick={() => setAttributes({ columns: 4 })} size="small" /></div>
-								<div><ColumnButton columns="flex" label={__("Flex Count")} onClick={() => setAttributes({ columns: "flex" })} size="small" /></div>
+								<div><ColumnButton columns="66/33" label={__("66/33")} onClick={() => setAttributes({ columns: 1 })} size="small" /></div>
 							</div>
 						</BaseControl>
 					</PanelBody>

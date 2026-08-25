@@ -1,4 +1,4 @@
-export const GridItem = ( { columnSpan = 3, children } ) => {
+export const GridItem = ( { columnSpan = 3, className = "", children } ) => {
   const gridClasses = [
     "col-span-1",
     "col-span-2",
@@ -14,7 +14,10 @@ export const GridItem = ( { columnSpan = 3, children } ) => {
     "col-span-12",
   ];
 
-  return <div className={gridClasses[columnSpan - 1]}>{children}</div>;
+  const itemClass = [gridClasses[columnSpan - 1]];
+  if( className ) itemClass.push( className );
+
+  return <div className={itemClass.join(' ')}>{children}</div>;
 }
 
 export const Grid = ( {className, children } ) => {
