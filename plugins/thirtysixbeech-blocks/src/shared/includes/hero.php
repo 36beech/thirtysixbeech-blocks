@@ -3,9 +3,13 @@
 /**
  * Builds the front-end markup for the Hero block.
  *
+ * $heading and $description are echoed as-is (not escaped) — callers are
+ * responsible for supplying safe markup, since some callers pass already
+ * block-rendered HTML (e.g. InnerBlocks content) rather than plain text.
+ *
  * @param int|null    $background_image Background image attachment ID.
- * @param string|null $heading          Heading text.
- * @param string|null $description      Description text.
+ * @param string|null $heading          Heading markup.
+ * @param string|null $description      Description markup.
  * @return string HTML markup.
  */
 function hero($background_image, $heading, $description)
@@ -30,10 +34,10 @@ function hero($background_image, $heading, $description)
       <div class="tsb-hero__body-container">
         <div class="tsb-hero__body-inner">
           <?php if ($heading) : ?>
-            <h2 class="tsb-hero__heading"><?php echo esc_html($heading); ?></h2>
+            <?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
           <?php endif; ?>
           <?php if ($description) : ?>
-            <p class="tsb-hero__description"><?php echo esc_html($description); ?></p>
+            <?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
           <?php endif; ?>
         </div>
       </div>

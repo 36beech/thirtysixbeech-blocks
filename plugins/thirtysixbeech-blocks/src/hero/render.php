@@ -11,8 +11,8 @@
  */
 require_once( __DIR__ . "/../shared/includes/hero.php" );
 $background_image = $attributes['backgroundImage'];
-$heading = $attributes['heading'];
-$description = $attributes['description'];
+$heading           = $attributes['heading'] ? '<h2 class="tsb-hero__heading">' . esc_html( $attributes['heading'] ) . '</h2>' : '';
+$description       = $attributes['description'] ? '<p class="tsb-hero__description">' . esc_html( $attributes['description'] ) . '</p>' : '';
 ?>
 <header <?php echo get_block_wrapper_attributes(); ?>>
 	<?php echo hero( $background_image, $heading, $description ); ?>

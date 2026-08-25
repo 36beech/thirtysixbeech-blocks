@@ -31,9 +31,20 @@
     "shadow": true
   },
   "attributes": {
-    "withinSection": { 
-      "type": "boolean", 
-      "default": true 
+    "style": {
+      "type": "object",
+      "default": {
+        "spacing": {
+          "padding": {
+            "top": "100px",
+            "bottom": "100px"
+          }
+        }
+      }
+    },
+    "withinSection": {
+      "type": "boolean",
+      "default": true
     },
     "semanticTag": {
       "type": "string",

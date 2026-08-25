@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
@@ -9,7 +10,10 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+require_once(__DIR__ . "/../shared/includes/hero.php");
+$background_image = get_post_thumbnail_id();
+$heading = $content;
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Portfolio Hero – hello from a dynamic block!', 'portfolio-hero' ); ?>
-</p>
+<div <?php echo get_block_wrapper_attributes(); ?>>
+	<?php echo hero($background_image, $heading, ''); ?>
+</div>
