@@ -10,6 +10,7 @@
 
 @theme {
 	--spacing-tsb: 2rem;
+	--spacing-tsb-half: calc(var(--spacing-tsb) / 2);
 }
 
 .tsb-accordion-summary-carat {
@@ -54,5 +55,5 @@
 }
 
 .tsb-gallery-row__image {
-	@apply h-full;
+	@apply h-full max-w-full;
 }

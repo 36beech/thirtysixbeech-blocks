@@ -66,7 +66,9 @@ export default function Edit({ attributes, setAttributes }) {
 				</Panel>
 			</InspectorControls>
 			<div { ...useBlockProps() }>
-				<p>Columns: {columns}</p>
+				<div className="tsb-inner-blocks">
+					<p>Columns: {columns}</p>
+				</div>
 			</div>
 		</>
 	);

@@ -60,6 +60,10 @@
     "partialBackgroundCoverage": {
       "type": "number",
       "default": 50
+    },
+    "backgroundImage": {
+      "type": "number",
+      "default": null
     }
   },
   "providesContext": {

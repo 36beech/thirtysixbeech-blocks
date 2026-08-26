@@ -43,7 +43,7 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 import { Section } from "@shared/react/Section";
-import { ColorSelector } from "@shared/react";
+import { ColorSelector, MediaSelector } from "@shared/react";
 
 export default function Edit({ attributes, setAttributes }) {
 	const {
@@ -51,6 +51,7 @@ export default function Edit({ attributes, setAttributes }) {
 		hasPartialBackground,
 		partialBackgroundColor,
 		partialBackgroundCoverage,
+		backgroundImage
 	} = attributes;
 
 	const TAGS = [
@@ -100,40 +101,17 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Background Element")}>
-					<ToggleControl
-						label={__("Has background element")}
-						checked={hasPartialBackground}
-						onChange={() =>
-							setAttributes({ hasPartialBackground: !hasPartialBackground })
-						}
-						__nextHasNoMarginBottom
-					></ToggleControl>
-					{hasPartialBackground && (
-						<>
-							<BaseControl
-								label={__("Background Element Color")}
-								__nextHasNoMarginBottom
-							>
-								<ColorSelector
-									value={partialBackgroundColor}
-									onChange={(color) => {
-										setAttributes({ partialBackgroundColor: color });
-									}}
-								/>
-							</BaseControl>
-							<RangeControl
-								label={__("Background Element Percentage")}
-								value={partialBackgroundCoverage}
-								max={100}
-								min={0}
-								onChange={(newValue) =>
-									setAttributes({ partialBackgroundCoverage: newValue })
-								}
-								__nextHasNoMarginBottom
-							/>
-						</>
-					)}
+				<PanelBody title={__("Background")}>
+					<MediaSelector 
+						value={backgroundImage} 
+						onSelect={(item) => {
+							setAttributes({
+								backgroundImage: item.id,
+							});
+						}}
+						onRemove={() => setAttributes({ backgroundImage: null })}
+						className="min-h-48"
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<BlockControls>
