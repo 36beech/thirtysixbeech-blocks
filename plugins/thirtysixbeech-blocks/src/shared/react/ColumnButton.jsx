@@ -25,9 +25,12 @@ export const ColumnButton = ({columns = 2, label = null, onClick, selected = fal
   const columnsCount = getColumnsCount(columns);
 
   const buttonClasses = [
-    "flex flex-col w-full aspect-305/200 rounded-lg items-center uppercase font-semibold bg-gray-400 cursor-pointer",
+    "flex flex-col w-full aspect-305/200 rounded-lg items-center uppercase font-semibold bg-gray-400 cursor-pointer duration-300",
     size === "large" ? "p-5 gap-4" : "p-2 gap-1 text-[10px]"
   ];
+
+  if( selected ) buttonClasses.push( "outline-solid outline-red-400" )
+
   const buttonClassesInner = [
     gridClass(columns),
     "grid grow w-full rounded-lg",
