@@ -22,7 +22,7 @@ export const GridItem = ( { columnSpan = 3, className = "", children } ) => {
 
 export const Grid = ( {className, children } ) => {
   const gridClasses = [
-    "grid grid-cols-12 gap-8",
+    "grid grid-cols-12 gap-tsb",
     "max-sm:flex max-sm:flex-col-reverse"
   ];
   if(className) {

@@ -91,7 +91,7 @@ export default function Edit({ attributes, setAttributes }) {
 				</Panel>
 			</InspectorControls>
 			<div { ...useBlockProps() }>
-				<div className="grid grid-cols-12 gap-8 py-4 min-h-100 border border-gray-100">
+				<div className="tsb-gallery-row grid grid-cols-12 gap-tsb py-4 min-h-100 border border-gray-100">
 					<GalleryRow 
 						columns={columns}
 						slot1={(
