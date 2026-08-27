@@ -25,6 +25,7 @@ import {
 	BaseControl,
 	RangeControl,
 } from "@wordpress/components";
+import { useMemo } from "react";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -44,6 +45,7 @@ import "./editor.scss";
  */
 import { Section } from "@shared/react/Section";
 import { ColorSelector, MediaSelector } from "@shared/react";
+import { useImage } from "@shared/react/useImage";
 
 export default function Edit({ attributes, setAttributes }) {
 	const {
@@ -53,6 +55,9 @@ export default function Edit({ attributes, setAttributes }) {
 		partialBackgroundCoverage,
 		backgroundImage
 	} = attributes;
+
+	const image = useImage(backgroundImage);
+	const imageUrl = image?.media_details?.sizes?.medium_large?.source_url ?? null;
 
 	const TAGS = [
 		{
@@ -82,7 +87,7 @@ export default function Edit({ attributes, setAttributes }) {
 		},
 	];
 
-	const options = TAGS.map(({ key, icon, label }) => ({
+	const options = useMemo(() => TAGS.map(({ key, icon, label }) => ({
 		icon: (
 			<div style={{ width: "96px", textAlign: "center" }}>
 				<code>{icon}</code>
@@ -91,7 +96,7 @@ export default function Edit({ attributes, setAttributes }) {
 		title: label,
 		onClick: () => setAttributes({ semanticTag: key }),
 		isActive: semanticTag === key,
-	}));
+	})), []);
 
 	const SelectedIcon = ({ tag }) => {
 		const match = TAGS.find((t) => t.key === tag) || TAGS[0];
@@ -125,7 +130,13 @@ export default function Edit({ attributes, setAttributes }) {
 				</ToolbarGroup>
 			</BlockControls>
 			<div {...useBlockProps()}>
-				<Section tag={semanticTag} className="relative z-10">
+				<Section tag={semanticTag} className={`tsb-section${imageUrl ? " has-background" : ""} relative z-10`}>
+					{imageUrl && (
+						<div className="tsb-section__background absolute top-0 left-0 z-0 w-full h-full">
+							<img src={imageUrl} className="w-full h-full object-cover relative z-0" /> 
+							<span className="tsb-section__background-overlay w-full h-full absolute top-0 left-0"></span>
+						</div>
+					)}
 					<div className="tsb-inner-blocks">
 						<InnerBlocks />
 					</div>

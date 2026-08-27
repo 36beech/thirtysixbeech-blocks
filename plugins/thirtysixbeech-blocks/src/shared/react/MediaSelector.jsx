@@ -11,12 +11,10 @@ export const MediaSelector = ({
 	onRemove,
 	showIcon = true,
 }) => {
-	console.log(className);
 	const image = useImage(value);
-	const sourceUrl = image?.media_details?.sizes?.medium_large?.source_url;
+	const sourceUrl = image?.media_details?.sizes?.medium_large?.source_url ?? null;
 	const classes = ["w-full h-full relative"];
 	if (className) classes.push(className);
-	console.log(classes);
 	return (
 		<div className={classes.join(" ")}>
 			{sourceUrl && (
