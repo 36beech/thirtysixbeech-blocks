@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thirtysixbeech-blocks/testimonial",
+  "version": "0.1.0",
+  "title": "Testimonial",
+  "category": "thirtysixbeech-content",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "color": {
+      "text": true,
+      "background": false
+    },
+    "typography": {
+        "textAlign": true
+    }
+  },
+  "attributes": {
+    "quote": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "authorTitle": {
+      "type": "string"
+    }
+  },
+  "textdomain": "testimonial",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}

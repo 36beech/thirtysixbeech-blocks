@@ -130,13 +130,13 @@ export default function Edit({ attributes, setAttributes }) {
 				</ToolbarGroup>
 			</BlockControls>
 			<div {...useBlockProps()}>
+				{imageUrl && (
+					<div className="tsb-section__background absolute top-0 left-0 z-0 w-full h-full">
+						<img src={imageUrl} className="w-full h-full object-cover relative z-0" /> 
+						<span className="tsb-section__background-overlay w-full h-full absolute top-0 left-0"></span>
+					</div>
+				)}
 				<Section tag={semanticTag} className={`tsb-section${imageUrl ? " has-background" : ""} relative z-10`}>
-					{imageUrl && (
-						<div className="tsb-section__background absolute top-0 left-0 z-0 w-full h-full">
-							<img src={imageUrl} className="w-full h-full object-cover relative z-0" /> 
-							<span className="tsb-section__background-overlay w-full h-full absolute top-0 left-0"></span>
-						</div>
-					)}
 					<div className="tsb-inner-blocks">
 						<InnerBlocks />
 					</div>
