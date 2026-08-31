@@ -16,9 +16,13 @@ $raw_tag      = $attributes['semanticTag'] ?? 'section';
 $tag          = in_array($raw_tag, $allowed_tags, true) ? $raw_tag : 'section';
 
 $background_image  = $attributes['backgroundImage'] ?? null;
-$background_url = $background_image ? wp_get_attachment_image_url($background_image, 'full') : '';
+$background_url = $background_image ? wp_get_attachment_image_url($background_image, 'full') : null;
 
-$block_class = "tsb-section relative px-5" . (!empty($background_url) ? " has-background" : "");
+$block_class = "tsb-section relative px-5";
+if (!empty($background_url)):
+	$block_class .= " tsb-has-background";
+endif;
+
 $block_attributes = get_block_wrapper_attributes(array("class" => $block_class));
 ?>
 <<?php echo esc_attr($tag); ?> <?php echo $block_attributes; ?>>

@@ -19,7 +19,14 @@ import {
 	InspectorControls,
 	LinkControl,
 } from "@wordpress/block-editor";
-import { ToolbarGroup, ToolbarButton, PanelBody } from "@wordpress/components";
+import {
+	ToolbarGroup,
+	ToolbarButton,
+	PanelBody,
+	ToggleControl,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+} from "@wordpress/components";
 import { mobile, desktop } from "@wordpress/icons";
 
 import { useState } from "react";
@@ -45,13 +52,33 @@ import { DimensionSlider } from "../shared/react/DimensionSlider";
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes }) {
-	const { desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth } =
+	const { logoLocation, showMobile, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth } =
 		attributes;
 	const [activeLogo, setActiveLogo] = useState("desktop");
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__("Logo Options", "thirtysix-beech")}>
+					<ToggleGroupControl
+						isBlock
+						label="Logo Location"
+						onChange={(value) => setAttributes({logoLocation: value})}
+						value={logoLocation}
+					>
+						<ToggleGroupControlOption
+							label="Header"
+							value="header"
+						/>
+						<ToggleGroupControlOption
+							label="Footer"
+							value="footer"
+						/>
+					</ToggleGroupControl>
+					<ToggleControl
+						label={__("Show mobile logo")}
+						checked={showMobile}
+						onChange={ () => setAttributes({showMobile: !showMobile}) }
+					/>
 					<DimensionSlider
 						label={__("Desktop logo width")}
 						value={desktopLogoWidth}
@@ -64,8 +91,8 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div {...useBlockProps()}>
-				<LogoIcon style={{ width: "56px", height: "56px" }} />
+			<div {...useBlockProps( {style: { "--logo-m-w": mobileLogoWidth, "--logo-w": desktopLogoWidth } } ) }>
+				<LogoIcon className="max-w-(--logo-m-w) sm:max-w-(--logo-w)" />
 			</div>
 		</>
 	);
