@@ -15,7 +15,13 @@ import {
 	InspectorControls,
 	InnerBlocks,
 } from '@wordpress/block-editor';
-import { Panel, PanelBody, BaseControl } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import {
+	Panel,
+	PanelBody,
+	BaseControl,
+	SelectControl,
+} from '@wordpress/components';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -25,7 +31,7 @@ import { Panel, PanelBody, BaseControl } from '@wordpress/components';
 import './editor.scss';
 import { Grid, GridItem } from '../shared/react/Grid';
 import { ColumnButton } from '../shared/react/ColumnButton';
-
+import { CardGroup } from '../shared/react/CardGroup';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -35,7 +41,32 @@ import { ColumnButton } from '../shared/react/ColumnButton';
  * @return {Element} Element to render.
  */
 export default function Edit( { attributes, setAttributes } ) {
-	const { columns } = attributes;
+	const { columns, postType } = attributes;
+
+	const postTypes = useSelect(
+		( select ) => select( 'core' ).getPostTypes( { per_page: -1 } ),
+		[]
+	);
+
+	const postTypeOptions = [
+		{ label: __( 'Select a post type' ), value: '' },
+		...( postTypes ?? [] )
+			.filter( ( type ) => type.viewable )
+			.map( ( type ) => ( { label: type.name, value: type.slug } ) ),
+	];
+
+	const posts = useSelect(
+		( select ) => {
+			if ( ! postType ) {
+				return null;
+			}
+			return select( 'core' ).getEntityRecords( 'postType', postType, {
+				status: 'publish',
+				per_page: 2,
+			} );
+		},
+		[ postType ]
+	);
 
 	if ( ! columns ) {
 		return (
@@ -75,12 +106,19 @@ export default function Edit( { attributes, setAttributes } ) {
 			</div>
 		);
 	}
-
 	return (
 		<>
 			<InspectorControls>
 				<Panel header="Card Group Settings">
 					<PanelBody>
+						<SelectControl
+							label={ __( 'Post Type' ) }
+							value={ postType ?? '' }
+							options={ postTypeOptions }
+							onChange={ ( value ) =>
+								setAttributes( { postType: value } )
+							}
+						/>
 						<BaseControl label={ __( 'Number of columns' ) }>
 							<div className="grid grid-cols-2 gap-2.5">
 								<div>
@@ -126,9 +164,23 @@ export default function Edit( { attributes, setAttributes } ) {
 				</Panel>
 			</InspectorControls>
 			<div { ...useBlockProps() }>
-				<div className="tsb-inner-blocks">
-					<InnerBlocks />
-				</div>
+				{ postType ? (
+					<CardGroup columns={ columns }>Hello</CardGroup>
+				) : (
+					<>
+						<h3 className="text-center">
+							Please select a post type
+						</h3>
+						<SelectControl
+							label={ __( 'Post Type' ) }
+							value={ postType ?? '' }
+							options={ postTypeOptions }
+							onChange={ ( value ) =>
+								setAttributes( { postType: value } )
+							}
+						/>
+					</>
+				) }
 			</div>
 		</>
 	);

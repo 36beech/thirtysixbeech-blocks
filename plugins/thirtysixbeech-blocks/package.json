@@ -16,7 +16,8 @@
 		"build:css": "postcss src/style.css -o build/assets/css/main.css && postcss src/editor.css -o build/assets/css/editor.css",
 		"watch:css": "postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch",
 		"nb": "node scripts/newblock.mjs",
-		"package": "./package.sh"
+		"package": "./package.sh",
+		"start-css": "npm run build:css; npm run watch:css"
 	},
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.3.0",
