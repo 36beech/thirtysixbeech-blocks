@@ -8,7 +8,7 @@ function card_group($columns, $cards)
     'grid-cols-2 md:grid-cols-4',
   );
 
-  $grid_class = "flex flex-col md:grid gap-tsb {$columnClasses[$columns - 2]}";
+  $grid_class = "flex flex-col md:grid gap-x-tsb gap-y-tsb-half {$columnClasses[$columns - 2]}";
   ob_start();
 ?>
   <div class="<?php echo $grid_class; ?>">
