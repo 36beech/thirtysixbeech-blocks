@@ -68,6 +68,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		[ postType ]
 	);
 
+	console.log( posts );
+
 	if ( ! columns ) {
 		return (
 			<div { ...useBlockProps() }>
@@ -164,8 +166,12 @@ export default function Edit( { attributes, setAttributes } ) {
 				</Panel>
 			</InspectorControls>
 			<div { ...useBlockProps() }>
-				{ postType ? (
-					<CardGroup columns={ columns }>Hello</CardGroup>
+				{ postType && posts ? (
+					<CardGroup columns={ columns }>
+						{ posts.map( ( post ) => (
+							<span>Hello</span>
+						) ) }
+					</CardGroup>
 				) : (
 					<>
 						<h3 className="text-center">
