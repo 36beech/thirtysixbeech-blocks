@@ -10,18 +10,16 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import {
-	useBlockProps,
-	InspectorControls,
-	InnerBlocks,
-} from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import {
 	Panel,
 	PanelBody,
-	BaseControl,
 	SelectControl,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
+import { InputControl, Stack } from '@wordpress/ui';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -29,9 +27,10 @@ import {
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
-import { Grid, GridItem } from '../shared/react/Grid';
-import { ColumnButton } from '../shared/react/ColumnButton';
-import { CardGroup } from '../shared/react/CardGroup';
+import { ColumnButtons } from '../shared/react/ColumnButton';
+import { Card, CardGroup } from '../shared/react/Card';
+import { useEffect, useState } from 'react';
+import { CheckboxGroup } from '../shared/react/CheckboxGroup';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -40,8 +39,39 @@ import { CardGroup } from '../shared/react/CardGroup';
  *
  * @return {Element} Element to render.
  */
+
+const columnOptions = [
+	{
+		columns: 2,
+	},
+	{
+		columns: 3,
+	},
+	{
+		columns: 4,
+	},
+	{
+		columns: 'flex',
+		label: __( 'Flex Count' ),
+	},
+];
+
+export const roundToNearestFactor = ( x, y ) => {
+	if ( x <= y ) return y;
+	return Math.round( x / y ) * y;
+};
+
 export default function Edit( { attributes, setAttributes } ) {
-	const { columns, postType } = attributes;
+	const {
+		columns,
+		postType,
+		postsPerPage,
+		pagination,
+		show,
+		datePrefix,
+		dateFormat,
+	} = attributes;
+	const [ selectedShowOptions, setSelectedShowOptions ] = useState( [] );
 
 	const postTypes = useSelect(
 		( select ) => select( 'core' ).getPostTypes( { per_page: -1 } ),
@@ -49,11 +79,15 @@ export default function Edit( { attributes, setAttributes } ) {
 	);
 
 	const postTypeOptions = [
-		{ label: __( 'Select a post type' ), value: '' },
+		{ label: __( 'Current Query' ), value: '' },
 		...( postTypes ?? [] )
 			.filter( ( type ) => type.viewable )
 			.map( ( type ) => ( { label: type.name, value: type.slug } ) ),
 	];
+
+	const postTypeHelp = __(
+		'By default, this shows posts from the query already running on this page. Select a specific post type to override that and pull from a different source instead.'
+	);
 
 	const posts = useSelect(
 		( select ) => {
@@ -68,7 +102,33 @@ export default function Edit( { attributes, setAttributes } ) {
 		[ postType ]
 	);
 
-	console.log( posts );
+	const columnCount = typeof columns === 'number' ? columns : 4;
+
+	useEffect( () => {
+		setAttributes( {
+			postsPerPage: roundToNearestFactor( postsPerPage, columnCount ),
+		} );
+	}, [ columns ] );
+
+	useEffect( () => {
+		const showOptions = [
+			{ label: 'Date', value: 'date' },
+			{ label: 'Author', value: 'author' },
+			{ label: 'Title', value: 'title' },
+			{ label: 'Excerpt', value: 'excerpt' },
+			{ label: 'Read More', value: 'readmore' },
+			{ label: 'Featured Image', value: 'image' },
+		];
+
+		const selected = showOptions.map( ( option ) => {
+			return {
+				...option,
+				checked: show?.includes( option.value ) ?? false,
+			};
+		} );
+
+		setSelectedShowOptions( selected );
+	}, [ show ] );
 
 	if ( ! columns ) {
 		return (
@@ -76,116 +136,103 @@ export default function Edit( { attributes, setAttributes } ) {
 				<h3 className="text-center mb-4">
 					Please select the number of columns
 				</h3>
-				<Grid>
-					<GridItem>
-						<ColumnButton
-							columns={ 2 }
-							onClick={ () => setAttributes( { columns: 2 } ) }
-						/>
-					</GridItem>
-					<GridItem>
-						<ColumnButton
-							columns={ 3 }
-							onClick={ () => setAttributes( { columns: 3 } ) }
-						/>
-					</GridItem>
-					<GridItem>
-						<ColumnButton
-							columns={ 4 }
-							onClick={ () => setAttributes( { columns: 4 } ) }
-						/>
-					</GridItem>
-					<GridItem>
-						<ColumnButton
-							columns="flex"
-							label={ __( 'Flex Count' ) }
-							onClick={ () =>
-								setAttributes( { columns: 'flex' } )
-							}
-						/>
-					</GridItem>
-				</Grid>
+				<ColumnButtons
+					location="editor"
+					options={ columnOptions }
+					selected={ columns }
+					onSelect={ ( value ) =>
+						setAttributes( { columns: value } )
+					}
+				/>
 			</div>
 		);
 	}
+
+	const handleSelectCardOptions = ( value, checked ) => {
+		const newValue = checked
+			? [ ...new Set( [ ...show, value ] ) ]
+			: show.filter( ( v ) => v !== value );
+		setAttributes( { show: newValue } );
+	};
+
 	return (
 		<>
 			<InspectorControls>
 				<Panel header="Card Group Settings">
-					<PanelBody>
-						<SelectControl
-							label={ __( 'Post Type' ) }
-							value={ postType ?? '' }
-							options={ postTypeOptions }
-							onChange={ ( value ) =>
-								setAttributes( { postType: value } )
-							}
-						/>
-						<BaseControl label={ __( 'Number of columns' ) }>
-							<div className="grid grid-cols-2 gap-2.5">
-								<div>
-									<ColumnButton
-										columns={ 2 }
-										onClick={ () =>
-											setAttributes( { columns: 2 } )
-										}
-										size="small"
-									/>
-								</div>
-								<div>
-									<ColumnButton
-										columns={ 3 }
-										onClick={ () =>
-											setAttributes( { columns: 3 } )
-										}
-										size="small"
-									/>
-								</div>
-								<div>
-									<ColumnButton
-										columns={ 4 }
-										onClick={ () =>
-											setAttributes( { columns: 4 } )
-										}
-										size="small"
-									/>
-								</div>
-								<div>
-									<ColumnButton
-										columns="flex"
-										label={ __( 'Flex Count' ) }
-										onClick={ () =>
-											setAttributes( { columns: 'flex' } )
-										}
-										size="small"
-									/>
-								</div>
-							</div>
-						</BaseControl>
+					<PanelBody
+						title={ __( 'Card Group Settings' ) }
+						initialOpen={ true }
+					>
+						<Stack direction="column" gap="lg">
+							<SelectControl
+								label={ __( 'Post Type' ) }
+								help={ postTypeHelp }
+								value={ postType ?? '' }
+								options={ postTypeOptions }
+								onChange={ ( value ) =>
+									setAttributes( { postType: value } )
+								}
+							/>
+							<ColumnButtons
+								options={ columnOptions }
+								selected={ columns }
+								onSelect={ ( value ) =>
+									setAttributes( { columns: value } )
+								}
+							/>
+							<InputControl
+								label={ __( 'Posts per page' ) }
+								value={ postsPerPage }
+								type="number"
+								step={ columnCount }
+								onValueChange={ ( value ) => {
+									setAttributes( { postsPerPage: value } );
+								} }
+							/>
+							<ToggleGroupControl
+								value={ pagination }
+								label={ __( 'Pagination Style' ) }
+								help={ __(
+									'Choose how visitors move through additional posts — numbered pagination, or a button that loads more via AJAX.'
+								) }
+								onChange={ ( value ) =>
+									setAttributes( { pagination: value } )
+								}
+								isBlock
+							>
+								<ToggleGroupControlOption
+									label="Pagination"
+									value={ true }
+								/>
+								<ToggleGroupControlOption
+									label="Load More"
+									value={ false }
+								/>
+							</ToggleGroupControl>
+						</Stack>
+					</PanelBody>
+					<PanelBody
+						title={ __( 'Card Settings' ) }
+						initialOpen={ true }
+					>
+						<Stack direction="column" gap="lg">
+							<CheckboxGroup
+								options={ selectedShowOptions }
+								label={ __( 'Show in card:' ) }
+								onCheck={ handleSelectCardOptions }
+							/>
+						</Stack>
 					</PanelBody>
 				</Panel>
 			</InspectorControls>
 			<div { ...useBlockProps() }>
-				{ postType && posts ? (
+				<p>Query</p>
+				{ posts && (
 					<CardGroup columns={ columns }>
 						{ posts.map( ( post ) => (
 							<Card key={ post.id } />
 						) ) }
 					</CardGroup>
-				) : (
-					<>
-						<h3 className="text-center">
-							Please select a post type
-						</h3>
-						<SelectControl
-							label={ __( 'Post Type' ) }
-							value={ postType ?? '' }
-							options={ postTypeOptions }
-							onChange={ ( value ) =>
-								setAttributes( { postType: value } )
-							}
-						/>
-					</>
 				) }
 			</div>
 		</>

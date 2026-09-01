@@ -15,7 +15,12 @@ import {
 	InspectorControls,
 	InnerBlocks,
 } from '@wordpress/block-editor';
-import { Panel, PanelBody, BaseControl } from '@wordpress/components';
+import {
+	Panel,
+	PanelBody,
+	BaseControl,
+	ToggleControl,
+} from '@wordpress/components';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.

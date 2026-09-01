@@ -16,7 +16,35 @@
 			"type": "text"
 		},
 		"columns": {
-			"type": "text"
+			"type": "text",
+			"default": null
+		},
+		"postsPerPage": {
+			"type": "number",
+			"default": 10
+		},
+		"pagination": {
+			"type": "boolean",
+			"default": false
+		},
+		"show": {
+			"type": "array",
+			"default": [
+				"date",
+				"author",
+				"title",
+				"excerpt",
+				"readmore",
+				"image"
+			]
+		},
+		"datePrefix": {
+			"type": "text",
+			"default": "Posted"
+		},
+		"dateFormat": {
+			"type": "text",
+			"default": "F j Y"
 		}
 	},
 	"textdomain": "post-listing-cards",
