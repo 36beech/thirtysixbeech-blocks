@@ -169,7 +169,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				{ postType && posts ? (
 					<CardGroup columns={ columns }>
 						{ posts.map( ( post ) => (
-							<span>Hello</span>
+							<Card key={ post.id } />
 						) ) }
 					</CardGroup>
 				) : (
