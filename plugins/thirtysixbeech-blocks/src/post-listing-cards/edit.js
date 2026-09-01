@@ -221,6 +221,20 @@ export default function Edit( { attributes, setAttributes } ) {
 								label={ __( 'Show in card:' ) }
 								onCheck={ handleSelectCardOptions }
 							/>
+							<InputControl
+								label={ __( 'Date Prefix' ) }
+								value={ datePrefix }
+								onChange={ ( value ) =>
+									setAttributes( { datePrefix: value } )
+								}
+							/>
+							<InputControl
+								label={ __( 'Date Format' ) }
+								value={ dateFormat }
+								onChange={ ( value ) =>
+									setAttributes( { dateFormat: value } )
+								}
+							/>
 						</Stack>
 					</PanelBody>
 				</Panel>
