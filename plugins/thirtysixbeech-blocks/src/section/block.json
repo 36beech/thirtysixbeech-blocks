@@ -1,78 +1,82 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "thirtysixbeech-blocks/section",
-  "version": "0.1.0",
-  "title": "Section",
-  "category": "thirtysixbeech-content",
-  "icon": "smiley",
-  "description": "Example block scaffolded with Create Block tool.",
-  "example": {},
-  "supports": {
-    "html": false,
-    "anchor": true,
-    "color": {
-      "background": true,
-      "gradients": true,
-      "link": false,
-      "text": true
-    },
-    "spacing": {
-      "padding": ["top", "bottom"],
-      "margin": ["top", "bottom"],
-      "units": ["px", "em", "rem"]
-    },
-    "layout": {
-      "allowSwitching": false,
-      "default": {
-        "type": "constrained"
-      }
-    },
-    "shadow": true
-  },
-  "attributes": {
-    "style": {
-      "type": "object",
-      "default": {
-        "spacing": {
-          "padding": {
-            "top": "100px",
-            "bottom": "100px"
-          }
-        }
-      }
-    },
-    "withinSection": {
-      "type": "boolean",
-      "default": true
-    },
-    "semanticTag": {
-      "type": "string",
-      "default": "section"
-    },
-    "hasPartialBackground": {
-      "type": "boolean",
-      "default": false
-    },
-    "partialBackgroundColor": {
-      "type": "string"
-    },
-    "partialBackgroundCoverage": {
-      "type": "number",
-      "default": 50
-    },
-    "backgroundImage": {
-      "type": "number",
-      "default": null
-    }
-  },
-  "providesContext": {
-    "thirtysixbeech/withinSection": "withinSection"
-  },
-  "textdomain": "section",
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
-  "render": "file:./render.php",
-  "viewScript": "file:./view.js"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/section",
+	"version": "0.1.0",
+	"title": "Section",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"color": {
+			"background": true,
+			"gradients": true,
+			"link": false,
+			"text": true
+		},
+		"spacing": {
+			"padding": [ "top", "bottom" ],
+			"margin": [ "top", "bottom" ],
+			"units": [ "px", "em", "rem" ]
+		},
+		"layout": {
+			"allowSwitching": false,
+			"default": {
+				"type": "constrained"
+			}
+		},
+		"shadow": true
+	},
+	"attributes": {
+		"style": {
+			"type": "object",
+			"default": {
+				"spacing": {
+					"padding": {
+						"top": "100px",
+						"bottom": "100px"
+					}
+				}
+			}
+		},
+		"withinSection": {
+			"type": "boolean",
+			"default": true
+		},
+		"semanticTag": {
+			"type": "string",
+			"default": "section"
+		},
+		"hasPartialBackground": {
+			"type": "boolean",
+			"default": false
+		},
+		"partialBackgroundColor": {
+			"type": "string"
+		},
+		"partialBackgroundCoverage": {
+			"type": "number",
+			"default": 50
+		},
+		"backgroundImage": {
+			"type": "number",
+			"default": null
+		},
+		"fullBrowser": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"providesContext": {
+		"thirtysixbeech/withinSection": "withinSection"
+	},
+	"textdomain": "section",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
 }

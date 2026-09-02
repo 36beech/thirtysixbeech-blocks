@@ -114,6 +114,30 @@ function thirtysixbeech_blocks_modify_block_styles()
 
 add_action('init', 'thirtysixbeech_blocks_modify_block_styles');
 
+function thirtysixbeech_blocks_disable_shortcode_block() {
+	unregister_block_type( 'core/shortcode' );
+}
+add_action( 'init', 'thirtysixbeech_blocks_disable_shortcode_block', 20 );
+
+function thirtysixbeech_blocks_disable_shortcode_block_editor() {
+	// core/shortcode gets hydrated straight into the block-registry data store
+	// (bypassing the public registerBlockType() wrapper), so there's no script
+	// handle we can reliably attach after. Watch the store instead and remove
+	// it the moment it shows up, whenever that turns out to be.
+	wp_add_inline_script(
+		'wp-blocks',
+		"wp.domReady( function() {"
+		. " var unsubscribe = wp.data.subscribe( function() {"
+		. " if ( wp.blocks.getBlockType( 'core/shortcode' ) ) {"
+		. " wp.blocks.unregisterBlockType( 'core/shortcode' );"
+		. " unsubscribe();"
+		. " }"
+		. " } );"
+		. " } );"
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'thirtysixbeech_blocks_disable_shortcode_block_editor' );
+
 function thirtysixbeech_blocks_inline_svg_sprite() {
     static $done = false;
 
@@ -140,3 +164,53 @@ function thirysixbeech_current_year() {
 }
 
 add_shortcode('current_year', 'thirysixbeech_current_year');
+
+/**
+ * [post_date] — outputs a post's date.
+ *
+ * Attributes:
+ *   format  PHP date format string (default: the site's Date Format setting)
+ *   id      Post ID to pull the date from (default: current post)
+ */
+function thirtysixbeech_blocks_post_date_shortcode( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'format' => get_option( 'date_format' ),
+			'id'     => get_the_ID(),
+		),
+		$atts,
+		'post_date'
+	);
+
+	if ( ! $atts['id'] ) {
+		return '';
+	}
+
+	return esc_html( get_the_date( $atts['format'], $atts['id'] ) );
+}
+add_shortcode( 'post_date', 'thirtysixbeech_blocks_post_date_shortcode' );
+
+/**
+ * [post_author] — outputs a post's author display name.
+ *
+ * Attributes:
+ *   id  Post ID to pull the author from (default: current post)
+ */
+function thirtysixbeech_blocks_post_author_shortcode( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'id' => get_the_ID(),
+		),
+		$atts,
+		'post_author'
+	);
+
+	$post = ! empty( $atts['id'] ) ? get_post( $atts['id'] ) : null;
+
+	if ( ! $post ) {
+		return '';
+	}
+
+	return esc_html( get_the_author_meta( 'display_name', $post->post_author ) );
+}
+add_shortcode( 'post_author', 'thirtysixbeech_blocks_post_author_shortcode' );

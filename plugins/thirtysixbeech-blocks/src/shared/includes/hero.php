@@ -24,7 +24,7 @@ function hero($background_image, $heading, $description)
         <img
           src="<?php echo esc_url($background_url); ?>"
           alt=""
-          class="relative z-0 w-full h-full object-cover"
+          class="block relative z-0 w-full h-full object-cover"
           loading="lazy"
           decoding="async" />
       </div>
@@ -34,10 +34,12 @@ function hero($background_image, $heading, $description)
       <div class="tsb-hero__body-container">
         <div class="tsb-hero__body-inner">
           <?php if ($heading) : ?>
-            <?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+            <?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+            ?>
           <?php endif; ?>
           <?php if ($description) : ?>
-            <?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+            <?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+            ?>
           <?php endif; ?>
         </div>
       </div>

@@ -17,25 +17,31 @@ $tag          = in_array($raw_tag, $allowed_tags, true) ? $raw_tag : 'section';
 
 $background_image  = $attributes['backgroundImage'] ?? null;
 $background_url = $background_image ? wp_get_attachment_image_url($background_image, 'full') : null;
+$full_browser = $attributes['fullBrowser'] ?? false;
 
 $block_class = "tsb-section relative px-5";
 if (!empty($background_url)):
 	$block_class .= " tsb-has-background";
 endif;
+if ($full_browser):
+	$block_class .= " w-screen left-1/2 -translate-x-1/2";
+endif;
 
 $block_attributes = get_block_wrapper_attributes(array("class" => $block_class));
 ?>
 <<?php echo esc_attr($tag); ?> <?php echo $block_attributes; ?>>
-	<?php if (!empty($background_url)) : ?>
-		<div class="tsb-section__background absolute top-0 left-0 z-0 w-full h-full">
-			<img
-				src="<?php echo esc_url($background_url); ?>"
-				alt=""
-				class="w-full h-full object-cover relative z-0"
-				loading="lazy"
-				decoding="async" />
-			<span class="tsb-section__background-overlay w-full h-full absolute top-0 left-0"></span>
-		</div>
-	<?php endif; ?>
-	<div class="relative z-10"><?php echo $content; ?></div>
+	<div>
+		<?php if (!empty($background_url)) : ?>
+			<div class="tsb-section__background absolute top-0 left-0 z-0 w-full h-full">
+				<img
+					src="<?php echo esc_url($background_url); ?>"
+					alt=""
+					class="w-full h-full object-cover relative z-0"
+					loading="lazy"
+					decoding="async" />
+				<span class="tsb-section__background-overlay w-full h-full absolute top-0 left-0"></span>
+			</div>
+		<?php endif; ?>
+		<div class="relative z-10"><?php echo $content; ?></div>
+	</div>
 </<?php echo esc_attr($tag); ?>>
