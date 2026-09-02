@@ -31,15 +31,18 @@ function card($card)
       <?php endif; ?>
     </div>
     <div class="tsb-card__body">
-      <?php if (!empty($card['title'])): ?>
-        <h2 class="tsb-card__heading"><?php echo $card['title']; ?></h2>
+      <?php if (!empty($card["eyebrow"])): ?>
+        <div class="tsb-card__eyebrow"><?php echo $card["eyebrow"]; ?></div>
       <?php endif; ?>
       <?php if (!empty($card['title'])): ?>
+        <h3 class="tsb-card__heading"><?php echo $card['title']; ?></h3>
+      <?php endif; ?>
+      <?php if (!empty($card['description'])): ?>
         <p class="tsb-card__description"><?php echo nl2br($card['description']); ?></p>
       <?php endif; ?>
     </div>
     <?php if (!empty($card['link'])): ?>
-      <a class="btn btn-tertiary" href="<?php echo $card['link']; ?>">Learn More</a>
+      <a class="tsb-card__link" href="<?php echo $card['link']; ?>">Learn More</a>
     <?php endif; ?>
   </div>
 <?php
