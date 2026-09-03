@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InnerBlocks, PlainText } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks, RichText } from '@wordpress/block-editor';
 import { createBlock } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { Button } from '@wordpress/ui';
@@ -61,23 +61,34 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 				}
 				body={
 					<>
-						<PlainText
+						<RichText
+							tagName="div"
 							className="tsb-card__eyebrow"
 							value={ overline }
+							onChange={ ( overline ) =>
+								setAttributes( { overline } )
+							}
 							placeholder={ __( 'Overline Text' ) }
-							tagName="div"
+							allowedFormats={ [] }
+							disableLineBreaks
 						/>
-						<PlainText
+						<RichText
+							tagName="h3"
 							className="tsb-card__heading"
 							value={ title }
+							onChange={ ( title ) => setAttributes( { title } ) }
 							placeholder={ __( 'Title Text' ) }
-							tagName="h3"
+							allowedFormats={ [] }
+							disableLineBreaks
 						/>
-						<PlainText
+						<RichText
+							tagName="p"
 							className="tsb-card__description"
 							value={ description }
+							onChange={ ( description ) =>
+								setAttributes( { description } )
+							}
 							placeholder={ __( 'Description' ) }
-							tagName="p"
 						/>
 					</>
 				}
