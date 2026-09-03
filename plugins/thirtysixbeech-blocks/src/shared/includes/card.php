@@ -41,9 +41,9 @@ function card($card)
         <p class="tsb-card__description"><?php echo nl2br($card['description']); ?></p>
       <?php endif; ?>
     </div>
-    <?php if (!empty($card['link'])): ?>
-      <a class="tsb-card__link" href="<?php echo $card['link']; ?>">Learn More</a>
-    <?php endif; ?>
+    <?php if (!empty($card['link'])):
+      echo $card['link'];
+    endif; ?>
   </div>
 <?php
   return ob_get_clean();
