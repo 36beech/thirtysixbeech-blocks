@@ -1,5 +1,11 @@
-export const Card = ( { eyebrow, title, description, link, image } ) => {
-	return <div>Card</div>;
+export const Card = ( { image, body, cta } ) => {
+	return (
+		<div className="tsb-card">
+			<div className="tsb-card__image">{ image }</div>
+			<div className="tsb-card__body">{ body }</div>
+			<div className="tsb-card__cta">{ cta }</div>
+		</div>
+	);
 };
 
 export const CardGroup = ( { columns, children } ) => {
