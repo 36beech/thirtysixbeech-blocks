@@ -27,7 +27,7 @@ function card($card)
   <div class="tsb-card">
     <div class="tsb-card__image">
       <?php if (!empty($card['image'])): ?>
-        <img src="<?php echo $card['image']; ?>" />
+        <img src="<?php echo $card['image']; ?>" class="block h-full w-full object-cover object-center" />
       <?php endif; ?>
     </div>
     <div class="tsb-card__body">

@@ -28,23 +28,25 @@ import { Grid, GridItem } from '../shared/react/Grid';
  *
  * @return {Element} Element to render.
  */
-export default function Edit({attributes, setAttributes}) {
+export default function Edit( { attributes, setAttributes } ) {
 	const { backgroundImage } = attributes;
 	return (
-		<Grid className="items-center">
-			<GridItem columnSpan={4}>
-				<InnerBlocks />
-			</GridItem>
-			<GridItem columnSpan={8}>
-				<MediaSelector 
-					value={backgroundImage} 
-					onSelect={(item) => {
-						setAttributes({
-							backgroundImage: item.id,
-						});
-					}}
-				/>
-			</GridItem>
-		</Grid>
+		<div { ...useBlockProps() }>
+			<Grid className="items-center">
+				<GridItem columnSpan={ 4 }>
+					<InnerBlocks />
+				</GridItem>
+				<GridItem columnSpan={ 8 }>
+					<MediaSelector
+						value={ backgroundImage }
+						onSelect={ ( item ) => {
+							setAttributes( {
+								backgroundImage: item.id,
+							} );
+						} }
+					/>
+				</GridItem>
+			</Grid>
+		</div>
 	);
 }
