@@ -5,17 +5,28 @@
  * wp-content/plugins and wp-content/themes folders (macOS).
  *
  * Usage:
- *   node tools/create-symlink.js /path/to/site-root
+ *   node tools/create-symlink.js /path/to/site-root [--dist]
+ *
+ *   --dist   Point the plugin symlink at plugins/thirtysixbeech-blocks/dist/
+ *            thirtysixbeech-blocks (the packaged shape — no src/, node_modules/,
+ *            etc.) instead of the full plugin source folder. Requires that
+ *            folder to already exist — run `npm run package` or `npm run start`
+ *            (with NO_ZIP=1) in plugins/thirtysixbeech-blocks first.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
+const useDist = process.argv.includes('--dist');
+
+const PLUGIN_SOURCE = useDist
+	? path.join(REPO_ROOT, 'plugins', 'thirtysixbeech-blocks', 'dist', 'thirtysixbeech-blocks')
+	: path.join(REPO_ROOT, 'plugins', 'thirtysixbeech-blocks');
 
 const LINKS = [
 	{
-		source: path.join(REPO_ROOT, 'plugins', 'thirtysixbeech-blocks'),
+		source: PLUGIN_SOURCE,
 		destDir: 'wp-content/plugins',
 		name: 'thirtysixbeech-blocks',
 	},
@@ -33,6 +44,11 @@ function fail(message) {
 
 function createSymlink({ source, destDir, name }, siteRoot) {
 	if (!fs.existsSync(source)) {
+		if (useDist && name === 'thirtysixbeech-blocks') {
+			fail(
+				`Source not found: ${source}\nRun "npm run package" (or NO_ZIP=1 npm run start) in plugins/thirtysixbeech-blocks first to build it.`
+			);
+		}
 		fail(`Source not found: ${source}`);
 	}
 
@@ -63,7 +79,7 @@ function createSymlink({ source, destDir, name }, siteRoot) {
 function main() {
 	const siteRootArg = process.argv[2];
 	if (!siteRootArg) {
-		fail('Missing site root path.\nUsage: node tools/create-symlink.js /path/to/site-root');
+		fail('Missing site root path.\nUsage: node tools/create-symlink.js /path/to/site-root [--dist]');
 	}
 
 	const siteRoot = path.resolve(siteRootArg);

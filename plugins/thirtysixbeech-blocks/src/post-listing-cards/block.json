@@ -1,0 +1,55 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/post-listing-cards",
+	"version": "0.1.0",
+	"title": "Post Listing Cards",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"postType": {
+			"type": "text"
+		},
+		"columns": {
+			"type": "text",
+			"default": null
+		},
+		"postsPerPage": {
+			"type": "number",
+			"default": 10
+		},
+		"pagination": {
+			"type": "boolean",
+			"default": false
+		},
+		"show": {
+			"type": "array",
+			"default": [
+				"date",
+				"author",
+				"title",
+				"excerpt",
+				"readmore",
+				"image"
+			]
+		},
+		"datePrefix": {
+			"type": "text",
+			"default": "Posted"
+		},
+		"dateFormat": {
+			"type": "text",
+			"default": "F j Y"
+		}
+	},
+	"textdomain": "post-listing-cards",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

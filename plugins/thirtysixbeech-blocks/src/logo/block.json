@@ -12,8 +12,8 @@
     "html": false
   },
   "attributes": {
-    "desktopLogo": { "type": "number", "default": null },
-    "mobileLogo": { "type": "number", "default": null },
+    "logoLocation": { "type": "string", "default": "header"},
+    "showMobile": { "type": "boolean", "default": false },
     "desktopLogoWidth": { "type": "string", "default": "170px" },
     "mobileLogoWidth": { "type": "string", "default": "36px" },
     "link": { "type": "string" }

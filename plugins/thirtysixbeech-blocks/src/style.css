@@ -8,6 +8,11 @@
 @source "./**/*.{js,jsx,php}" not "./**/edit.js";
 @source inline("z-20");
 
+@theme {
+	--spacing-tsb: 2rem;
+	--spacing-tsb-half: calc(var(--spacing-tsb) / 2);
+}
+
 .tsb-accordion-summary-carat {
 	@apply -scale-y-100 transition-all duration-300;
 
@@ -47,4 +52,15 @@
 
 .is-style-contain img {
 	@apply object-contain;
+}
+
+.tsb-gallery-row__image {
+	@apply h-full max-w-full;
+}
+
+.tsb-flex-wrapper > .block-editor-inner-blocks,
+.tsb-flex-wrapper
+	> .block-editor-inner-blocks
+	> .block-editor-block-list__layout {
+	@apply contents;
 }
