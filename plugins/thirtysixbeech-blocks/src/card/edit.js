@@ -137,27 +137,3 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		</div>
 	);
 }
-
-/*
-  <div class="tsb-card">
-    <div class="tsb-card__image">
-      <?php if (!empty($card['image'])): ?>
-        <img src="<?php echo $card['image']; ?>" />
-      <?php endif; ?>
-    </div>
-    <div class="tsb-card__body">
-      <?php if (!empty($card["eyebrow"])): ?>
-        <div class="tsb-card__eyebrow"><?php echo $card["eyebrow"]; ?></div>
-      <?php endif; ?>
-      <?php if (!empty($card['title'])): ?>
-        <h3 class="tsb-card__heading"><?php echo $card['title']; ?></h3>
-      <?php endif; ?>
-      <?php if (!empty($card['description'])): ?>
-        <p class="tsb-card__description"><?php echo nl2br($card['description']); ?></p>
-      <?php endif; ?>
-    </div>
-    <?php if (!empty($card['link'])): ?>
-      <a class="tsb-card__link" href="<?php echo $card['link']; ?>">Learn More</a>
-    <?php endif; ?>
-  </div>
-	*/
