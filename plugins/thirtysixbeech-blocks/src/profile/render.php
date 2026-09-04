@@ -19,10 +19,10 @@ $image = !empty($portrait) ? wp_get_attachment_image($portrait, 'full', false, a
 )) : null;
 ?>
 <article <?php echo get_block_wrapper_attributes(array("class" => "tsb-profile flex max-sm:flex-col gap-tsb items-center")); ?>>
-	<div className="tsb-profile__portrait">
+	<div class="tsb-profile__portrait">
 		<?php if ($image) echo $image; ?>
 	</div>
-	<div className="tsb-profile__body">
+	<div class="tsb-profile__body">
 		<?php if ($name): ?>
 			<h3 class="tsb-profile__name"><?php echo $name; ?></h3>
 		<?php endif; ?>
