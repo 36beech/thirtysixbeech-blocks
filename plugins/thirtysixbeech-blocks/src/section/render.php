@@ -42,6 +42,6 @@ $block_attributes = get_block_wrapper_attributes(array("class" => $block_class))
 				<span class="tsb-section__background-overlay w-full h-full absolute top-0 left-0"></span>
 			</div>
 		<?php endif; ?>
-		<div class="relative z-10"><?php echo $content; ?></div>
+		<div class="tsb-section__inner relative z-10"><?php echo $content; ?></div>
 	</div>
 </<?php echo esc_attr($tag); ?>>

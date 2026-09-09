@@ -56,6 +56,11 @@ foreach ($block->inner_blocks as $profile_block) {
 					<?php endforeach; ?>
 				</div>
 			</div>
+			<div class="flex gap-2 my-4">
+				<div class="wp-block-button is-style-link"><button class="tsb-profile-carousel__prev wp-block-button__link wp-element-button">Prev</button></div>
+				<div class="tsb-carousel__navigation tsb-profile-carousel__pagination swiper-pagination"></div>
+				<div class="wp-block-button is-style-link"><button class="tsb-profile-carousel__next wp-block-button__link wp-element-button">Next</button></div>
+			</div>
 		</div>
 	</div>
 </div>

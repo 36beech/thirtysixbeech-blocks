@@ -64,3 +64,53 @@
 	> .block-editor-block-list__layout {
 	@apply contents;
 }
+
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+	&.tsb-carousel__navigation {
+		@apply w-auto static;
+	}
+}
+
+.wp-block-thirtysixbeech-blocks-logo {
+	@apply shrink-0 grow-0;
+}
+
+.wp-block-thirtysixbeech-blocks-logo svg {
+	@apply fill-current;
+}
+
+.site-header .tsb-section__inner {
+	@apply flex max-md:justify-between md:grid gap-tsb;
+	grid-template-columns: auto 1fr auto;
+}
+
+.main-navigation {
+	@apply max-md:flex-col;
+
+	.tsb-section__inner {
+		@apply max-md:static;
+	}
+}
+
+.mobile-navigation__menu {
+	@apply max-md:w-screen max-md:h-screen max-md:absolute max-md:top-0 max-md:left-0 max-md:z-1000 translate-x-full transition-all duration-300;
+
+	.menu-open & {
+		@apply translate-x-0;
+	}
+}
+
+.main-header .tsb-section__inner {
+	@apply max-md:static;
+}
+
+.wp-site-blocks {
+	overflow: clip;
+}
+
+button {
+	@apply cursor-pointer;
+}
