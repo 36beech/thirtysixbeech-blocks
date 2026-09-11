@@ -34,7 +34,7 @@ $posts_per_page += $featured === "most recent" ? 1 : 0;
 $datePrefix = $attributes["datePrefix"] ?? "Posted";
 $dateFormat = $attributes["dateFormat"] ?? "F j Y";
 
-if (!empty($post_type) && "current query") :
+if (!empty($post_type) && $post_type !== "current query") :
 	$posts = get_posts(array(
 		'post_type'      => $post_type,
 		'post_status'    => 'publish',
@@ -48,21 +48,29 @@ else:
 	$posts = array_slice($wp_query->posts ?? array(), 0, $posts_per_page);
 endif;
 
+$featured_post = null;
+if ($featured === "most recent" && !empty($posts)) {
+	$featured_post = array_shift($posts);
+}
+
 $cards = array();
 foreach ($posts as $post):
-	$card = array();
-	$eyebrow = makeEyebrow($show, $post, $dateFormat, $datePrefix);
-	$permalink = get_permalink($post->ID);
-
-	if ($eyebrow) $card["eyebrow"] = $eyebrow;
-	if (in_array('title', $show)) $card['title'] = $post->post_title;
-	if (in_array('excerpt', $show)) $card['description'] = get_the_excerpt($post->ID);
-	if (in_array('readmore', $show)) $card['link'] = "<a class=\"tsb-card__link\" href=\"{$permalink}\">Learn More</a>";
-	if (in_array('image', $show)) $card['image'] = get_the_post_thumbnail_url($post->ID, 'large');
-
-	$cards[] = $card;
+	$cards[] = makePostCard($post, $show, $dateFormat, $datePrefix);
 endforeach;
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
+	<?php if (!empty($featured_post)):
+		$card = makePostCard($featured_post, $show, $dateFormat, $datePrefix);
+	?>
+		<pre><?php print_r($card); ?></pre>
+		<div class="grid grid-cols-12 gap-tsb">
+			<div class="col-span-4">
+				Featured
+			</div>
+			<div class="col-span-8">
+				Image
+			</div>
+		</div>
+	<?php endif; ?>
 	<?php echo card_group($columns, $cards); ?>
 </div>
