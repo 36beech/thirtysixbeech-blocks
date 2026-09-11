@@ -88,6 +88,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		columns,
 		postType,
 		postsPerPage,
+		featured,
 		pagination,
 		show,
 		datePrefix,
@@ -104,7 +105,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	);
 
 	const postTypeOptions = [
-		{ label: __( 'Current Query' ), value: '' },
+		{ label: __( 'Current Query' ), value: 'current query' },
 		...( postTypes ?? [] )
 			.filter( ( type ) => type.viewable )
 			.map( ( type ) => ( { label: type.name, value: type.slug } ) ),
@@ -215,6 +216,30 @@ export default function Edit( { attributes, setAttributes } ) {
 								} }
 							/>
 							<ToggleGroupControl
+								value={ featured }
+								label={ __( 'Show Featured' ) }
+								help={ __(
+									'Choose a highlighted post first. Choose between the most recent post or a selected post.'
+								) }
+								onChange={ ( value ) =>
+									setAttributes( { featured: value } )
+								}
+								isBlock
+							>
+								<ToggleGroupControlOption
+									label="None"
+									value={ 'none' }
+								/>
+								<ToggleGroupControlOption
+									label="Most Recent"
+									value={ 'most recent' }
+								/>
+								<ToggleGroupControlOption
+									label="Selected Post"
+									value={ 'selected post' }
+								/>
+							</ToggleGroupControl>
+							<ToggleGroupControl
 								value={ pagination }
 								label={ __( 'Pagination Style' ) }
 								help={ __(
@@ -226,12 +251,16 @@ export default function Edit( { attributes, setAttributes } ) {
 								isBlock
 							>
 								<ToggleGroupControlOption
+									label="No Pagination"
+									value={ 'none' }
+								/>
+								<ToggleGroupControlOption
 									label="Pagination"
-									value={ true }
+									value={ 'pagination' }
 								/>
 								<ToggleGroupControlOption
 									label="Load More"
-									value={ false }
+									value={ 'loadmore' }
 								/>
 							</ToggleGroupControl>
 						</Stack>

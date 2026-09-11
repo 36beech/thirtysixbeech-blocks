@@ -11,24 +11,14 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 require_once(__DIR__ . "/../shared/includes/card.php");
+require_once(__DIR__ . "/includes/util.php");
 global $wp_query;
 
-function makeEyebrow($show, $post, $dateFormat, $datePrefix)
-{
-	$showDate = in_array('date', $show);
-	$showAuthor = in_array('author', $show);
-
-	if (!$showDate && !$showAuthor) return null;
-
-	$eyebrowText = $datePrefix . " ";
-	if ($showDate) $eyebrowText .= get_the_date($dateFormat, $post->ID);
-	if ($showAuthor) $eyebrowText .= " by " . get_the_author_meta('display_name', $post->post_author);
-	return $eyebrowText;
-}
 
 $columns   = $attributes["columns"] ?? 2;
 $post_type = $attributes["postType"] ?? '';
 $posts_per_page = $attributes["postsPerPage"] ?? 10;
+$featured = $attributes["featured"] ?? 'none';
 $pagination = $attributes["pagination"] ?? false;
 $show = $attributes["show"] ?? array(
 	"date",
@@ -38,10 +28,13 @@ $show = $attributes["show"] ?? array(
 	"readmore",
 	"image"
 );
+
+$posts_per_page += $featured === "most recent" ? 1 : 0;
+
 $datePrefix = $attributes["datePrefix"] ?? "Posted";
 $dateFormat = $attributes["dateFormat"] ?? "F j Y";
 
-if (!empty($post_type)) :
+if (!empty($post_type) && "current query") :
 	$posts = get_posts(array(
 		'post_type'      => $post_type,
 		'post_status'    => 'publish',
@@ -52,10 +45,8 @@ else:
 	// already querying for this page: the blog listing, a post type archive,
 	// a taxonomy archive, etc. Same source Core's Query Loop block uses for
 	// its "Inherit query from template" mode.
-	$posts = array_slice($wp_query->posts, 0, $posts_per_page);
+	$posts = array_slice($wp_query->posts ?? array(), 0, $posts_per_page);
 endif;
-
-$posts = array_slice($wp_query->posts, 0, $posts_per_page);
 
 $cards = array();
 foreach ($posts as $post):

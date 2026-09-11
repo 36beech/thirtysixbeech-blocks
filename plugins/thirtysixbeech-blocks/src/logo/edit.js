@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,28 +11,16 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import {
-	useBlockProps,
-	BlockControls,
-	MediaUploadCheck,
-	MediaUpload,
-	InspectorControls,
-	LinkControl,
-} from "@wordpress/block-editor";
-import {
-	ToolbarGroup,
-	ToolbarButton,
 	PanelBody,
 	ToggleControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
-} from "@wordpress/components";
-import { mobile, desktop } from "@wordpress/icons";
+} from '@wordpress/components';
 
-import { useState } from "react";
-import { ReactComponent as LogoIcon } from "./icon.svg";
-
-import { useImage } from "@shared/react/useImage";
+import { useState } from 'react';
+import { ReactComponent as LogoIcon } from './icon.svg';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -40,8 +28,8 @@ import { useImage } from "@shared/react/useImage";
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import "./editor.scss";
-import { DimensionSlider } from "../shared/react/DimensionSlider";
+import './editor.scss';
+import { DimensionSlider } from '../shared/react/DimensionSlider';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -51,47 +39,65 @@ import { DimensionSlider } from "../shared/react/DimensionSlider";
  *
  * @return {Element} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
-	const { logoLocation, showMobile, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth } =
-		attributes;
-	const [activeLogo, setActiveLogo] = useState("desktop");
+export default function Edit( { attributes, setAttributes } ) {
+	const {
+		logoLocation,
+		showMobile,
+		desktopLogo,
+		mobileLogo,
+		desktopLogoWidth,
+		mobileLogoWidth,
+	} = attributes;
+	const [ activeLogo, setActiveLogo ] = useState( 'desktop' );
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Logo Options", "thirtysix-beech")}>
+				<PanelBody title={ __( 'Logo Options', 'thirtysix-beech' ) }>
 					<ToggleGroupControl
 						isBlock
 						label="Logo Location"
-						onChange={(value) => setAttributes({logoLocation: value})}
-						value={logoLocation}
+						onChange={ ( value ) =>
+							setAttributes( { logoLocation: value } )
+						}
+						value={ logoLocation }
 					>
-						<ToggleGroupControlOption
-							label="Header"
-							value="header"
-						/>
+						<ToggleGroupControlOption label="Header" value="logo" />
 						<ToggleGroupControlOption
 							label="Footer"
-							value="footer"
+							value="footer_logo"
 						/>
 					</ToggleGroupControl>
 					<ToggleControl
-						label={__("Show mobile logo")}
-						checked={showMobile}
-						onChange={ () => setAttributes({showMobile: !showMobile}) }
+						label={ __( 'Show mobile logo' ) }
+						checked={ showMobile }
+						onChange={ () =>
+							setAttributes( { showMobile: ! showMobile } )
+						}
 					/>
 					<DimensionSlider
-						label={__("Desktop logo width")}
-						value={desktopLogoWidth}
-						onChange={(value) => setAttributes({ desktopLogoWidth: value })}
+						label={ __( 'Desktop logo width' ) }
+						value={ desktopLogoWidth }
+						onChange={ ( value ) =>
+							setAttributes( { desktopLogoWidth: value } )
+						}
 					/>
 					<DimensionSlider
-						label={__("Mobile logo width")}
-						value={mobileLogoWidth}
-						onChange={(value) => setAttributes({ mobileLogoWidth: value })}
+						label={ __( 'Mobile logo width' ) }
+						value={ mobileLogoWidth }
+						onChange={ ( value ) =>
+							setAttributes( { mobileLogoWidth: value } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div {...useBlockProps( {style: { "--logo-m-w": mobileLogoWidth, "--logo-w": desktopLogoWidth } } ) }>
+			<div
+				{ ...useBlockProps( {
+					style: {
+						'--logo-m-w': mobileLogoWidth,
+						'--logo-w': desktopLogoWidth,
+					},
+				} ) }
+			>
 				<LogoIcon className="max-w-(--logo-m-w) sm:max-w-(--logo-w)" />
 			</div>
 		</>

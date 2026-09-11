@@ -14,7 +14,7 @@
 $image = $attributes["backgroundImage"] ?? null;
 $attachment = !empty($image) ? wp_get_attachment_image($image, 'full') : null;
 ?>
-<div <?php echo get_block_wrapper_attributes(array("class" => "flex flex-col-reverse md:grid md:items-center grid-cols-12 gap-tsb")); ?>>
-	<div class="col-span-4"><?php echo $content; ?></div>
-	<div class="col-span-8"><?php echo $attachment; ?></div>
+<div <?php echo get_block_wrapper_attributes(array("class" => "flex flex-col-reverse md:grid md:items-center grid-cols-12 gap-tsb tsb-image-text")); ?>>
+	<div class="col-span-5 lg:col-span-4 tsb-image-text__text-column"><?php echo $content; ?></div>
+	<div class="col-span-7 lg:col-span-8 tsb-image-text__image-column"><?php echo $attachment; ?></div>
 </div>

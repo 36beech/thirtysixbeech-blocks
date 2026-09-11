@@ -13,7 +13,8 @@
 	},
 	"attributes": {
 		"postType": {
-			"type": "text"
+			"type": "text",
+			"default": "current query"
 		},
 		"columns": {
 			"type": "text",
@@ -23,9 +24,13 @@
 			"type": "number",
 			"default": 10
 		},
+		"featured": {
+			"type": "text",
+			"default": "most recent"
+		},
 		"pagination": {
-			"type": "boolean",
-			"default": false
+			"type": "text",
+			"default": "pagination"
 		},
 		"show": {
 			"type": "array",
