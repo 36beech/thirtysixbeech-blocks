@@ -27,13 +27,17 @@ $next = $current_post < $total_posts ? $current_post + 1 : 0;
 
 $previous_post = $posts[$previous];
 $next_post = $posts[$next];
+$archive_link = get_post_type_archive_link($post->post_type);
 ?>
-<div <?php echo get_block_wrapper_attributes(array("class" => "flex justify-center items-center tsb-post-navigation")); ?>>
-	<div><a href="<?php echo get_permalink($previous_post->ID); ?>" class="tsb-post-navigation__nextprev prev"><?php echo $previous_post->post_title; ?></a></div>
-	<ul class="flex tsb-post-navigation__pages">
-		<?php foreach ($posts as $i => $p): ?>
-			<li><a href="<?php echo get_permalink($p->ID); ?>" class="tsb-post-navigation__pages-num<?php echo $i === $current_post ? ' current' : ''; ?>"><?php echo $i + 1; ?></a></li>
-		<?php endforeach; ?>
-	</ul>
-	<div><a href="<?php echo get_permalink($next_post->ID); ?>" class="tsb-post-navigation__nextprev next"><?php echo $next_post->post_title; ?></a></div>
+<div <?php echo get_block_wrapper_attributes(array("class" => "flex flex-col items-center")); ?>>
+	<div class="flex justify-center items-center tsb-post-navigation">
+		<a href="<?php echo get_permalink($previous_post->ID); ?>" class="tsb-post-navigation__nextprev prev"><?php echo $previous_post->post_title; ?></a>
+		<ul class="flex tsb-post-navigation__pages">
+			<?php foreach ($posts as $i => $p): ?>
+				<li><a href="<?php echo get_permalink($p->ID); ?>" class="tsb-post-navigation__pages-num<?php echo $i === $current_post ? ' current' : ''; ?>"><?php echo $i + 1; ?></a></li>
+			<?php endforeach; ?>
+		</ul>
+		<a href="<?php echo get_permalink($next_post->ID); ?>" class="tsb-post-navigation__nextprev next"><?php echo $next_post->post_title; ?></a>
+	</div>
+	<a href="<?php echo $archive_link; ?>" class="tsb-post-all">View all projects</a>
 </div>
