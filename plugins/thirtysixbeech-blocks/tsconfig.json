@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"target": "ES2019",
+		"lib": ["ES2019", "DOM", "DOM.Iterable"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"allowJs": true,
+		"checkJs": false,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"noEmit": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"paths": {
+			"@shared/*": ["./src/shared/*"]
+		}
+	},
+	"include": ["src"]
+}

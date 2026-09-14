@@ -23,24 +23,37 @@
  *
  * What it does, step by step:
  *   1. Runs `npx @wordpress/create-block` to scaffold src/<block-slug>.
- *   2. Overwrites block.json's title (create-block slugifies it), sets the
- *      category to "thirtysixbeech-content", and drops `viewScript` (see
- *      step 6).
- *   3. Adds a default save.js if the variant didn't generate one, so the
+ *   2. Renames create-block's generated .js/.jsx files (index, edit, save,
+ *      view) to .ts/.tsx, since every block in this plugin is scaffolded as
+ *      TypeScript. block.json's `file:./index.js`-style paths don't need to
+ *      change — @wordpress/scripts resolves those against whatever
+ *      .(m)[jt]s(x) file actually exists.
+ *   3. Overwrites block.json's title (create-block slugifies it), sets the
+ *      category to "thirtysixbeech-content", ensures an (empty, if not
+ *      already set) `attributes` object exists so index.tsx can spread the
+ *      metadata into registerBlockType()'s settings and still satisfy
+ *      @wordpress/blocks' types, and drops `viewScript` (see step 8).
+ *   4. Adds a default save.tsx if the variant didn't generate one, so the
  *      block has somewhere to serialize markup even for dynamic/hybrid use.
- *   4. Copies in a shared default icon.svg if the block doesn't have one.
- *   5. Patches index.js to import Save/Icon and wire them into
- *      registerBlockType() (save: Save, icon: <Icon />), without clobbering
- *      anything already customized there.
- *   6. Strips create-block's boilerplate comment out of style.scss and
+ *   5. Copies in a shared default icon.svg if the block doesn't have one.
+ *   6. Patches index.tsx to spread block.json's metadata into
+ *      registerBlockType()'s settings (satisfies @wordpress/blocks' types,
+ *      which require `attributes`/`category`/`title` on the settings object
+ *      even though the server already has them from block.json) and to
+ *      import Save/Icon and wire them in (save: Save, icon: <Icon />),
+ *      without clobbering anything already customized there.
+ *   7. Strips create-block's boilerplate comment out of style.scss and
  *      editor.scss, leaving just the empty `.wp-block-thirtysixbeech-blocks-<slug>`
  *      rule to fill in.
- *   7. Removes view.js's placeholder console.log (keeping its explanatory
- *      comment). Combined with step 2 dropping `viewScript`, view.js is
+ *   8. Removes view.ts's placeholder console.log (keeping its explanatory
+ *      comment). Combined with step 3 dropping `viewScript`, view.ts is
  *      scaffolded but not loaded on the front end until you opt back in.
+ *   9. Scaffolds a models/attributes.ts with a starter `Attributes`
+ *      interface — the single source of truth to import from edit.tsx/
+ *      save.tsx once you add real attributes to block.json.
  */
 import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, renameSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
 /**
@@ -79,12 +92,21 @@ const blockSlug = toKebabCase(blockTitle);
 
 // Every generated/patched file lives under this one directory.
 const blockDir = `src/${blockSlug}`;
-const indexFile = join(blockDir, "index.js");
-const saveFile = join(blockDir, "save.js");
+// create-block always generates plain .js/.jsx; these are its output paths,
+// renamed to their TS equivalents in step 2 below.
+const indexFileJs = join(blockDir, "index.js");
+const editFileJs = join(blockDir, "edit.js");
+const saveFileJs = join(blockDir, "save.js");
+const viewFileJs = join(blockDir, "view.js");
+const indexFile = join(blockDir, "index.tsx");
+const editFile = join(blockDir, "edit.tsx");
+const saveFile = join(blockDir, "save.tsx");
+const viewFile = join(blockDir, "view.ts");
 const iconFile = join(blockDir, "icon.svg");
 const styleFile = join(blockDir, "style.scss");
 const editorStyleFile = join(blockDir, "editor.scss");
-const viewFile = join(blockDir, "view.js");
+const modelsDir = join(blockDir, "models");
+const attributesModelFile = join(modelsDir, "attributes.ts");
 
 /**
  * Step 1: Scaffold the block via the official @wordpress/create-block tool.
@@ -98,35 +120,62 @@ const result = spawnSync("npx", args, { stdio: "inherit" });
 if (result.status !== 0) process.exit(result.status ?? 1);
 
 /**
- * Step 1b: create-block derives block.json's title from the slug (so
+ * Step 2: Rename create-block's generated .js/.jsx files to their TS
+ * equivalents. Their contents are already valid TS/TSX as written (create-
+ * block emits plain ES modules + JSX, no untyped params), so this is a pure
+ * rename — no content rewriting needed. view.js/save.js only exist for some
+ * variants, so each rename is a no-op when the source file isn't there.
+ */
+function convertToTs(jsPath, tsPath) {
+  if (existsSync(jsPath)) {
+    renameSync(jsPath, tsPath);
+    console.log(`✔ Converted ${jsPath} -> ${tsPath}`);
+  }
+}
+convertToTs(indexFileJs, indexFile);
+convertToTs(editFileJs, editFile);
+convertToTs(saveFileJs, saveFile);
+convertToTs(viewFileJs, viewFile);
+
+/**
+ * Step 3: create-block derives block.json's title from the slug (so
  * "Hero Carousel" would otherwise come back as "Hero carousel"). Restore the
  * title exactly as typed, and force every block into the shared
  * "thirtysixbeech-content" category so blocks don't scatter across the
- * default WordPress categories. Also drops `viewScript`, since view.js
- * shouldn't be enqueued on the front end by default (see step 6).
+ * default WordPress categories. Also ensures an `attributes` object exists
+ * (empty, if not already set) — index.tsx (step 6) spreads block.json's
+ * metadata into registerBlockType()'s settings, and @wordpress/blocks'
+ * types require `attributes` to be present on that object even when it's
+ * empty. Finally drops `viewScript`, since view.ts shouldn't be enqueued on
+ * the front end by default (see step 8).
  */
 const blockJsonFile = join(blockDir, "block.json");
 if (existsSync(blockJsonFile)) {
   let blockJson = JSON.parse(readFileSync(blockJsonFile, "utf8"));
   blockJson.title = blockTitle; // Keep full name as title
   blockJson.category = "thirtysixbeech-content";
+  if (!blockJson.attributes) blockJson.attributes = {};
   delete blockJson.viewScript;
   writeFileSync(blockJsonFile, JSON.stringify(blockJson, null, 2), "utf8");
   console.log(`✔ Updated ${blockJsonFile} with title "${blockTitle}"`);
 }
 
 /**
- * Step 2: Ensure save.js exists. The dynamic variant doesn't generate one
+ * Step 4: Ensure save.tsx exists. The dynamic variant doesn't generate one
  * (render.php handles output instead), but having a Save component is still
  * useful for hybrid blocks that serialize inner blocks to post_content while
  * also rendering server-side. No-op if the file's already there.
  */
 if (!existsSync(saveFile)) {
   const saveTemplate = `import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
+import type { ReactElement } from "react";
 
-export default function Save({ attributes }) {
+export default function Save() {
   const blockProps = useBlockProps.save();
-  const { children } = useInnerBlocksProps.save(blockProps);
+  // @types/wordpress__block-editor's \`.save()\` overload types this as
+  // Record<string, unknown>, losing the \`children: ReactElement\` shape its
+  // main overload has — it really is a ReactElement at runtime.
+  const { children } = useInnerBlocksProps.save(blockProps) as { children: ReactElement };
   return children;
 }
 `;
@@ -135,7 +184,7 @@ export default function Save({ attributes }) {
 }
 
 /**
- * Step 3: Drop in a shared default icon.svg if the block doesn't already
+ * Step 5: Drop in a shared default icon.svg if the block doesn't already
  * have one, so every scaffolded block starts with a real icon instead of
  * create-block's generic placeholder.
  */
@@ -146,8 +195,16 @@ if (!existsSync(iconFile)) {
 }
 
 /**
- * Step 4: Patch index.js to import Save/Icon and wire them into the
- * registerBlockType() call (save: Save, icon: <Icon />).
+ * Step 6: Patch index.tsx to spread block.json's metadata into
+ * registerBlockType()'s settings object, and to import Save/Icon and wire
+ * them in (save: Save, icon: <Icon />).
+ *
+ * The metadata spread isn't needed at runtime — block.json is already
+ * registered server-side — but @wordpress/blocks' own types require
+ * `attributes`/`category`/`title` to be present on the settings object
+ * passed to registerBlockType(), which a bare `{ edit: Edit }` doesn't
+ * satisfy. Spreading `...metadata` (already imported by create-block) is
+ * the standard fix.
  *
  * This is regex-based text patching rather than an AST transform, so every
  * insertion is guarded by a "does this already exist?" check first — running
@@ -158,6 +215,11 @@ if (!existsSync(iconFile)) {
 if (existsSync(indexFile)) {
   let data = readFileSync(indexFile, "utf8");
   const nl = data.includes("\r\n") ? "\r\n" : "\n";
+
+  // Spread `...metadata` as the first property of the settings object, if missing.
+  if (!/\.\.\.metadata\b/.test(data)) {
+    data = data.replace(/(registerBlockType\(\s*metadata\.name\s*,\s*\{\s*\r?\n)/, `$1  ...metadata,${nl}`);
+  }
 
   // Add `import Save from "./save"` right after the Edit import, if missing.
   if (!/import\s+Save\s+from\s+['"]\.\/save['"];?/.test(data)) {
@@ -187,7 +249,7 @@ if (existsSync(indexFile)) {
 }
 
 /**
- * Step 5: create-block seeds style.scss/editor.scss with an explanatory
+ * Step 7: create-block seeds style.scss/editor.scss with an explanatory
  * comment plus an empty `.wp-block-thirtysixbeech-blocks-<slug>` rule.
  * Drop the comment — leave just the bare rule, ready to fill in.
  */
@@ -202,11 +264,11 @@ for (const file of [styleFile, editorStyleFile]) {
 }
 
 /**
- * Step 6: view.js ships with a placeholder `console.log(...)` (wrapped in
+ * Step 8: view.ts ships with a placeholder `console.log(...)` (wrapped in
  * eslint-disable/enable comments just to silence the no-console rule around
  * it). Strip that out — keep the rest of the file's explanatory comment,
  * since it's useful documentation for whoever adds real code here later.
- * Paired with dropping `viewScript` in step 1b, view.js now exists but isn't
+ * Paired with dropping `viewScript` in step 3, view.ts now exists but isn't
  * enqueued on the front end until someone opts back in.
  */
 if (existsSync(viewFile)) {
@@ -218,4 +280,27 @@ if (existsSync(viewFile)) {
   console.log(`✔ Removed console.log from ${viewFile}`);
 }
 
-console.log(`✅ Block scaffolded (${variant}) with save.js, icon.svg, index.js, style.scss, and editor.scss updated.`);
+/**
+ * Step 9: Scaffold a models/attributes.ts with a starter `Attributes`
+ * interface. Fresh blocks start with no attributes in block.json, so this
+ * is just a skeleton — add a property here for every attribute you add to
+ * block.json, then import it from edit.tsx/save.tsx as the single source
+ * of truth for that block's attribute shape.
+ */
+if (!existsSync(modelsDir)) {
+  mkdirSync(modelsDir, { recursive: true });
+}
+if (!existsSync(attributesModelFile)) {
+  const attributesTemplate = `/**
+ * Attributes for the "${blockTitle}" block.
+ * Keep this in sync with the \`attributes\` defined in block.json.
+ */
+export interface Attributes {
+	[key: string]: unknown;
+}
+`;
+  writeFileSync(attributesModelFile, attributesTemplate, "utf8");
+  console.log(`✔ Created ${attributesModelFile}`);
+}
+
+console.log(`✅ Block scaffolded (${variant}) as TypeScript: save.tsx, icon.svg, index.tsx, style.scss, editor.scss, and models/attributes.ts updated.`);

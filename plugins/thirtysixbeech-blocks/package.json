@@ -17,7 +17,8 @@
 		"watch:css": "postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch",
 		"nb": "node scripts/newblock.mjs",
 		"package": "./package.sh",
-		"start-css": "npm run build:css; npm run watch:css"
+		"start-css": "npm run build:css; npm run watch:css",
+		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.3.3",
@@ -32,6 +33,10 @@
 		"swiper": "^14.2.0"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^34.2.0"
+		"@types/react": "^18.3.31",
+		"@types/react-dom": "^18.3.7",
+		"@types/wordpress__block-editor": "^15.0.6",
+		"@wordpress/scripts": "^34.2.0",
+		"typescript": "^7.0.2"
 	}
 }
