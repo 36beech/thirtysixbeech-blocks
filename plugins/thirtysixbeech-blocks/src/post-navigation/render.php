@@ -28,16 +28,30 @@ $next = $current_post < $total_posts ? $current_post + 1 : 0;
 $previous_post = $posts[$previous];
 $next_post = $posts[$next];
 $archive_link = get_post_type_archive_link($post->post_type);
+
+$view_all_label = $attributes["viewAll"];
+$prev_prefix = $attributes["prevPrefix"] ?? null;
+$prev_suffix = $attributes["prevSuffix"] ?? null;
+$next_prefix = $attributes["nextPrefix"] ?? null;
+$next_suffix = $attributes["nextSuffix"] ?? null;
 ?>
 <div <?php echo get_block_wrapper_attributes(array("class" => "flex flex-col items-center")); ?>>
 	<div class="flex justify-center items-center tsb-post-navigation">
-		<a href="<?php echo get_permalink($previous_post->ID); ?>" class="tsb-post-navigation__nextprev prev"><?php echo $previous_post->post_title; ?></a>
+		<a href="<?php echo get_permalink($previous_post->ID); ?>" class="tsb-post-navigation__nextprev prev">
+			<?php if ($prev_prefix) echo $prev_prefix; ?>
+			<?php echo $previous_post->post_title; ?>
+			<?php if ($prev_suffix) echo $prev_suffix; ?>
+		</a>
 		<ul class="flex tsb-post-navigation__pages">
 			<?php foreach ($posts as $i => $p): ?>
 				<li><a href="<?php echo get_permalink($p->ID); ?>" class="tsb-post-navigation__pages-num<?php echo $i === $current_post ? ' current' : ''; ?>"><?php echo $i + 1; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
-		<a href="<?php echo get_permalink($next_post->ID); ?>" class="tsb-post-navigation__nextprev next"><?php echo $next_post->post_title; ?></a>
+		<a href="<?php echo get_permalink($next_post->ID); ?>" class="tsb-post-navigation__nextprev next">
+			<?php if ($next_prefix) echo $next_prefix; ?>
+			<?php echo $next_post->post_title; ?>
+			<?php if ($next_suffix) echo $next_suffix; ?>
+		</a>
 	</div>
-	<a href="<?php echo $archive_link; ?>" class="tsb-post-all">View all projects</a>
+	<a href="<?php echo $archive_link; ?>" class="tsb-post-all"><?php echo $view_all_label; ?></a>
 </div>
