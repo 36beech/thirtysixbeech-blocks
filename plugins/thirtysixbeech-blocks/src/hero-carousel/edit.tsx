@@ -10,7 +10,8 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks, store as blockEditorStore } from '@wordpress/block-editor';
+import { useSelect } from '@wordpress/data';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -18,6 +19,10 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+
+interface EditProps {
+	clientId: string;
+}
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -27,10 +32,20 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+export default function Edit( { clientId }: EditProps ) {
+	const slideCount = useSelect(
+		( select ) =>
+			select( blockEditorStore ).getBlockOrder( clientId ).length,
+		[ clientId ]
+	);
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Hero Carousel – hello from the editor!', 'hero-carousel' ) }
-		</p>
+		<div { ...useBlockProps() }>
+			{ slideCount < 1 && <p>Insert a hero</p> }
+			<div className="tsb-inner-blocks">
+				<InnerBlocks
+					allowedBlocks={ [ 'thirtysixbeech-blocks/hero' ] }
+				/>
+			</div>
+		</div>
 	);
 }

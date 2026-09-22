@@ -1,5 +1,6 @@
 @import "swiper/css";
 @import "swiper/css/pagination";
+@import "swiper/css/effect-fade";
 
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);

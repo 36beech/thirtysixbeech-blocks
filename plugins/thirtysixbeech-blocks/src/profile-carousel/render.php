@@ -22,10 +22,10 @@ foreach ($block->inner_blocks as $profile_block) {
 }
 ?>
 
-<div <?php echo get_block_wrapper_attributes(); ?>>
+<div <?php echo get_block_wrapper_attributes(array("class" => "tsb-multislider")); ?>>
 	<div class="tsb-profile flex max-sm:flex-col gap-tsb items-center">
 		<div class="tsb-profile__portrait">
-			<div class="tsb-profile-carousel__images swiper">
+			<div class="tsb-profile-carousel__images __images swiper">
 				<div class="swiper-wrapper">
 					<?php foreach ($profiles as $profile) :
 						$image = !empty($profile['portrait']) ? wp_get_attachment_image($profile['portrait'], 'full', false, array(
@@ -38,7 +38,7 @@ foreach ($block->inner_blocks as $profile_block) {
 			</div>
 		</div>
 		<div class="tsb-profile__body">
-			<div class="tsb-profile-carousel__body swiper">
+			<div class="tsb-profile-carousel__body __body swiper">
 				<div class="swiper-wrapper">
 					<?php foreach ($profiles as $profile) : ?>
 						<div class="tsb-profile__body-slide swiper-slide">
@@ -57,9 +57,9 @@ foreach ($block->inner_blocks as $profile_block) {
 				</div>
 			</div>
 			<div class="flex gap-2 my-4">
-				<div class="wp-block-button is-style-link"><button class="tsb-profile-carousel__prev wp-block-button__link wp-element-button">Prev</button></div>
-				<div class="tsb-carousel__navigation tsb-profile-carousel__pagination swiper-pagination"></div>
-				<div class="wp-block-button is-style-link"><button class="tsb-profile-carousel__next wp-block-button__link wp-element-button">Next</button></div>
+				<div class="wp-block-button is-style-link"><button class="tsb-profile-carousel__prev __prev wp-block-button__link wp-element-button">Prev</button></div>
+				<div class="tsb-carousel__navigation tsb-profile-carousel__pagination __pagination swiper-pagination"></div>
+				<div class="wp-block-button is-style-link"><button class="tsb-profile-carousel__next __next wp-block-button__link wp-element-button">Next</button></div>
 			</div>
 		</div>
 	</div>
