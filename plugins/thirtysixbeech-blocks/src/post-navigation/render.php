@@ -36,7 +36,7 @@ $next_prefix = $attributes["nextPrefix"] ?? null;
 $next_suffix = $attributes["nextSuffix"] ?? null;
 ?>
 <div <?php echo get_block_wrapper_attributes(array("class" => "flex flex-col items-center")); ?>>
-	<div class="flex justify-center items-center tsb-post-navigation">
+	<div class="grid grid-cols-3 justify-center items-center tsb-post-navigation">
 		<a href="<?php echo get_permalink($previous_post->ID); ?>" class="tsb-post-navigation__nextprev prev">
 			<?php if ($prev_prefix) echo $prev_prefix; ?>
 			<?php echo $previous_post->post_title; ?>
