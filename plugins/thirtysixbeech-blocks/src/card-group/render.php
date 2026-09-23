@@ -26,7 +26,7 @@ switch ($columns):
 		$groupClasses[] = "grid-cols-4";
 		break;
 endswitch;
-$groupClasses[] = "gap-tsb";
+$groupClasses[] = "gap-x-tsb-x gap-y-tsb-y";
 ?>
 <div <?php echo get_block_wrapper_attributes(array("class" => implode(" ", $groupClasses))); ?>>
 	<?php echo $content; ?>

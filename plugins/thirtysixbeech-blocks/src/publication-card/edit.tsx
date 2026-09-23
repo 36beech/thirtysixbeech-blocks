@@ -82,7 +82,9 @@ export default function Edit( { attributes, setAttributes }: EditProps ) {
 								setAttributes( { link: newLink } )
 							}
 							onRemove={ () => {
-								setAttributes( { link: {} } );
+								setAttributes( {
+									link: { opensInNewTab: true },
+								} );
 								setIsEditingLink( false );
 							} }
 						/>

@@ -28,7 +28,7 @@
 		},
 		"link": {
 			"type": "object",
-			"default": {}
+			"default": { "opensInNewTab": true }
 		}
 	},
 	"textdomain": "publication-card",

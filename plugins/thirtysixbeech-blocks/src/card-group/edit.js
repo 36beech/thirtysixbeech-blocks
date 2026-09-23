@@ -54,7 +54,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { columns } = attributes;
 
 	const groupClasses = () => {
-		const groupClasses = ' gap-tsb tsb-flex-wrapper';
+		const groupClasses = ' gap-x-tsb-x gap-y-tsb-y tsb-flex-wrapper';
 		if ( columns === 'flex' ) return '' + groupClasses;
 
 		switch ( columns ) {

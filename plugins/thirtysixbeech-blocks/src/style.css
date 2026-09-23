@@ -11,6 +11,8 @@
 
 @theme {
 	--spacing-tsb: 2rem;
+	--spacing-tsb-x: var(--spacing-tsb);
+	--spacing-tsb-y: var(--spacing-tsb);
 	--spacing-tsb-half: calc(var(--spacing-tsb) / 2);
 	--spacing-pub-logo: 100%;
 }

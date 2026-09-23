@@ -19,7 +19,7 @@ $link = $attributes["link"] ?? null;
 $background_url = $background_image ? wp_get_attachment_image_url($background_image, 'full') : null;
 $logo_url = $logo ? wp_get_attachment_image_url($logo, 'full') : null;
 ?>
-<?php if (!empty($link)): ?>
+<?php if (!empty($link) && ($link["url"] ?? false)): ?>
 	<a href="<?php echo $link["url"]; ?>" <?php if ($link["opensInNewTab"] ?? false) echo ' target="_blank"'; ?>>
 	<?php endif; ?>
 	<article <?php echo get_block_wrapper_attributes(array("style" => "--spacing-pub-logo: {$logo_width}%")); ?>>
