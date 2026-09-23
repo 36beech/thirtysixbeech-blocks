@@ -21,6 +21,9 @@
 		},
 		"image2": {
 			"type": "number"
+		},
+		"image3": {
+			"type": "number"
 		}
 	},
 	"textdomain": "gallery-row",

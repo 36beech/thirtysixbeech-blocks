@@ -15,6 +15,9 @@ const gridClass = ( columns ) => {
 			return 'grid-cols-3';
 		case 4:
 			return 'grid-cols-4';
+		case '33/66/2':
+		case '66/33/2':
+			return 'grid-cols-3 grid-rows-2';
 		case 5:
 		case 'flex':
 			return 'grid-cols-5';
@@ -70,6 +73,31 @@ export const ColumnButton = ( {
 							columns === '33/66' ? 'col-span-2' : ''
 						}` }
 					></span>
+				</div>
+				<span>{ label ? label : `${ columnsCount } Columns` }</span>
+			</button>
+		);
+	}
+
+	if ( columns === '33/66/2' || columns === '66/33/2' ) {
+		return (
+			<button
+				className={ buttonClasses.join( ' ' ) }
+				onClick={ onClick }
+				value={ columns }
+			>
+				<div className={ buttonClassesInner.join( ' ' ) }>
+					<span
+						className={ `bg-gray-700 ${
+							columns === '66/33/2' ? 'col-span-2 row-span-2' : ''
+						}` }
+					></span>
+					<span
+						className={ `bg-gray-700 ${
+							columns === '33/66/2' ? 'col-span-2 row-span-2' : ''
+						}` }
+					></span>
+					<span className="bg-gray-700"></span>
 				</div>
 				<span>{ label ? label : `${ columnsCount } Columns` }</span>
 			</button>
