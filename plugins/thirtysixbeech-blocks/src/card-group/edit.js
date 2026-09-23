@@ -104,7 +104,10 @@ export default function Edit( { attributes, setAttributes } ) {
 				<div className="tsb-inner-blocks">
 					<div className={ groupClasses() }>
 						<InnerBlocks
-							allowedBlocks={ [ 'thirtysixbeech-blocks/card' ] }
+							allowedBlocks={ [
+								'thirtysixbeech-blocks/card',
+								'thirtysixbeech-blocks/publication-card',
+							] }
 						/>
 					</div>
 				</div>

@@ -11,5 +11,5 @@
  */
 ?>
 <p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Logo Image Card – hello from a dynamic block!', 'logo-image-card' ); ?>
+	<?php esc_html_e( 'Publication Card – hello from a dynamic block!', 'publication-card' ); ?>
 </p>

@@ -146,8 +146,9 @@ convertToTs(viewFileJs, viewFile);
  * (empty, if not already set) — index.tsx (step 6) spreads block.json's
  * metadata into registerBlockType()'s settings, and @wordpress/blocks'
  * types require `attributes` to be present on that object even when it's
- * empty. Finally drops `viewScript`, since view.ts shouldn't be enqueued on
- * the front end by default (see step 8).
+ * empty. Turns on `supports.anchor` so every block gets an HTML anchor
+ * field by default. Finally drops `viewScript`, since view.ts shouldn't be
+ * enqueued on the front end by default (see step 8).
  */
 const blockJsonFile = join(blockDir, "block.json");
 if (existsSync(blockJsonFile)) {
@@ -155,6 +156,7 @@ if (existsSync(blockJsonFile)) {
   blockJson.title = blockTitle; // Keep full name as title
   blockJson.category = "thirtysixbeech-content";
   if (!blockJson.attributes) blockJson.attributes = {};
+  blockJson.supports = { ...blockJson.supports, anchor: true };
   delete blockJson.viewScript;
   writeFileSync(blockJsonFile, JSON.stringify(blockJson, null, 2), "utf8");
   console.log(`✔ Updated ${blockJsonFile} with title "${blockTitle}"`);

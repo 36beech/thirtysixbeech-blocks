@@ -60,12 +60,14 @@ export default function Edit( { attributes, setAttributes } ) {
 							placeholder='Hero Heading'
 							onChange={(newValue) => setAttributes( { heading: newValue } ) }
 							className="tsb-hero__heading"
+							allowedFormats={ [ 'core/italic' ] }
 						/>
 						<RichText
 							value={description}
 							placeholder='Hero description'
 							onChange={(newValue) => setAttributes( { description: newValue } ) }
 							className="tsb-hero__description"
+							allowedFormats={ [ 'core/bold', 'core/italic' ] }
 						/>
 					</div>
 				</div>

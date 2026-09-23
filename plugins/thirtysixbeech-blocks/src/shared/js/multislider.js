@@ -20,7 +20,16 @@ export const multislider = () => {
 		const options = JSON.parse( block.dataset.sliderOptions ?? '{}' );
 		const { effect = 'slide', autoplay = false } = options ?? {};
 
-		if ( ! imagesEl || ! bodyEl ) {
+		// Every block that shares this `.tsb-multislider` markup (hero-carousel,
+		// profile-carousel, ...) calls multislider() from its own view script,
+		// and each call scans the whole page — so a page using more than one
+		// of those blocks would otherwise run `new Swiper(...)` twice on the
+		// same element. Skip anything Swiper's already initialized.
+		if (
+			! imagesEl ||
+			! bodyEl ||
+			imagesEl.classList.contains( 'swiper-initialized' )
+		) {
 			return;
 		}
 

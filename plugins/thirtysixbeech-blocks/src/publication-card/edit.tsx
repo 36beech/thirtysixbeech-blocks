@@ -30,10 +30,10 @@ import './editor.scss';
 export default function Edit() {
 	return (
 		<div { ...useBlockProps() }>
-			<div className="tsb-image-logo-card relative z-0 w-full">
-				<div className="absolute w-full h-full top-0 left-0 z-0 tsb-image-logo-card__image"></div>
-				<div className="absolute w-full h-full top-0 left-0 z-10 tsb-image-logo-card__overlay"></div>
-				<div className="absolute w-full h-full top-0 left-0 z-20 tsb-image-logo-card__logo">
+			<div className="tsb-image-publication-card relative z-0 w-full">
+				<div className="absolute w-full h-full top-0 left-0 z-0 tsb-image-publication-card__image"></div>
+				<div className="absolute w-full h-full top-0 left-0 z-10 tsb-image-publication-card__overlay"></div>
+				<div className="absolute w-full h-full top-0 left-0 z-20 tsb-image-publication-card__logo">
 					hi.
 				</div>
 			</div>

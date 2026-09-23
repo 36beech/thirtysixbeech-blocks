@@ -10,6 +10,7 @@
   "example": {},
   "supports": {
     "html": false,
+    "anchor": true,
     "spacing": {
       "padding": true,
       "units": ["px", "em", "rem"]

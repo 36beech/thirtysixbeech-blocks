@@ -1,5 +1,5 @@
 /**
- * Attributes for the "Logo + Image Card" block.
+ * Attributes for the "Publication Card" block.
  * Keep this in sync with the `attributes` defined in block.json.
  */
 export interface Attributes {

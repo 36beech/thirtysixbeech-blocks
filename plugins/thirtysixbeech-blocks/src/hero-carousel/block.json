@@ -9,7 +9,8 @@
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"anchor": true
 	},
 	"textdomain": "hero-carousel",
 	"editorScript": "file:./index.js",

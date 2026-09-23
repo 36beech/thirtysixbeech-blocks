@@ -23,6 +23,7 @@
   },
   "supports": {
     "html": false,
+    "anchor": true,
     "color": {
       "background": true,
       "gradients": true,
@@ -36,10 +37,7 @@
     },
     "shadow": true
   },
-  "usesContext": [
-    "thirtysixbeech/blockGap", 
-    "thirtysixbeech/evenColumns"
-  ],
+  "usesContext": ["thirtysixbeech/blockGap", "thirtysixbeech/evenColumns"],
   "textdomain": "card",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",

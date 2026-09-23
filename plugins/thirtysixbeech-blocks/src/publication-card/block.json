@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "thirtysixbeech-blocks/mobile-navigation",
+	"name": "thirtysixbeech-blocks/publication-card",
 	"version": "0.1.0",
-	"title": "Mobile Navigation",
+	"title": "Publication Card",
 	"category": "thirtysixbeech-content",
 	"icon": "smiley",
 	"description": "Example block scaffolded with Create Block tool.",
@@ -12,10 +12,11 @@
 		"html": false,
 		"anchor": true
 	},
-	"textdomain": "mobile-navigation",
+	"attributes": {},
+	"textdomain": "publication-card",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": "file:./view.js",
-	"render": "file:./render.php"
+	"render": "file:./render.php",
+	"attributes": {}
 }

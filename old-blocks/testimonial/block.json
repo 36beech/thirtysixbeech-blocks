@@ -10,12 +10,13 @@
   "example": {},
   "supports": {
     "html": false,
+    "anchor": true,
     "color": {
       "text": true,
       "background": false
     },
     "typography": {
-        "textAlign": true
+      "textAlign": true
     }
   },
   "attributes": {
