@@ -23,7 +23,8 @@
 			"type": "number"
 		},
 		"link": {
-			"type": "number"
+			"type": "object",
+			"default": {}
 		}
 	},
 	"textdomain": "publication-card",

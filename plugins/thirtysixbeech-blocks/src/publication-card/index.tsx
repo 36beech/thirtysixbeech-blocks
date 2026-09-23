@@ -16,13 +16,14 @@ import Edit from './edit';
 import Save from "./save";
 import { ReactComponent as Icon } from "./icon.svg";
 import metadata from './block.json';
+import type { Attributes } from './models/attributes';
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType( metadata.name, {
+registerBlockType<Attributes>( metadata.name, {
   ...metadata,
 	/**
 	 * @see ./edit.js
