@@ -12,11 +12,23 @@
 		"html": false,
 		"anchor": true
 	},
-	"attributes": {},
+	"attributes": {
+		"title": {
+			"type": "text"
+		},
+		"backgroundImage": {
+			"type": "number"
+		},
+		"logo": {
+			"type": "number"
+		},
+		"link": {
+			"type": "number"
+		}
+	},
 	"textdomain": "publication-card",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"render": "file:./render.php",
-	"attributes": {}
+	"render": "file:./render.php"
 }
