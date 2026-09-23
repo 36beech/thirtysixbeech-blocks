@@ -14,6 +14,7 @@ import {
 	useBlockProps,
 	MediaUploadCheck,
 	MediaUpload,
+	RichText,
 } from '@wordpress/block-editor';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -48,11 +49,30 @@ export default function Edit( { attributes, setAttributes } ) {
 					{ backgroundImageUrl && (
 						<img
 							src={ backgroundImageUrl }
-							className="w-full h-full object-fit object-center"
+							className="w-full h-full object-cover object-center"
 						/>
 					) }
 				</div>
 				<div className="absolute w-full h-full top-0 left-0 z-10 tsb-image-publication-card__overlay"></div>
+				<MediaUploadCheck>
+					<MediaUpload
+						onSelect={ ( item ) => {
+							setAttributes( { backgroundImage: item.id } );
+						} }
+						render={ ( { open } ) => (
+							<>
+								<button
+									className="w-22 h-22 absolute top-6 right-6 z-100 uppercase font-semibold bg-[rgba(255,255,255,0.8)] border text-[9px] p-2"
+									onClick={ open }
+								>
+									{ backgroundImageUrl
+										? __( 'Change Background Image' )
+										: __( 'Add Background Image' ) }
+								</button>
+							</>
+						) }
+					/>
+				</MediaUploadCheck>
 				<div className="absolute w-full h-full top-0 left-0 z-20 flex flex-col items-stretch justify-center tsb-image-publication-card__logo">
 					<div
 						className={ `p-5 ${
@@ -91,6 +111,14 @@ export default function Edit( { attributes, setAttributes } ) {
 					</div>
 				</div>
 			</div>
+			<RichText
+				tagName="h3"
+				className="tsb-image-publication-card__title"
+				placeholder={ __( 'Publication Title' ) }
+				allowedFormats={ [] }
+				value={ title }
+				onChange={ ( value ) => setAttributes( { title: value } ) }
+			/>
 		</div>
 	);
 }

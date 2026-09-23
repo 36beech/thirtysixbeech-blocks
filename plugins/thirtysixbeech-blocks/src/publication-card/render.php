@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
@@ -9,7 +10,34 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+$title = $attributes["title"] ?? null;
+$background_image = $attributes["backgroundImage"] ?? null;
+$logo = $attributes["logo"] ?? null;
+$link = $attributes["link"] ?? null;
+
+$background_url = $background_image ? wp_get_attachment_image_url($background_image, 'full') : null;
+$logo_url = $logo ? wp_get_attachment_image_url($logo, 'full') : null;
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Publication Card – hello from a dynamic block!', 'publication-card' ); ?>
-</p>
+<article <?php echo get_block_wrapper_attributes(); ?>>
+	<div class="tsb-image-publication-card relative z-0 w-full">
+
+		<?php if (!empty($background_url)): ?>
+			<div class="relative w-full h-full top-0 left-0 z-0 tsb-image-publication-card__image">
+				<img
+					src="<?php echo $background_url; ?>"
+					class="w-full h-full object-cover object-center tsb-image-publication-card__background-image" />
+			</div>
+		<?php endif; ?>
+
+		<div class="absolute w-full h-full top-0 left-0 z-10 tsb-image-publication-card__overlay"></div>
+		<div class="absolute w-full h-full top-0 left-0 z-20 flex flex-col items-stretch justify-center tsb-image-publication-card__logo">
+
+			<?php if (!empty($background_url)): ?>
+				<img
+					src="<?php echo $logo_url; ?>"
+					class="col-start-1 row-start-1 relative z-0 tsb-image-publication-card__logo-image" />
+		</div>
+	<?php endif; ?>
+	</div>
+	<h3 class="tsb-image-publication-card__title"><?php echo $title; ?></h3>
+</article>
