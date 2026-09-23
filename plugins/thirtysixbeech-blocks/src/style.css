@@ -12,6 +12,7 @@
 @theme {
 	--spacing-tsb: 2rem;
 	--spacing-tsb-half: calc(var(--spacing-tsb) / 2);
+	--spacing-pub-logo: 100%;
 }
 
 .tsb-accordion-summary-carat {

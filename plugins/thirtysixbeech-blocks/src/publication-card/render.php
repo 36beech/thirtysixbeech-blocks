@@ -13,15 +13,16 @@
 $title = $attributes["title"] ?? null;
 $background_image = $attributes["backgroundImage"] ?? null;
 $logo = $attributes["logo"] ?? null;
+$logo_width = $attributes["logoWidth"] ?? 100;
 $link = $attributes["link"] ?? null;
 
 $background_url = $background_image ? wp_get_attachment_image_url($background_image, 'full') : null;
 $logo_url = $logo ? wp_get_attachment_image_url($logo, 'full') : null;
 ?>
 <?php if (!empty($link)): ?>
-	<a href="<?php echo $link["url"]; ?>" <?php if ($link["opensInNewTab"]) echo ' target="_blank"'; ?>>
+	<a href="<?php echo $link["url"]; ?>" <?php if ($link["opensInNewTab"] ?? false) echo ' target="_blank"'; ?>>
 	<?php endif; ?>
-	<article <?php echo get_block_wrapper_attributes(); ?>>
+	<article <?php echo get_block_wrapper_attributes(array("style" => "--spacing-pub-logo: {$logo_width}%")); ?>>
 		<div class="tsb-image-publication-card relative z-0 w-full">
 
 			<?php if (!empty($background_url)): ?>
@@ -38,7 +39,7 @@ $logo_url = $logo ? wp_get_attachment_image_url($logo, 'full') : null;
 				<div class="absolute w-full h-full top-0 left-0 z-20 flex flex-col items-stretch justify-center tsb-image-publication-card__logo">
 					<img
 						src="<?php echo $logo_url; ?>"
-						class="col-start-1 row-start-1 relative z-0 tsb-image-publication-card__logo-image" />
+						class="tsb-image-publication-card__logo-image w-pub-logo m-auto" />
 				</div>
 			<?php endif; ?>
 		</div>

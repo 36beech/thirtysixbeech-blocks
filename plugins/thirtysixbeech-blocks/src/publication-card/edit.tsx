@@ -19,7 +19,12 @@ import {
 	LinkControl,
 } from '@wordpress/block-editor';
 
-import { ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
+import {
+	ToolbarGroup,
+	ToolbarButton,
+	Popover,
+	RangeControl,
+} from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { link as linkIcon } from '@wordpress/icons';
 /**
@@ -34,7 +39,7 @@ import type { Attributes } from './models/attributes';
 
 interface EditProps {
 	attributes: Attributes;
-	setAttributes: ( attributes: Partial<Attributes> ) => void;
+	setAttributes: ( attributes: Partial< Attributes > ) => void;
 }
 
 /**
@@ -46,7 +51,7 @@ interface EditProps {
  * @return {Element} Element to render.
  */
 export default function Edit( { attributes, setAttributes }: EditProps ) {
-	const { title, backgroundImage, logo, link } = attributes;
+	const { title, backgroundImage, logo, logoWidth = 100, link } = attributes;
 	const [ isEditingLink, setIsEditingLink ] = useState( false );
 
 	const backgroundImageItem = useImage( backgroundImage );
@@ -84,7 +89,13 @@ export default function Edit( { attributes, setAttributes }: EditProps ) {
 					</Popover>
 				) }
 			</BlockControls>
-			<div { ...useBlockProps() }>
+			<div
+				{ ...useBlockProps( {
+					style: {
+						'--spacing-pub-logo': `${ logoWidth }%`,
+					},
+				} ) }
+			>
 				<div className="tsb-image-publication-card relative z-0 w-full">
 					<div className="relative w-full h-full top-0 left-0 z-0 tsb-image-publication-card__image">
 						{ backgroundImageUrl && (
@@ -103,7 +114,7 @@ export default function Edit( { attributes, setAttributes }: EditProps ) {
 							render={ ( { open } ) => (
 								<>
 									<button
-										className="w-22 h-22 absolute top-6 right-6 z-100 uppercase font-semibold bg-[rgba(255,255,255,0.8)] border text-[9px] p-2"
+										className="tsb-image-publication-card__control w-22 h-22 absolute top-6 right-6 z-100 uppercase font-semibold bg-[rgba(255,255,255,0.8)] border text-[9px] p-2"
 										onClick={ open }
 									>
 										{ backgroundImageUrl
@@ -116,7 +127,7 @@ export default function Edit( { attributes, setAttributes }: EditProps ) {
 					</MediaUploadCheck>
 					<div className="absolute w-full h-full top-0 left-0 z-20 flex flex-col items-stretch justify-center tsb-image-publication-card__logo">
 						<div
-							className={ `p-5 ${
+							className={ `relative ${
 								logoUrl
 									? 'grid grid-cols-1 grid-rows-1'
 									: 'aspect-67/17'
@@ -130,7 +141,7 @@ export default function Edit( { attributes, setAttributes }: EditProps ) {
 									render={ ( { open } ) => (
 										<>
 											<button
-												className="tsb-image-publication-card__upload-logo w-full h-full col-start-1 row-start-1 relative z-10 uppercase font-semibold"
+												className="tsb-image-publication-card__control tsb-image-publication-card__upload-logo w-full h-full col-start-1 row-start-1 relative z-10 uppercase font-semibold"
 												onClick={ open }
 											>
 												<span className="bg-[rgba(255,255,255,0.8)] p-2 inline-block border">
@@ -146,7 +157,7 @@ export default function Edit( { attributes, setAttributes }: EditProps ) {
 											{ logoUrl && (
 												<img
 													src={ logoUrl }
-													className="col-start-1 row-start-1 relative z-0"
+													className="col-start-1 row-start-1 relative z-0 w-pub-logo m-auto"
 												/>
 											) }
 										</>
@@ -155,6 +166,21 @@ export default function Edit( { attributes, setAttributes }: EditProps ) {
 							</MediaUploadCheck>
 						</div>
 					</div>
+					{ logoUrl && (
+						<div className="tsb-image-publication-card__control w-full absolute bottom-0 text-white py-14 px-10 z-100">
+							<RangeControl
+								value={ logoWidth }
+								label={ __( 'Logo Width (%)' ) }
+								min={ 10 }
+								max={ 100 }
+								onChange={ ( value ) =>
+									setAttributes( {
+										logoWidth: value,
+									} )
+								}
+							/>
+						</div>
+					) }
 				</div>
 				<RichText
 					tagName="h3"

@@ -56,3 +56,11 @@
 		}
 	}
 }
+
+.tsb-image-publication-card__control {
+	@apply opacity-10 transition-all duration-300;
+
+	.tsb-image-publication-card:hover & {
+		@apply opacity-100;
+	}
+}

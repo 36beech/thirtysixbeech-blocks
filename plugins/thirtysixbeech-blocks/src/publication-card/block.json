@@ -22,6 +22,10 @@
 		"logo": {
 			"type": "number"
 		},
+		"logoWidth": {
+			"type": "number",
+			"default": 100
+		},
 		"link": {
 			"type": "object",
 			"default": {}
