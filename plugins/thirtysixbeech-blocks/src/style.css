@@ -16,6 +16,7 @@
 	--spacing-tsb-y: var(--spacing-tsb);
 	--spacing-tsb-half: calc(var(--spacing-tsb) / 2);
 	--spacing-pub-logo: 100%;
+	--spacing-tsb-width: var(--wp--style--global--content-size);
 }
 
 .tsb-accordion-summary-carat {
