@@ -6,7 +6,8 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css";
 
-@source "./**/*.{js,jsx,php}" not "./**/edit.js";
+@source "./**/*.{html,css,scss,js,jsx,ts,tsx,php}";
+@source not "./**/edit.{js,jsx,ts,tsx}";
 @source inline("z-20");
 
 @theme {
