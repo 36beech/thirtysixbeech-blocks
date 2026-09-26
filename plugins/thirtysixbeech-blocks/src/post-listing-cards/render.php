@@ -17,8 +17,8 @@ global $wp_query;
 
 $columns   = $attributes["columns"] ?? 2;
 $post_type = $attributes["postType"] ?? '';
-$posts_per_page = $attributes["postsPerPage"] ?? 10;
 $featured = $attributes["featured"] ?? 'none';
+$posts_per_page = ($attributes["postsPerPage"] ?? 10);
 $pagination = $attributes["pagination"] ?? false;
 $show = $attributes["show"] ?? array(
 	"date",
@@ -34,19 +34,41 @@ $posts_per_page += $featured === "most recent" ? 1 : 0;
 $datePrefix = $attributes["datePrefix"] ?? "Posted";
 $dateFormat = $attributes["dateFormat"] ?? "F j Y";
 
+$paged = max(1, (int) get_query_var('paged'));
+
 if (!empty($post_type) && $post_type !== "current query") :
-	$posts = get_posts(array(
-		'post_type'      => $post_type,
-		'post_status'    => 'publish',
-		'posts_per_page' => $posts_per_page,
-	));
+	$query_args = array(
+		'post_type'           => $post_type,
+		'post_status'         => 'publish',
+		'posts_per_page'      => $posts_per_page,
+		'paged'               => $paged,
+		'ignore_sticky_posts' => true,
+	);
 else:
 	// No post type explicitly chosen — fall back to whatever WordPress is
 	// already querying for this page: the blog listing, a post type archive,
 	// a taxonomy archive, etc. Same source Core's Query Loop block uses for
 	// its "Inherit query from template" mode.
-	$posts = array_slice($wp_query->posts ?? array(), 0, $posts_per_page);
+	//
+	// The main query only loads as many posts as Settings > Reading allows,
+	// so slicing its results can never return more than that. Re-run the same
+	// query (same archive/taxonomy/search/etc.) with this block's own count.
+	$query_args = is_array($wp_query->query) ? $wp_query->query : wp_parse_args($wp_query->query);
+	$query_args['posts_per_page'] = $posts_per_page;
+	$query_args['paged'] = $paged;
 endif;
+
+$listing_query = new WP_Query($query_args);
+$posts = $listing_query->posts;
+
+// Only offer a "View More" link when there are more pages of results.
+$view_more_url = '';
+if ($listing_query->max_num_pages > $paged) {
+	// Singular pages don't have /page/N/ archive URLs, so use a query arg there.
+	$view_more_url = is_singular()
+		? add_query_arg('paged', $paged + 1)
+		: get_pagenum_link($paged + 1);
+}
 
 $featured_post = null;
 if ($featured === "most recent" && !empty($posts)) {
@@ -92,4 +114,9 @@ endforeach;
 		</div>
 	<?php endif; ?>
 	<?php echo card_group($columns, $cards); ?>
+	<?php if ($view_more_url): ?>
+		<div class="wp-block-button is-style-link tsb-view-more">
+			<a href="<?php echo esc_url($view_more_url); ?>" class="wp-block-button__link wp-element-button"><?php esc_html_e('View More', 'thirtysixbeech-blocks'); ?></a>
+		</div>
+	<?php endif; ?>
 </div>
