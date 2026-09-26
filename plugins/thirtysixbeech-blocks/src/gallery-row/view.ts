@@ -23,6 +23,7 @@ import { DOMElement } from 'react';
  */
 import Swiper from 'swiper';
 import { Navigation, Pagination, Keyboard } from 'swiper/modules';
+import { parseHTML } from '@shared/js/utils';
 
 interface GalleryImage {
 	alt: string;
@@ -75,10 +76,6 @@ const slide = ( imageObj: GalleryImage ) => `<div class="swiper-slide h-full">
 		}
 	</figure>
 </div>`;
-
-const parseHTML = ( html: string ): HTMLElement | null =>
-	new DOMParser().parseFromString( html, 'text/html' ).body
-		.firstElementChild as HTMLElement | null;
 
 const gallery = () => {
 	const galleryRows = Array.from(

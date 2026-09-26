@@ -20,27 +20,9 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
 import { format, dateI18n } from '@wordpress/date';
-interface QueryArgs {
-	post_type?: string;
-	posts_per_page?: number;
-	offset?: number;
-}
-
-interface PostCard {
-	link: string;
-	title: {
-		rendered: string;
-	};
-	date: string;
-	author: string;
-}
-
-interface CardOptions {
-	datePrefix: string;
-	dateFormat: string;
-}
-
-const restBaseCache: Record< string, string > = {};
+import { getRestBase, getRestRoot } from './utils/utils';
+import { parseHTML } from '@shared/js/utils';
+import { QueryArgs, PostCard, CardOptions } from './utils/types';
 
 const card = ( card: PostCard, options: CardOptions ) => {
 	const date = dateI18n( options.dateFormat, card.date );
@@ -58,37 +40,10 @@ const card = ( card: PostCard, options: CardOptions ) => {
 };
 
 /**
- * REST API root, e.g. "http://site.com/wp-json/". Falls back to /wp-json/.
- */
-const getRestRoot = (): string =>
-	document.querySelector< HTMLLinkElement >(
-		'link[rel="https://api.w.org/"]'
-	)?.href ?? '/wp-json/';
-
-/**
- * A post type's endpoint isn't always its name ("post" is "posts"), so look
- * up its rest_base instead of guessing.
- */
-const getRestBase = async ( postType: string ): Promise< string > => {
-	if ( restBaseCache[ postType ] ) return restBaseCache[ postType ];
-
-	const response = await fetch(
-		`${ getRestRoot() }wp/v2/types/${ encodeURIComponent( postType ) }`
-	);
-	if ( ! response.ok ) {
-		throw new Error( `Unknown post type "${ postType }"` );
-	}
-
-	const type: { rest_base: string } = await response.json();
-	restBaseCache[ postType ] = type.rest_base;
-	return type.rest_base;
-};
-
-/**
  * Fetches the next batch of posts: `posts_per_page` posts starting after the
  * `queryArgs.offset` posts that have already been shown.
  */
-const getMorePosts = async ( queryArgs: QueryArgs ) => {
+const getMorePosts = async ( queryArgs: QueryArgs ): Promise< PostCard[] > => {
 	const { post_type = 'post', posts_per_page = 10, offset = 0 } = queryArgs;
 
 	const restBase = await getRestBase( post_type );
@@ -104,20 +59,29 @@ const getMorePosts = async ( queryArgs: QueryArgs ) => {
 		throw new Error( `Request failed: ${ response.status }` );
 	}
 
-	return response.json();
+	return ( await response.json() ) as PostCard[];
 };
 
 const postListingViewMore = (): void => {
+	/**
+	 * Get the Post Listing Cards block
+	 */
 	const postListing: HTMLElement | null = document.querySelector(
 		'.wp-block-thirtysixbeech-blocks-post-listing-cards'
 	);
 	if ( ! postListing ) return;
 
+	/**
+	 * Get the View More button, exit if there is no View More button
+	 */
 	const viewMore = postListing.querySelector(
 		'.tsb-view-more .wp-element-button'
 	);
 	if ( ! viewMore ) return;
 
+	/**
+	 *  Get the Card Group and its date
+	 */
 	const cardGroup: HTMLElement | null =
 		postListing.querySelector( '.tsb-card-group' );
 	if ( ! cardGroup ) return;
@@ -130,6 +94,9 @@ const postListingViewMore = (): void => {
 		? JSON.parse( postListing.dataset.options )
 		: null;
 
+	/**
+	 * Add Click event to View More button
+	 */
 	let loading = false;
 
 	viewMore.addEventListener( 'click', async ( event ) => {
@@ -140,6 +107,11 @@ const postListingViewMore = (): void => {
 		try {
 			const posts = await getMorePosts( queryArgs );
 			console.log( posts );
+
+			posts.forEach( ( post ) => {
+				const postCard = parseHTML( card( post, options ) );
+				if ( postCard ) cardGroup.appendChild( postCard );
+			} );
 
 			// Next click starts after the posts just fetched.
 			queryArgs.offset = ( queryArgs.offset ?? 0 ) + posts.length;
