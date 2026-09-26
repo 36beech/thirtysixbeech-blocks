@@ -29,47 +29,50 @@ $show = $attributes["show"] ?? array(
 	"image"
 );
 
-$posts_per_page += $featured === "most recent" ? 1 : 0;
 
 $datePrefix = $attributes["datePrefix"] ?? "Posted";
 $dateFormat = $attributes["dateFormat"] ?? "F j Y";
 
 $paged = max(1, (int) get_query_var('paged'));
+$posts_per_page = (int) $posts_per_page;
+
+// In "most recent" mode the first post is pulled out as the featured card, so
+// page 1 fetches one extra post. Later pages must skip everything already
+// shown (including that extra one), which `paged` alone can't express, so
+// this uses `offset` instead.
+$featured_extra = $featured === "most recent" ? 1 : 0;
+$fetch_count = $posts_per_page + ($paged === 1 ? $featured_extra : 0);
+$offset = $paged === 1 ? 0 : ($paged - 1) * $posts_per_page + $featured_extra;
 
 if (!empty($post_type) && $post_type !== "current query") :
 	$query_args = array(
 		'post_type'           => $post_type,
 		'post_status'         => 'publish',
-		'posts_per_page'      => $posts_per_page,
-		'paged'               => $paged,
 		'ignore_sticky_posts' => true,
 	);
 else:
-	// No post type explicitly chosen — fall back to whatever WordPress is
-	// already querying for this page: the blog listing, a post type archive,
-	// a taxonomy archive, etc. Same source Core's Query Loop block uses for
-	// its "Inherit query from template" mode.
-	//
-	// The main query only loads as many posts as Settings > Reading allows,
-	// so slicing its results can never return more than that. Re-run the same
-	// query (same archive/taxonomy/search/etc.) with this block's own count.
 	$query_args = is_array($wp_query->query) ? $wp_query->query : wp_parse_args($wp_query->query);
-	$query_args['posts_per_page'] = $posts_per_page;
-	$query_args['paged'] = $paged;
+	if (empty($query_args['post_type'])) $query_args['post_type'] = 'post';
+	unset($query_args['paged']);
 endif;
+
+$query_args['posts_per_page'] = $fetch_count;
+$query_args['offset'] = $offset;
 
 $listing_query = new WP_Query($query_args);
 $posts = $listing_query->posts;
 
-// Only offer a "View More" link when there are more pages of results.
+// Only offer a "View More" link when there are posts beyond this page.
+// (max_num_pages ignores `offset`, so compare against found_posts instead.)
 $view_more_url = '';
-if ($listing_query->max_num_pages > $paged) {
+if ($listing_query->found_posts > $offset + $fetch_count) {
 	// Singular pages don't have /page/N/ archive URLs, so use a query arg there.
 	$view_more_url = is_singular()
 		? add_query_arg('paged', $paged + 1)
 		: get_pagenum_link($paged + 1);
 }
 
+/* TODO: Handle selected featured post */
 $featured_post = null;
 if ($featured === "most recent" && !empty($posts)) {
 	$featured_post = array_shift($posts);
@@ -79,8 +82,18 @@ $cards = array();
 foreach ($posts as $post):
 	$cards[] = makePostCard($post, $show, $dateFormat, $datePrefix);
 endforeach;
+
+// What the front-end script needs to request the next batch: how many to
+// fetch each time, and how many posts have already been shown.
+$query_args['posts_per_page'] = $posts_per_page;
+$query_args['offset'] = $offset + $listing_query->post_count;
+
+$options = array(
+	"datePrefix" => $datePrefix,
+	"dateFormat" => $dateFormat,
+);
 ?>
-<div <?php echo get_block_wrapper_attributes(); ?>>
+<div <?php echo get_block_wrapper_attributes(array("data-query" => json_encode($query_args), "data-options" => json_encode($options))); ?>>
 	<?php if (!empty($featured_post)):
 		$card = makePostCard($featured_post, $show, $dateFormat, $datePrefix);
 	?>
