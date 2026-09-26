@@ -19,20 +19,32 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
-import { format, dateI18n } from '@wordpress/date';
+import { dateI18n } from '@wordpress/date';
 import { getRestBase, getRestRoot } from './utils/utils';
 import { parseHTML } from '@shared/js/utils';
 import { QueryArgs, PostCard, CardOptions } from './utils/types';
 
 const card = ( card: PostCard, options: CardOptions ) => {
 	const date = dateI18n( options.dateFormat, card.date );
+
+	const authorName = card._embedded?.author?.[ 0 ]?.name ?? '';
+	const media = card._embedded?.[ 'wp:featuredmedia' ]?.[ 0 ];
+	const imageUrl =
+		media?.media_details?.sizes?.large?.source_url ?? media?.source_url;
+
 	return `
   <div class="tsb-card">
     <div class="tsb-card__image">
-      <img src="http://localhost:10058/wp-content/uploads/2026/09/high_end_interior_1014x856.png" class="block h-full w-full object-cover object-center">
+      ${
+			imageUrl
+				? `<img src="${ imageUrl }" class="block h-full w-full object-cover object-center">`
+				: ''
+		}
     </div>
     <div class="tsb-card__body">
-      <div class="tsb-card__eyebrow">${ options.datePrefix } ${ date } by ${ card.author }</div>
+      <div class="tsb-card__eyebrow">${ options.datePrefix } ${ date }${
+			authorName ? ` by ${ authorName }` : ''
+		}</div>
         <h3 class="tsb-card__heading">${ card?.title?.rendered }</h3>
       </div>
     <a class="tsb-card__link" href="${ card?.link }">Learn More</a>
@@ -43,13 +55,16 @@ const card = ( card: PostCard, options: CardOptions ) => {
  * Fetches the next batch of posts: `posts_per_page` posts starting after the
  * `queryArgs.offset` posts that have already been shown.
  */
-const getMorePosts = async ( queryArgs: QueryArgs ): Promise< PostCard[] > => {
+const getMorePosts = async (
+	queryArgs: QueryArgs
+): Promise< { posts: PostCard[]; total: number } > => {
 	const { post_type = 'post', posts_per_page = 10, offset = 0 } = queryArgs;
 
 	const restBase = await getRestBase( post_type );
 	const params = new URLSearchParams( {
 		per_page: String( posts_per_page ),
 		offset: String( offset ),
+		_embed: 'author,wp:featuredmedia',
 	} );
 
 	const response = await fetch(
@@ -59,7 +74,10 @@ const getMorePosts = async ( queryArgs: QueryArgs ): Promise< PostCard[] > => {
 		throw new Error( `Request failed: ${ response.status }` );
 	}
 
-	return ( await response.json() ) as PostCard[];
+	return {
+		posts: ( await response.json() ) as PostCard[],
+		total: Number( response.headers.get( 'X-WP-Total' ) ),
+	};
 };
 
 const postListingViewMore = (): void => {
@@ -78,6 +96,8 @@ const postListingViewMore = (): void => {
 		'.tsb-view-more .wp-element-button'
 	);
 	if ( ! viewMore ) return;
+
+	const spinner = postListing.querySelector( '.tsb-spinner' );
 
 	/**
 	 *  Get the Card Group and its date
@@ -104,8 +124,11 @@ const postListingViewMore = (): void => {
 		if ( loading ) return;
 		loading = true;
 
+		viewMore.classList.add( 'hidden' );
+		spinner?.classList.remove( 'hidden' );
+
 		try {
-			const posts = await getMorePosts( queryArgs );
+			const { posts, total } = await getMorePosts( queryArgs );
 			console.log( posts );
 
 			posts.forEach( ( post ) => {
@@ -115,10 +138,17 @@ const postListingViewMore = (): void => {
 
 			// Next click starts after the posts just fetched.
 			queryArgs.offset = ( queryArgs.offset ?? 0 ) + posts.length;
+
+			// Nothing left to load: remove the View More button.
+			if ( ! posts.length || queryArgs.offset >= total ) {
+				viewMore.closest( '.tsb-view-more' )?.remove();
+			}
 		} catch ( error ) {
 			console.error( error );
 		} finally {
 			loading = false;
+			viewMore.classList.remove( 'hidden' );
+			spinner?.classList.add( 'hidden' );
 		}
 	} );
 };
