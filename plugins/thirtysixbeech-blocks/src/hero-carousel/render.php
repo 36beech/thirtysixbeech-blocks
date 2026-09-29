@@ -67,9 +67,7 @@ $options = array(
 					</div>
 				</div>
 				<div class="flex gap-2 my-4">
-					<!-- <div class="wp-block-button is-style-link"><button class="tsb-hero-carousel__prev __prev wp-block-button__link wp-element-button text-white">Prev</button></div> -->
 					<div class="tsb-carousel__navigation tsb-hero-carousel__pagination __pagination swiper-pagination"></div>
-					<!-- <div class="wp-block-button is-style-link"><button class="tsb-hero-carousel__next __next wp-block-button__link wp-element-button text-white">Next</button></div> -->
 				</div>
 			</div>
 		</div>
