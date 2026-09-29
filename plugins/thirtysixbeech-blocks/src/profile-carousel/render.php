@@ -37,7 +37,7 @@ foreach ($block->inner_blocks as $profile_block) {
 				</div>
 			</div>
 		</div>
-		<div class="tsb-profile__body">
+		<div class="tsb-profile__body w-full">
 			<div class="tsb-profile-carousel__body __body swiper">
 				<div class="swiper-wrapper">
 					<?php foreach ($profiles as $profile) : ?>
@@ -56,7 +56,7 @@ foreach ($block->inner_blocks as $profile_block) {
 					<?php endforeach; ?>
 				</div>
 			</div>
-			<div class="flex gap-2 my-4">
+			<div class="flex gap-2 my-8 sm:my-4 max-sm:justify-center">
 				<div class="wp-block-button is-style-link"><button class="tsb-profile-carousel__prev __prev wp-block-button__link wp-element-button">Prev</button></div>
 				<div class="tsb-carousel__navigation tsb-profile-carousel__pagination __pagination swiper-pagination"></div>
 				<div class="wp-block-button is-style-link"><button class="tsb-profile-carousel__next __next wp-block-button__link wp-element-button">Next</button></div>

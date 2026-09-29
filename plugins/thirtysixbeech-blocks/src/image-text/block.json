@@ -25,6 +25,22 @@
 		"reversed": {
 			"type": "boolean",
 			"default": false
+		},
+		"imageLayout": {
+			"type": "string",
+			"default": "1x1"
+		},
+		"image2": {
+			"type": "number",
+			"default": null
+		},
+		"image3": {
+			"type": "number",
+			"default": null
+		},
+		"image4": {
+			"type": "number",
+			"default": null
 		}
 	},
 	"textdomain": "image-text",

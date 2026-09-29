@@ -10,7 +10,18 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InnerBlocks,
+	InspectorControls,
+} from '@wordpress/block-editor';
+import {
+	Panel,
+	PanelBody,
+	ToggleControl,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+} from '@wordpress/components';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -28,25 +39,112 @@ import { Grid, GridItem } from '../shared/react/Grid';
  *
  * @return {Element} Element to render.
  */
-export default function Edit( { attributes, setAttributes } ) {
-	const { backgroundImage } = attributes;
+const ImageGroup = ( { imageLayout, children } ) => {
+	if ( imageLayout === '1x1' ) return <>{ children }</>;
+
 	return (
-		<div { ...useBlockProps() }>
-			<Grid className="items-center">
-				<GridItem columnSpan={ 4 }>
-					<InnerBlocks />
-				</GridItem>
-				<GridItem columnSpan={ 8 }>
-					<MediaSelector
-						value={ backgroundImage }
-						onSelect={ ( item ) => {
-							setAttributes( {
-								backgroundImage: item.id,
-							} );
-						} }
-					/>
-				</GridItem>
-			</Grid>
-		</div>
+		<div className="grid grid-cols-2 grid-rows-2 gap-tsb">{ children }</div>
+	);
+};
+
+export default function Edit( { attributes, setAttributes } ) {
+	const {
+		backgroundImage,
+		reversed,
+		imageLayout = '1x1',
+		image2,
+		image3,
+		image4,
+	} = attributes;
+	return (
+		<>
+			<InspectorControls group="styles">
+				<Panel title={ __( 'Cards Options', 'thirtysix-beech' ) }>
+					<PanelBody>
+						<ToggleControl
+							label={ __( 'Reverse' ) }
+							checked={ reversed }
+							help={ __(
+								'Toggle between Text Left/Image Right and Text Right/Image Left'
+							) }
+							onChange={ () =>
+								setAttributes( { reversed: ! reversed } )
+							}
+						/>
+						<ToggleGroupControl
+							label={ __( 'Image Layout' ) }
+							value={ imageLayout }
+							onChange={ ( value ) =>
+								setAttributes( { imageLayout: value } )
+							}
+							isBlock
+						>
+							<ToggleGroupControlOption
+								label={ __( '1 x 1' ) }
+								value="1x1"
+							/>
+							<ToggleGroupControlOption
+								label={ __( '2 x 2' ) }
+								value="2x2"
+							/>
+						</ToggleGroupControl>
+					</PanelBody>
+				</Panel>
+			</InspectorControls>
+			<div { ...useBlockProps() }>
+				<Grid className="items-center">
+					{ ! reversed && (
+						<GridItem columnSpan={ 4 }>
+							<InnerBlocks />
+						</GridItem>
+					) }
+					<GridItem columnSpan={ 8 }>
+						<ImageGroup imageLayout={ imageLayout }>
+							<MediaSelector
+								value={ backgroundImage }
+								onSelect={ ( item ) => {
+									setAttributes( {
+										backgroundImage: item.id,
+									} );
+								} }
+							/>
+							{ imageLayout === '2x2' && (
+								<>
+									<MediaSelector
+										value={ image2 }
+										onSelect={ ( item ) => {
+											setAttributes( {
+												image2: item.id,
+											} );
+										} }
+									/>
+									<MediaSelector
+										value={ image3 }
+										onSelect={ ( item ) => {
+											setAttributes( {
+												image3: item.id,
+											} );
+										} }
+									/>
+									<MediaSelector
+										value={ image4 }
+										onSelect={ ( item ) => {
+											setAttributes( {
+												image4: item.id,
+											} );
+										} }
+									/>
+								</>
+							) }
+						</ImageGroup>
+					</GridItem>
+					{ reversed && (
+						<GridItem columnSpan={ 4 }>
+							<InnerBlocks />
+						</GridItem>
+					) }
+				</Grid>
+			</div>
+		</>
 	);
 }

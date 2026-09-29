@@ -52,7 +52,17 @@ if (!empty($post_type) && $post_type !== "current query") :
 	);
 else:
 	$query_args = is_array($wp_query->query) ? $wp_query->query : wp_parse_args($wp_query->query);
-	if (empty($query_args['post_type'])) $query_args['post_type'] = 'post';
+	if (empty($query_args['post_type'])) {
+		// A taxonomy archive's own query (e.g. /room/family-room/) has no
+		// `post_type` key at all, and WP_Query defaults to 'post' when one
+		// isn't given — wrong for a taxonomy registered on another post type
+		// (e.g. "room" is registered on "work"). Resolve it from the queried
+		// taxonomy's registered object type(s) instead of assuming 'post'.
+		$queried_object = get_queried_object();
+		$query_args['post_type'] = ($queried_object instanceof WP_Term)
+			? (get_taxonomy($queried_object->taxonomy)->object_type ?: 'post')
+			: 'post';
+	}
 	unset($query_args['paged']);
 endif;
 
