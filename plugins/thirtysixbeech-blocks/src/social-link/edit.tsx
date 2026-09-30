@@ -10,12 +10,8 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import {
-	useBlockProps,
-	BlockControls,
-	LinkControl,
-} from '@wordpress/block-editor';
-import { ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
+import { useBlockProps, BlockControls } from '@wordpress/block-editor';
+import { ToolbarGroup } from '@wordpress/components';
 import { LinkPopover } from '@shared/react/LinkPopover';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -24,6 +20,52 @@ import { LinkPopover } from '@shared/react/LinkPopover';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+import type { Attributes } from './models/attributes';
+import type { FunctionComponent, SVGProps } from 'react';
+
+import { ReactComponent as FacebookIcon } from '@shared/icons/square-facebook.svg';
+import { ReactComponent as HouzzIcon } from '@shared/icons/square-houzz.svg';
+import { ReactComponent as InstagramIcon } from '@shared/icons/instagram.svg';
+import { ReactComponent as PinterestIcon } from '@shared/icons/square-pinterest.svg';
+import { ReactComponent as LinkedinIcon } from '@shared/icons/square-linkedin.svg';
+
+interface EditProps {
+	attributes: Attributes;
+	setAttributes: ( attributes: Partial< Attributes > ) => void;
+}
+
+// Matches the `ReactComponent` export typed in src/types/svg.d.ts.
+type IconComponent = FunctionComponent< SVGProps< SVGSVGElement > >;
+
+const getIcon = ( url?: string | null ): IconComponent | null => {
+	if ( ! url ) return null;
+
+	let hostname;
+	try {
+		( { hostname } = new URL( url ) );
+	} catch {
+		// Partial/invalid URL (e.g. still being typed into LinkControl).
+		return null;
+	}
+
+	// Only strip "www." when something meaningful is left after — "www.com"
+	// is itself a real domain, not "www." + the TLD "com".
+	const withoutWww = hostname.replace( /^www\./, '' );
+	const host = withoutWww.includes( '.' ) ? withoutWww : hostname;
+	switch ( host ) {
+		case 'facebook.com':
+			return FacebookIcon;
+		case 'houzz.com':
+			return HouzzIcon;
+		case 'instagram.com':
+			return InstagramIcon;
+		case 'pinterest.com':
+			return PinterestIcon;
+		case 'linkedin.com':
+			return LinkedinIcon;
+	}
+	return null;
+};
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -33,8 +75,10 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit( { attributes, setAttributes } ) {
+export default function Edit( { attributes, setAttributes }: EditProps ) {
 	const { link } = attributes;
+	const url = link?.url ?? null;
+	const Icon = getIcon( url );
 	return (
 		<>
 			<BlockControls>
@@ -52,9 +96,15 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 				</ToolbarGroup>
 			</BlockControls>
-			<p { ...useBlockProps() }>
-				{ __( 'Social Link – hello from the editor!', 'social-link' ) }
-			</p>
+			{ Icon ? (
+				<Icon className="tsb-social-link-icon" />
+			) : (
+				<div
+					{ ...useBlockProps( {
+						className: 'tsb-social-link-icon bg-black opacity-20',
+					} ) }
+				></div>
+			) }
 		</>
 	);
 }

@@ -39,7 +39,7 @@ const ALLOWED_BLOCKS = [ 'thirtysixbeech-blocks/social-link' ];
 export default function Edit() {
 	return (
 		<div { ...useBlockProps() }>
-			<div className="tsb-inner-blocks">
+			<div className="tsb-inner-blocks flex gap-3">
 				<InnerBlocks allowedBlocks={ ALLOWED_BLOCKS } />
 			</div>
 		</div>

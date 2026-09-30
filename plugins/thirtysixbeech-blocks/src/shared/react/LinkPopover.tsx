@@ -5,7 +5,24 @@ import { link as linkIcon } from '@wordpress/icons';
 
 import { useState } from 'react';
 
-export const LinkPopover = ( { value, onChange, onRemove } ) => {
+// Matches @wordpress/block-editor's own LinkControl.Value shape.
+export interface Link {
+	url?: string;
+	title?: string;
+	opensInNewTab?: boolean;
+}
+
+interface LinkPopoverProps {
+	value?: Link;
+	onChange: ( value?: Link ) => void;
+	onRemove: () => void;
+}
+
+export const LinkPopover = ( {
+	value,
+	onChange,
+	onRemove,
+}: LinkPopoverProps ) => {
 	const [ isEditingLink, setIsEditingLink ] = useState( false );
 	return (
 		<>

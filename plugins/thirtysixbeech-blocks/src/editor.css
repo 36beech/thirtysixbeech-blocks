@@ -45,6 +45,15 @@
 
 .tsb-inner-blocks {
 	@apply p-4 border border-dashed border-slate-200;
+
+	&.flex {
+		> .block-editor-inner-blocks {
+			&,
+			> .block-editor-block-list__layout {
+				@apply contents;
+			}
+		}
+	}
 }
 
 .wp-block-thirtysixbeech-blocks-grid {
