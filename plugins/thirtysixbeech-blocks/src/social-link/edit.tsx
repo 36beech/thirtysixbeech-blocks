@@ -21,51 +21,12 @@ import { LinkPopover } from '@shared/react/LinkPopover';
  */
 import './editor.scss';
 import type { Attributes } from './models/attributes';
-import type { FunctionComponent, SVGProps } from 'react';
-
-import { ReactComponent as FacebookIcon } from '@shared/icons/square-facebook.svg';
-import { ReactComponent as HouzzIcon } from '@shared/icons/square-houzz.svg';
-import { ReactComponent as InstagramIcon } from '@shared/icons/instagram.svg';
-import { ReactComponent as PinterestIcon } from '@shared/icons/square-pinterest.svg';
-import { ReactComponent as LinkedinIcon } from '@shared/icons/square-linkedin.svg';
+import { getIcon } from './utils';
 
 interface EditProps {
 	attributes: Attributes;
 	setAttributes: ( attributes: Partial< Attributes > ) => void;
 }
-
-// Matches the `ReactComponent` export typed in src/types/svg.d.ts.
-type IconComponent = FunctionComponent< SVGProps< SVGSVGElement > >;
-
-const getIcon = ( url?: string | null ): IconComponent | null => {
-	if ( ! url ) return null;
-
-	let hostname;
-	try {
-		( { hostname } = new URL( url ) );
-	} catch {
-		// Partial/invalid URL (e.g. still being typed into LinkControl).
-		return null;
-	}
-
-	// Only strip "www." when something meaningful is left after — "www.com"
-	// is itself a real domain, not "www." + the TLD "com".
-	const withoutWww = hostname.replace( /^www\./, '' );
-	const host = withoutWww.includes( '.' ) ? withoutWww : hostname;
-	switch ( host ) {
-		case 'facebook.com':
-			return FacebookIcon;
-		case 'houzz.com':
-			return HouzzIcon;
-		case 'instagram.com':
-			return InstagramIcon;
-		case 'pinterest.com':
-			return PinterestIcon;
-		case 'linkedin.com':
-			return LinkedinIcon;
-	}
-	return null;
-};
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -97,11 +58,14 @@ export default function Edit( { attributes, setAttributes }: EditProps ) {
 				</ToolbarGroup>
 			</BlockControls>
 			{ Icon ? (
-				<Icon className="tsb-social-link-icon" />
+				<li { ...useBlockProps() }>
+					<Icon className="tsb-social-link-icon" />
+				</li>
 			) : (
 				<div
 					{ ...useBlockProps( {
-						className: 'tsb-social-link-icon bg-black opacity-20',
+						className:
+							'tsb-social-link-icon bg-black opacity-20 block',
 					} ) }
 				></div>
 			) }

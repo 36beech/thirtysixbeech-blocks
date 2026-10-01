@@ -1,11 +1,28 @@
-import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
-import type { ReactElement } from "react";
+import { useBlockProps } from '@wordpress/block-editor';
+import type { Attributes } from './models/attributes';
+import { getIconFrontend } from './utils';
 
-export default function Save() {
-  const blockProps = useBlockProps.save();
-  // @types/wordpress__block-editor's `.save()` overload types this as
-  // Record<string, unknown>, losing the `children: ReactElement` shape its
-  // main overload has — it really is a ReactElement at runtime.
-  const { children } = useInnerBlocksProps.save(blockProps) as { children: ReactElement };
-  return children;
+interface SaveProps {
+	attributes: Attributes;
+}
+
+export default function Save( { attributes }: SaveProps ) {
+	const { link } = attributes;
+	const icon = getIconFrontend( link?.url ?? null, 'tsb-social-link-icon' );
+
+	if ( ! link?.url ) {
+		return <div { ...useBlockProps.save() }>{ icon }</div>;
+	}
+
+	return (
+		<li { ...useBlockProps.save() }>
+			<a
+				href={ link.url }
+				target={ link.opensInNewTab ? '_blank' : undefined }
+				rel={ link.opensInNewTab ? 'noreferrer noopener' : undefined }
+			>
+				{ icon }
+			</a>
+		</li>
+	);
 }

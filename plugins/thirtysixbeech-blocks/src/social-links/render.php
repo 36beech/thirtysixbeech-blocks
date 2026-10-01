@@ -12,6 +12,6 @@
  */
 
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
+<ul <?php echo get_block_wrapper_attributes(array("class" => "flex gap-3")); ?>>
 	<?php echo $content; ?>
-</p>
+</ul>

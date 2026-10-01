@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       Thirtysixbeech Blocks
  * Description:       Example block scaffolded with Create Block tool.
@@ -13,12 +14,13 @@
  * @package CreateBlock
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+if (! defined('ABSPATH')) {
+    exit; // Exit if accessed directly.
 }
 
-require_once plugin_dir_path( __FILE__ ) . 'includes/svg.php';
-require_once plugin_dir_path( __FILE__ ) . 'includes/site-settings.php';
+require_once plugin_dir_path(__FILE__) . 'includes/svg.php';
+require_once plugin_dir_path(__FILE__) . 'includes/site-settings.php';
+require_once plugin_dir_path(__FILE__) . 'includes/contact-form.php';
 
 /**
  * Registers the block(s) metadata from the `blocks-manifest.php` and registers the block type(s)
@@ -28,10 +30,11 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/site-settings.php';
  * @see https://make.wordpress.org/core/2025/03/13/more-efficient-block-type-registration-in-6-8/
  * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
  */
-function create_block_thirtysixbeech_blocks_block_init() {
-	wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
+function create_block_thirtysixbeech_blocks_block_init()
+{
+    wp_register_block_types_from_metadata_collection(__DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php');
 }
-add_action( 'init', 'create_block_thirtysixbeech_blocks_block_init' );
+add_action('init', 'create_block_thirtysixbeech_blocks_block_init');
 
 add_filter('block_categories_all', function ($categories, $post) {
     $custom_categories = [
@@ -63,35 +66,37 @@ add_filter('block_categories_all', function ($categories, $post) {
 /**
  * Enqueue front end styles
  */
-function thirtysixbeech_blocks_enqueue_styles() {
+function thirtysixbeech_blocks_enqueue_styles()
+{
     wp_enqueue_style(
         'thirtysixbeech-blocks',
-        plugin_dir_url( __FILE__ ) . 'build/assets/css/main.css',
+        plugin_dir_url(__FILE__) . 'build/assets/css/main.css',
         array(),
-        filemtime( plugin_dir_path( __FILE__ ) . 'build/assets/css/main.css' )
+        filemtime(plugin_dir_path(__FILE__) . 'build/assets/css/main.css')
     );
 }
-add_action( 'wp_enqueue_scripts', 'thirtysixbeech_blocks_enqueue_styles' );
+add_action('wp_enqueue_scripts', 'thirtysixbeech_blocks_enqueue_styles');
 
 /**
  * Enqueue editor styles
  */
-function thirtysixbeech_blocks_enqueue_shared_block_styles() {
+function thirtysixbeech_blocks_enqueue_shared_block_styles()
+{
     wp_enqueue_style(
         'thirtysixbeech-blocks',
-        plugin_dir_url( __FILE__ ) . 'build/assets/css/main.css',
+        plugin_dir_url(__FILE__) . 'build/assets/css/main.css',
         array(),
-        filemtime( plugin_dir_path( __FILE__ ) . 'build/assets/css/main.css' )
+        filemtime(plugin_dir_path(__FILE__) . 'build/assets/css/main.css')
     );
 
-	wp_enqueue_style(
-		'thirtysixbeech-blocks-shared',
-		plugin_dir_url( __FILE__ ) . 'build/assets/css/editor.css',
-		array(),
-		filemtime( plugin_dir_path( __FILE__ ) . 'build/assets/css/editor.css' )
-	);
+    wp_enqueue_style(
+        'thirtysixbeech-blocks-shared',
+        plugin_dir_url(__FILE__) . 'build/assets/css/editor.css',
+        array(),
+        filemtime(plugin_dir_path(__FILE__) . 'build/assets/css/editor.css')
+    );
 }
-add_action( 'enqueue_block_assets', 'thirtysixbeech_blocks_enqueue_shared_block_styles' );
+add_action('enqueue_block_assets', 'thirtysixbeech_blocks_enqueue_shared_block_styles');
 
 
 function thirtysixbeech_blocks_modify_block_styles()
@@ -114,52 +119,56 @@ function thirtysixbeech_blocks_modify_block_styles()
 
 add_action('init', 'thirtysixbeech_blocks_modify_block_styles');
 
-function thirtysixbeech_blocks_disable_shortcode_block() {
-	unregister_block_type( 'core/shortcode' );
+function thirtysixbeech_blocks_disable_shortcode_block()
+{
+    unregister_block_type('core/shortcode');
 }
-add_action( 'init', 'thirtysixbeech_blocks_disable_shortcode_block', 20 );
+add_action('init', 'thirtysixbeech_blocks_disable_shortcode_block', 20);
 
-function thirtysixbeech_blocks_disable_shortcode_block_editor() {
-	// core/shortcode gets hydrated straight into the block-registry data store
-	// (bypassing the public registerBlockType() wrapper), so there's no script
-	// handle we can reliably attach after. Watch the store instead and remove
-	// it the moment it shows up, whenever that turns out to be.
-	wp_add_inline_script(
-		'wp-blocks',
-		"wp.domReady( function() {"
-		. " var unsubscribe = wp.data.subscribe( function() {"
-		. " if ( wp.blocks.getBlockType( 'core/shortcode' ) ) {"
-		. " wp.blocks.unregisterBlockType( 'core/shortcode' );"
-		. " unsubscribe();"
-		. " }"
-		. " } );"
-		. " } );"
-	);
+function thirtysixbeech_blocks_disable_shortcode_block_editor()
+{
+    // core/shortcode gets hydrated straight into the block-registry data store
+    // (bypassing the public registerBlockType() wrapper), so there's no script
+    // handle we can reliably attach after. Watch the store instead and remove
+    // it the moment it shows up, whenever that turns out to be.
+    wp_add_inline_script(
+        'wp-blocks',
+        "wp.domReady( function() {"
+            . " var unsubscribe = wp.data.subscribe( function() {"
+            . " if ( wp.blocks.getBlockType( 'core/shortcode' ) ) {"
+            . " wp.blocks.unregisterBlockType( 'core/shortcode' );"
+            . " unsubscribe();"
+            . " }"
+            . " } );"
+            . " } );"
+    );
 }
-add_action( 'enqueue_block_editor_assets', 'thirtysixbeech_blocks_disable_shortcode_block_editor' );
+add_action('enqueue_block_editor_assets', 'thirtysixbeech_blocks_disable_shortcode_block_editor');
 
-function thirtysixbeech_blocks_inline_svg_sprite() {
+function thirtysixbeech_blocks_inline_svg_sprite()
+{
     static $done = false;
 
     // Prevent double printing
-    if ( $done ) {
+    if ($done) {
         return;
     }
     $done = true;
 
-    $sprite_path = plugin_dir_path( __FILE__ ) . 'build/sprite.svg';
+    $sprite_path = plugin_dir_path(__FILE__) . 'build/sprite.svg';
 
-    if ( file_exists( $sprite_path ) ) {
+    if (file_exists($sprite_path)) {
         echo '<!-- SVG Sprite -->';
         echo '<div class="sr-only">';
-        echo file_get_contents( $sprite_path ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo file_get_contents($sprite_path); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo '</div>';
     }
 }
-add_action( 'wp_head', 'thirtysixbeech_blocks_inline_svg_sprite' );
+add_action('wp_head', 'thirtysixbeech_blocks_inline_svg_sprite');
 
 
-function thirysixbeech_current_year() {
+function thirysixbeech_current_year()
+{
     return date("Y");
 }
 
@@ -172,23 +181,24 @@ add_shortcode('current_year', 'thirysixbeech_current_year');
  *   format  PHP date format string (default: the site's Date Format setting)
  *   id      Post ID to pull the date from (default: current post)
  */
-function thirtysixbeech_blocks_post_date_shortcode( $atts ) {
-	$atts = shortcode_atts(
-		array(
-			'format' => get_option( 'date_format' ),
-			'id'     => get_the_ID(),
-		),
-		$atts,
-		'post_date'
-	);
+function thirtysixbeech_blocks_post_date_shortcode($atts)
+{
+    $atts = shortcode_atts(
+        array(
+            'format' => get_option('date_format'),
+            'id'     => get_the_ID(),
+        ),
+        $atts,
+        'post_date'
+    );
 
-	if ( ! $atts['id'] ) {
-		return '';
-	}
+    if (! $atts['id']) {
+        return '';
+    }
 
-	return esc_html( get_the_date( $atts['format'], $atts['id'] ) );
+    return esc_html(get_the_date($atts['format'], $atts['id']));
 }
-add_shortcode( 'post_date', 'thirtysixbeech_blocks_post_date_shortcode' );
+add_shortcode('post_date', 'thirtysixbeech_blocks_post_date_shortcode');
 
 /**
  * [post_author] — outputs a post's author display name.
@@ -196,21 +206,22 @@ add_shortcode( 'post_date', 'thirtysixbeech_blocks_post_date_shortcode' );
  * Attributes:
  *   id  Post ID to pull the author from (default: current post)
  */
-function thirtysixbeech_blocks_post_author_shortcode( $atts ) {
-	$atts = shortcode_atts(
-		array(
-			'id' => get_the_ID(),
-		),
-		$atts,
-		'post_author'
-	);
+function thirtysixbeech_blocks_post_author_shortcode($atts)
+{
+    $atts = shortcode_atts(
+        array(
+            'id' => get_the_ID(),
+        ),
+        $atts,
+        'post_author'
+    );
 
-	$post = ! empty( $atts['id'] ) ? get_post( $atts['id'] ) : null;
+    $post = ! empty($atts['id']) ? get_post($atts['id']) : null;
 
-	if ( ! $post ) {
-		return '';
-	}
+    if (! $post) {
+        return '';
+    }
 
-	return esc_html( get_the_author_meta( 'display_name', $post->post_author ) );
+    return esc_html(get_the_author_meta('display_name', $post->post_author));
 }
-add_shortcode( 'post_author', 'thirtysixbeech_blocks_post_author_shortcode' );
+add_shortcode('post_author', 'thirtysixbeech_blocks_post_author_shortcode');

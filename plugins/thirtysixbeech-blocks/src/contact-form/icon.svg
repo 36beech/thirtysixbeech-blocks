@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 1200 1200">
+  <path d="M692.811 658.264h-34.55v503.26h503.26v-503.26h-468.71Zm399.56 434.114h-365.02v-365.02h365.02v365.02Z" style="fill:var(--wp--preset--color--accent-1)"/>
+  <path d="M692.851 38.488h-34.55v503.26h503.26V38.488h-468.71Zm399.56 434.161h-365.02v-365.02h365.02v365.02Z" style="fill:var(--wp--preset--color--secondary)"/>
+  <path d="M73.031 38.484h-34.55v1122.99h503.26V38.483H73.031Zm34.63 1053.894V107.63h364.97l.05 984.749h-365.02Z" style="fill:var(--wp--preset--color--primary)"/>
+</svg>
