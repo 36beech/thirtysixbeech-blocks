@@ -14,12 +14,14 @@ export interface Link {
 
 interface LinkPopoverProps {
 	value?: Link;
+	hasTextControl?: boolean;
 	onChange: ( value?: Link ) => void;
 	onRemove: () => void;
 }
 
 export const LinkPopover = ( {
 	value,
+	hasTextControl = false,
 	onChange,
 	onRemove,
 }: LinkPopoverProps ) => {
@@ -39,6 +41,7 @@ export const LinkPopover = ( {
 				>
 					<LinkControl
 						value={ value }
+						hasTextControl={ hasTextControl }
 						onChange={ onChange }
 						onRemove={ () => {
 							onRemove();

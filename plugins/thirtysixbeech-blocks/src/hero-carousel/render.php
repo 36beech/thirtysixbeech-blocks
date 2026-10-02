@@ -18,6 +18,7 @@ foreach ($block->inner_blocks as $hero_block) {
 		'background_image'	=> $hero_block->attributes['backgroundImage'] ?? null,
 		'heading'						=> !empty($hero_block->attributes['heading']) ? '<h2 class="tsb-hero__heading">' . esc_html($hero_block->attributes['heading']) . '</h2>' : '',
 		'description'				=> !empty($hero_block->attributes['description']) ? '<p class="tsb-hero__description">' . esc_html($hero_block->attributes['description']) . '</p>' : '',
+		'link'							=> !empty($hero_block->attributes['link']) ? '<div class="tsb-hero__link wp-block-button is-style-link"><a class="wp-block-button__link" href="' . $hero_block->attributes['link']['url'] . '">' . esc_html($hero_block->attributes['link']['title']) . '</a></div>' : ''
 	);
 }
 
@@ -54,14 +55,15 @@ $options = array(
 					<div class="swiper-wrapper">
 						<?php foreach ($heros as $hero): ?>
 							<div class="swiper-slide">
-								<?php if ($hero['heading']) : ?>
-									<?php echo $hero['heading']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
-									?>
-								<?php endif; ?>
-								<?php if ($hero['description']) : ?>
-									<?php echo $hero['description']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
-									?>
-								<?php endif; ?>
+								<?php if (!empty($hero['heading'])) :
+									echo $hero['heading']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+								endif; ?>
+								<?php if (!empty($hero['description'])) :
+									echo $hero['description']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+								endif; ?>
+								<?php if (!empty($hero['link'])) :
+									echo $hero['link'];
+								endif; ?>
 							</div>
 						<?php endforeach; ?>
 					</div>

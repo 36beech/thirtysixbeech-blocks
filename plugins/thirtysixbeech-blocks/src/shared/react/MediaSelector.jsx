@@ -45,11 +45,11 @@ export const MediaSelector = ( {
 						<button
 							className={ `media-upload-button ${
 								sourceUrl ? '' : 'media-upload-button-no-image '
-							}absolute z-10 w-full h-full top-0 left-0 bg-transparent border-0` }
+							}absolute z-10 w-30 h-35 top-1/2 left-1/2 -translate-1/2 bg-transparent border-0` }
 							onClick={ open }
 						>
 							{ showIcon && (
-								<div className="media-upload-icon w-20 h-20 p-4 bg-white opacity-20 rounded-lg">
+								<div className="media-upload-icon w-20 h-20 p-4 bg-white opacity-50 rounded-lg">
 									<UploadIcon className="w-full h-full" />
 								</div>
 							) }

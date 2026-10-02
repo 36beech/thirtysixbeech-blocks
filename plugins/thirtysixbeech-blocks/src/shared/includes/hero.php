@@ -10,9 +10,10 @@
  * @param int|null    $background_image Background image attachment ID.
  * @param string|null $heading          Heading markup.
  * @param string|null $description      Description markup.
+ * @param string|null $link             Link markup.
  * @return string HTML markup.
  */
-function hero($background_image, $heading, $description)
+function hero($background_image, $heading, $description, $link = '')
 {
   $background_url = $background_image ? wp_get_attachment_image_url($background_image, 'full') : '';
 
@@ -39,6 +40,10 @@ function hero($background_image, $heading, $description)
           <?php endif; ?>
           <?php if ($description) : ?>
             <?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+            ?>
+          <?php endif; ?>
+          <?php if ($link) : ?>
+            <?php echo $link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
             ?>
           <?php endif; ?>
         </div>
