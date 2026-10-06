@@ -24,6 +24,7 @@ $card['eyebrow'] = $overline;
 $card['title'] = $title;
 $card['description'] = $description;
 $card['link'] = $content;
+
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
 	<?php echo card($card); ?>

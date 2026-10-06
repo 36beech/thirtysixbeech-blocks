@@ -93,6 +93,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		show,
 		datePrefix,
 		dateFormat,
+		viewMoreLabel,
 	} = attributes;
 	const [ selectedShowOptions, setSelectedShowOptions ] = useState( [] );
 	const [ isDateFormatHelpVisible, setIsDateFormatHelpVisible ] =
@@ -276,9 +277,16 @@ export default function Edit( { attributes, setAttributes } ) {
 								onCheck={ handleSelectCardOptions }
 							/>
 							<InputControl
+								label={ __( 'View More Label' ) }
+								value={ viewMoreLabel }
+								onValueChange={ ( value ) =>
+									setAttributes( { viewMoreLabel: value } )
+								}
+							/>
+							<InputControl
 								label={ __( 'Date Prefix' ) }
 								value={ datePrefix }
-								onChange={ ( value ) =>
+								onValueChange={ ( value ) =>
 									setAttributes( { datePrefix: value } )
 								}
 							/>
@@ -288,7 +296,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								description={ __(
 									'Controls how the post date is displayed, using PHP date format codes — e.g. "F j, Y" outputs "January 1, 2026".'
 								) }
-								onChange={ ( value ) =>
+								onValueChange={ ( value ) =>
 									setAttributes( { dateFormat: value } )
 								}
 							/>

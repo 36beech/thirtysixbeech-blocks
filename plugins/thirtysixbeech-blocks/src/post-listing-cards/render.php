@@ -29,6 +29,7 @@ $show = $attributes["show"] ?? array(
 	"image"
 );
 
+$view_more_label = $attributes["viewMoreLabel"] ?? "Learn More";
 
 $datePrefix = $attributes["datePrefix"] ?? "Posted";
 $dateFormat = $attributes["dateFormat"] ?? "F j Y";
@@ -90,7 +91,7 @@ if ($featured === "most recent" && !empty($posts)) {
 
 $cards = array();
 foreach ($posts as $post):
-	$cards[] = makePostCard($post, $show, $dateFormat, $datePrefix);
+	$cards[] = makePostCard($post, $show, $dateFormat, $datePrefix, $view_more_label);
 endforeach;
 
 // What the front-end script needs to request the next batch: how many to
@@ -105,7 +106,7 @@ $options = array(
 ?>
 <div <?php echo get_block_wrapper_attributes(array("data-query" => json_encode($query_args), "data-options" => json_encode($options))); ?>>
 	<?php if (!empty($featured_post)):
-		$card = makePostCard($featured_post, $show, $dateFormat, $datePrefix);
+		$card = makePostCard($featured_post, $show, $dateFormat, $datePrefix, $view_more_label);
 	?>
 
 		<div class="flex flex-col md:grid grid-cols-12 md:items-center gap-tsb mb-30 tsb-card-horizontal">
