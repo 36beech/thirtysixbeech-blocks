@@ -129,7 +129,6 @@ const postListingViewMore = (): void => {
 
 		try {
 			const { posts, total } = await getMorePosts( queryArgs );
-			console.log( posts );
 
 			posts.forEach( ( post ) => {
 				const postCard = parseHTML( card( post, options ) );

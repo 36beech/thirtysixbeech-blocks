@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
@@ -9,7 +10,11 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+require_once(__DIR__ . "/../shared/includes/util.php");
+$images = $attributes["images"];
+$image_list = array();
+foreach ($images as $image) {
+	$image_list[] = image_info($image);
+}
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Additional Gallery Images – hello from a dynamic block!', 'additional-gallery-images' ); ?>
-</p>
+<span <?php echo get_block_wrapper_attributes(array("class" => "tsb-gallery-row sr-only", "data-images" => json_encode($image_list))); ?>></span>

@@ -32,7 +32,6 @@ import { MediaSelector } from '../shared/react/MediaSelector';
  */
 
 const GalleryRow = ( { columns, slot1, slot2, slot3 } ) => {
-	console.log( columns );
 	if ( ! columns ) return;
 	if ( columns === 1 ) {
 		return <div className="col-span-12 p-1">{ slot1 }</div>;
