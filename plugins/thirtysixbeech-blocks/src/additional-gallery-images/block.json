@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/additional-gallery-images",
+	"version": "0.1.0",
+	"title": "Additional Gallery Images",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "When paired with the Gallery Row block, will add additional images to the modal carousel.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"textdomain": "additional-gallery-images",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"attributes": {
+		"images": {
+			"type": "array",
+			"default": []
+		}
+	}
+}
