@@ -40,6 +40,16 @@ class BuildGlobalCssPlugin {
 
 module.exports = {
   ...defaultConfig,
+  // Block scripts are discovered from block.json files. Editor-only plugins (sidebar
+  // panels and the like) have no block.json, so add them as extra entries. Each is built
+  // to build/<name>.js with a matching .asset.php (used by includes/focal-point.php).
+  entry: async () => ({
+    ...(await defaultConfig.entry()),
+    "editor-plugins/featured-focal-point/index": path.resolve(
+      __dirname,
+      "src/editor-plugins/featured-focal-point/index.tsx"
+    ),
+  }),
   resolve: {
     ...defaultConfig.resolve,
     alias: {

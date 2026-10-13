@@ -18,9 +18,12 @@ if (! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
+define('THIRTYSIXBEECH_BLOCKS_FILE', __FILE__);
+
 require_once plugin_dir_path(__FILE__) . 'includes/svg.php';
 require_once plugin_dir_path(__FILE__) . 'includes/site-settings.php';
 require_once plugin_dir_path(__FILE__) . 'includes/contact-form.php';
+require_once plugin_dir_path(__FILE__) . 'includes/focal-point.php';
 
 /**
  * Registers the block(s) metadata from the `blocks-manifest.php` and registers the block type(s)

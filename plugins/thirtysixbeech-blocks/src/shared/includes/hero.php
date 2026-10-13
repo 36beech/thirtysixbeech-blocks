@@ -25,7 +25,7 @@ function hero($background_image, $heading, $description, $link = '')
         <img
           src="<?php echo esc_url($background_url); ?>"
           alt=""
-          class="block relative z-0 w-full h-full object-cover object-center"
+          class="block relative z-0 w-full h-full object-cover object-(--hero-position)"
           loading="lazy"
           decoding="async" />
       </div>
