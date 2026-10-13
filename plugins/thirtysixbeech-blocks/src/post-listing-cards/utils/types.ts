@@ -5,6 +5,7 @@ export interface QueryArgs {
 }
 
 export interface PostCard {
+	id: number;
 	link: string;
 	title: {
 		rendered: string;
@@ -12,6 +13,8 @@ export interface PostCard {
 	date: string;
 	author: number;
 	featured_media: number;
+	// Registered meta; `tsb-thumb` is the alternate thumbnail's attachment ID.
+	meta?: { 'tsb-thumb'?: number };
 	// Present when the request includes `_embed`.
 	_embedded?: {
 		author?: Array< { name: string } >;
@@ -21,6 +24,14 @@ export interface PostCard {
 				sizes?: Record< string, { source_url: string } >;
 			};
 		} >;
+	};
+}
+
+export interface MediaImage {
+	id: number;
+	source_url: string;
+	media_details?: {
+		sizes?: Record< string, { source_url: string } >;
 	};
 }
 

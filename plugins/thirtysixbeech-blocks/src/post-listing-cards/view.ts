@@ -22,15 +22,27 @@
 import { dateI18n } from '@wordpress/date';
 import { getRestBase, getRestRoot } from './utils/utils';
 import { parseHTML } from '@shared/js/utils';
-import { QueryArgs, PostCard, CardOptions } from './utils/types';
+import {
+	QueryArgs,
+	PostCard,
+	CardOptions,
+	MediaImage,
+} from './utils/types';
 
-const card = ( card: PostCard, options: CardOptions ) => {
+const card = (
+	card: PostCard,
+	options: CardOptions,
+	altThumbUrls: Record< number, string > = {}
+) => {
 	const date = dateI18n( options.dateFormat, card.date );
 
 	const authorName = card._embedded?.author?.[ 0 ]?.name ?? '';
 	const media = card._embedded?.[ 'wp:featuredmedia' ]?.[ 0 ];
+	// Prefer the alternate thumbnail (`tsb-thumb`) over the featured image.
 	const imageUrl =
-		media?.media_details?.sizes?.large?.source_url ?? media?.source_url;
+		altThumbUrls[ card.meta?.[ 'tsb-thumb' ] ?? 0 ] ??
+		media?.media_details?.sizes?.large?.source_url ??
+		media?.source_url;
 
 	return `
   <div class="tsb-card">
@@ -78,6 +90,46 @@ const getMorePosts = async (
 		posts: ( await response.json() ) as PostCard[],
 		total: Number( response.headers.get( 'X-WP-Total' ) ),
 	};
+};
+
+/**
+ * Resolves the posts' `tsb-thumb` attachment IDs to image URLs in one request.
+ * Falls back to an empty map so a failure here never blocks loading cards.
+ */
+const getAlternateThumbUrls = async (
+	posts: PostCard[]
+): Promise< Record< number, string > > => {
+	const ids = [
+		...new Set(
+			posts
+				.map( ( post ) => post.meta?.[ 'tsb-thumb' ] ?? 0 )
+				.filter( Boolean )
+		),
+	];
+	if ( ! ids.length ) return {};
+
+	try {
+		const params = new URLSearchParams( {
+			include: ids.join( ',' ),
+			per_page: String( ids.length ),
+			_fields: 'id,source_url,media_details',
+		} );
+		const response = await fetch(
+			`${ getRestRoot() }wp/v2/media?${ params }`
+		);
+		if ( ! response.ok ) return {};
+
+		const images = ( await response.json() ) as MediaImage[];
+		return Object.fromEntries(
+			images.map( ( image ) => [
+				image.id,
+				image.media_details?.sizes?.large?.source_url ??
+					image.source_url,
+			] )
+		);
+	} catch {
+		return {};
+	}
 };
 
 const postListingViewMore = (): void => {
@@ -130,8 +182,10 @@ const postListingViewMore = (): void => {
 		try {
 			const { posts, total } = await getMorePosts( queryArgs );
 
+			const altThumbUrls = await getAlternateThumbUrls( posts );
+
 			posts.forEach( ( post ) => {
-				const postCard = parseHTML( card( post, options ) );
+				const postCard = parseHTML( card( post, options, altThumbUrls ) );
 				if ( postCard ) cardGroup.appendChild( postCard );
 			} );
 

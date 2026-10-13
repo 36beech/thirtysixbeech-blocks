@@ -24,7 +24,12 @@ function makePostCard($post, $show, $dateFormat, $datePrefix, $view_more_label =
   if (in_array('title', $show)) $card['title'] = $post->post_title;
   if (in_array('excerpt', $show)) $card['description'] = get_the_excerpt($post->ID);
   if (in_array('readmore', $show)) $card['link'] = "<a class=\"tsb-card__link\" href=\"{$permalink}\" aria-label=\"Read more about {$card['title']}\">{$view_more_label}</a>";
-  if (in_array('image', $show)) $card['image'] = get_the_post_thumbnail_url($post->ID, 'large');
+  if (in_array('image', $show)) {
+    // Prefer the alternate thumbnail (`tsb-thumb` meta, an attachment ID) over the featured image.
+    $alt_thumb_id = (int) get_post_meta($post->ID, 'tsb-thumb', true);
+    $alt_thumb_url = $alt_thumb_id ? wp_get_attachment_image_url($alt_thumb_id, 'large') : false;
+    $card['image'] = $alt_thumb_url ?: get_the_post_thumbnail_url($post->ID, 'large');
+  }
 
   return $card;
 }

@@ -19,7 +19,7 @@ $columns   = $attributes["columns"] ?? 2;
 $post_type = $attributes["postType"] ?? '';
 $featured = $attributes["featured"] ?? 'none';
 $posts_per_page = ($attributes["postsPerPage"] ?? 10);
-$pagination = $attributes["pagination"] ?? false;
+$pagination = $attributes["pagination"] ?? null;
 $show = $attributes["show"] ?? array(
 	"date",
 	"author",
@@ -138,7 +138,7 @@ $options = array(
 		</div>
 	<?php endif; ?>
 	<?php echo card_group($columns, $cards); ?>
-	<?php if ($view_more_url): ?>
+	<?php if ($pagination !== "none" && $view_more_url): ?>
 		<div class="wp-block-button is-style-link tsb-view-more">
 			<a href="<?php echo esc_url($view_more_url); ?>" class="wp-block-button__link wp-element-button"><?php esc_html_e('View More', 'thirtysixbeech-blocks'); ?></a>
 		</div>
