@@ -1,0 +1,23 @@
+{
+	"name": "thirtysixbeech-base",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"sass:build": "sass src/scss/style.scss:.tmp/style.css --style=compressed --no-source-map",
+		"sass:watch": "sass src/scss/style.scss:.tmp/style.css --watch",
+		"postcss:build": "postcss .tmp/style.css -o assets/css/base.css",
+		"postcss:watch": "postcss .tmp/style.css -o assets/css/base.css --watch",
+		"build:css": "npm run sass:build && npm run postcss:build",
+		"watch:css": "npm run sass:watch & npm run postcss:watch",
+		"build": "npm run build:css",
+		"watch": "npm run watch:css",
+		"start": "npm run watch"
+	},
+	"devDependencies": {
+		"postcss": "^8.5.26",
+		"postcss-cli": "^11.0.1",
+		"postcss-pxtorem": "^6.1.0",
+		"postcss-sort-media-queries": "^6.7.1",
+		"sass": "^1.100.0"
+	}
+}

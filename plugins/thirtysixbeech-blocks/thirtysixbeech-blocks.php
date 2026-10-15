@@ -228,3 +228,48 @@ function thirtysixbeech_blocks_post_author_shortcode($atts)
     return esc_html(get_the_author_meta('display_name', $post->post_author));
 }
 add_shortcode('post_author', 'thirtysixbeech_blocks_post_author_shortcode');
+
+/**
+ * [privacy_policy_link] — links to whichever page is set as the Privacy Policy
+ * (Settings → Privacy), so the link follows if that page is renamed, moved or replaced.
+ * Outputs nothing if no published privacy page is set.
+ *
+ * Attributes:
+ *   text   Link text (default: the privacy page's title)
+ *   class  CSS class(es) for the link (optional)
+ *   url    Set to "only" to output just the URL, for use inside your own link markup
+ */
+function thirtysixbeech_blocks_privacy_policy_link_shortcode($atts)
+{
+    $atts = shortcode_atts(
+        array(
+            'text'  => '',
+            'class' => '',
+            'url'   => '',
+        ),
+        $atts,
+        'privacy_policy_link'
+    );
+
+    $url = get_privacy_policy_url();
+
+    if (! $url) {
+        return '';
+    }
+
+    if ('only' === $atts['url']) {
+        return esc_url($url);
+    }
+
+    $text = '' !== $atts['text']
+        ? $atts['text']
+        : get_the_title((int) get_option('wp_page_for_privacy_policy'));
+
+    return sprintf(
+        '<a href="%s"%s>%s</a>',
+        esc_url($url),
+        '' !== $atts['class'] ? ' class="' . esc_attr($atts['class']) . '"' : '',
+        esc_html($text)
+    );
+}
+add_shortcode('privacy_policy_link', 'thirtysixbeech_blocks_privacy_policy_link_shortcode');

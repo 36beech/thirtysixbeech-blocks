@@ -1,0 +1,25 @@
+// Thirtysixbeech Base — compiles to assets/css/base.css (loaded on every site built on this theme,
+// including child themes, before the child's own stylesheet)
+// npm run build:css   (one-off, compressed)
+// npm run watch:css   (rebuilds on save)
+//
+// Everything in here lives in the `tsb-base` cascade layer. Layered CSS always loses to
+// unlayered CSS, so a child theme's normal (unlayered) CSS overrides anything here without
+// needing higher specificity or a later source order.
+//
+// To add base styles: create a partial in includes/ (e.g. includes/_header.scss) and add a
+// load-css line inside the layer block below. Breakpoint mixins are in includes/_breakpoints.scss:
+//   @use "../includes/breakpoints" as bp;   (from another partial)
+
+@use "sass:meta";
+
+// Layer ORDER is fixed by whichever stylesheet declares it first, so keep this line first and
+// load this file before the blocks plugin's CSS (see functions.php). It repeats Tailwind's layer
+// order (theme, base, components, utilities, used by the blocks plugin) and slots `tsb-base` in
+// above Tailwind's `base` reset (which sets `padding: 0` and would otherwise win) and below
+// `utilities` (so classes like `pl-0` still override these defaults).
+@layer theme, base, tsb-base, components, utilities;
+
+@layer tsb-base {
+  @include meta.load-css("includes/lists");
+}

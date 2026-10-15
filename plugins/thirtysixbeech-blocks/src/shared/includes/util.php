@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Outputs a responsive <img> (srcset + sizes) for an attachment ID.
  *
@@ -32,7 +33,7 @@ function image_html($image, $sizes = null)
 	return '
 		<img
 			' . implode("\n\t\t\t", $attrs) . '
-			class="relative z-0 w-full h-full object-cover"
+			class="relative z-0 w-full h-full object-cover object-(--tsb-position)"
 			loading="lazy"
 			decoding="async" />';
 }

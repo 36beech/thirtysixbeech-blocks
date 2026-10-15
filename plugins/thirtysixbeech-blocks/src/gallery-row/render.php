@@ -11,6 +11,17 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 require_once(__DIR__ . "/../shared/includes/util.php");
+
+if (!function_exists("position")) {
+	function position($focal_point)
+	{
+		$x = round(($focal_point["x"] ?? 0.5) * 100) . "%";
+		$y = round(($focal_point["y"] ?? 0.5) * 100) . "%";
+
+		return "{$x} {$y}";
+	}
+}
+
 $columns = $attributes["columns"];
 
 $image1 = $attributes["image1"] ?? null;
@@ -20,6 +31,10 @@ $image3 = $attributes["image3"] ?? null;
 $image1_html = $image1 ? image_html($image1) : "";
 $image2_html = $image2 ? image_html($image2) : "";
 $image3_html = $image3 ? image_html($image3) : "";
+
+$image1_focal_point = $attributes["image1FocalPoint"] ?? "50% 50%";
+$image2_focal_point = $attributes["image2FocalPoint"] ?? "50% 50%";
+$image3_focal_point = $attributes["image3FocalPoint"] ?? "50% 50%";
 
 $image_list = array();
 
@@ -50,58 +65,58 @@ $row_class = ($columns === "33/66/2" || $columns === "66/33/2") ? " grid-rows-2"
 
 	<?php if ($columns === 1) : ?>
 		<div class="col-span-12">
-			<div class="tsb-gallery-row__image image-full-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-full-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
 		</div>
 	<?php endif; ?>
 
 	<?php if ($columns === 2) : ?>
 		<div class="col-span-6">
-			<div class="tsb-gallery-row__image image-50-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-50-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
 		</div>
 		<div class="col-span-6">
-			<div class="tsb-gallery-row__image image-50-col"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-50-col"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
 		</div>
 	<?php endif; ?>
 
 	<?php if ($columns === "33/66") : ?>
 		<div class="col-span-4">
-			<div class="tsb-gallery-row__image image-33-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-33-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
 		</div>
 		<div class="col-span-8">
-			<div class="tsb-gallery-row__image image-66-col"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-66-col"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
 		</div>
 	<?php endif; ?>
 
 	<?php if ($columns === "66/33") : ?>
 		<div class="col-span-8">
-			<div class="tsb-gallery-row__image image-66-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-66-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
 		</div>
 		<div class="col-span-4">
-			<div class="tsb-gallery-row__image image-33-col"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-33-col"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
 		</div>
 	<?php endif; ?>
 
 	<?php if ($columns === "33/66/2") : ?>
 		<div class="col-span-8 row-span-2 col-start-5 row-start-1">
-			<div class="tsb-gallery-row__image image-66-2-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-66-2-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
 		</div>
 		<div class="col-span-4">
-			<div class="tsb-gallery-row__image image-33-1-col col-start-1 row-start-1"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-33-1-col col-start-1 row-start-1"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
 		</div>
 		<div class="col-span-4">
-			<div class="tsb-gallery-row__image image-33-1-col col-start-1 row-start-2"><a href="<?php echo $image_list[2]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image3_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-33-1-col col-start-1 row-start-2"><a href="<?php echo $image_list[2]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image3_html; ?></a></div>
 		</div>
 	<?php endif; ?>
 
 	<?php if ($columns === "66/33/2") : ?>
 		<div class="col-span-8 row-span-2">
-			<div class="tsb-gallery-row__image image-66-2-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-66-2-col"><a href="<?php echo $image_list[0]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image1_html; ?></a></div>
 		</div>
 		<div class="col-span-4">
-			<div class="tsb-gallery-row__image image-33-1-col"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-33-1-col"><a href="<?php echo $image_list[1]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image2_html; ?></a></div>
 		</div>
 		<div class="col-span-4">
-			<div class="tsb-gallery-row__image image-33-1-col"><a href="<?php echo $image_list[2]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image3_html; ?></a></div>
+			<div style="--tsb-position: <?php echo position($image1_focal_point); ?>" class="tsb-gallery-row__image image-33-1-col"><a href="<?php echo $image_list[2]['url']; ?>" class="tsb-gallery-row__image-link" target="_blank"><?php echo $image3_html; ?></a></div>
 		</div>
 	<?php endif; ?>
 

@@ -23,7 +23,7 @@ export const MediaSelector = ( {
 				<>
 					<img
 						src={ sourceUrl }
-						className="w-full h-full object-cover relative z-0"
+						className="w-full h-full object-cover object-(--tsb-position) relative z-0"
 					/>
 					{ onRemove && (
 						<Tooltip.Root>

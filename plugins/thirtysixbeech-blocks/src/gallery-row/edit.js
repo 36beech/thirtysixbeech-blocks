@@ -11,7 +11,13 @@ import { __ } from '@wordpress/i18n';
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { Panel, PanelBody, BaseControl } from '@wordpress/components';
+import {
+	Panel,
+	PanelBody,
+	BaseControl,
+	FocalPointPicker,
+	Spinner,
+} from '@wordpress/components';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -22,6 +28,7 @@ import './editor.scss';
 import { Grid, GridItem } from '../shared/react/Grid';
 import { ColumnButton } from '../shared/react/ColumnButton';
 import { MediaSelector } from '../shared/react/MediaSelector';
+import { useImage } from '../shared/react/useImage';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -30,6 +37,11 @@ import { MediaSelector } from '../shared/react/MediaSelector';
  *
  * @return {Element} Element to render.
  */
+
+const setFocalPoint = ( focalPoint = { x: 0.5, y: 0.5 } ) => {
+	const { x, y } = focalPoint;
+	return `${ Math.round( x * 100 ) }% ${ Math.round( y * 100 ) }%`;
+};
 
 const GalleryRow = ( { columns, slot1, slot2, slot3 } ) => {
 	if ( ! columns ) return;
@@ -87,8 +99,57 @@ const GalleryRow = ( { columns, slot1, slot2, slot3 } ) => {
 	return;
 };
 
+const CENTER = { x: 0.5, y: 0.5 };
+
+// How many image slots the chosen layout actually shows.
+const slotCount = ( columns ) => {
+	const layout = String( columns );
+	if ( layout === '1' ) return 1;
+	if ( [ '2', '33/66', '66/33' ].includes( layout ) ) return 2;
+	return 3;
+};
+
+const ImageFocalPoint = ( { label, imageId, value, onChange } ) => {
+	const image = useImage( imageId );
+	const url =
+		image?.media_details?.sizes?.large?.source_url ?? image?.source_url;
+
+	return (
+		<div className="mb-4">
+			<p className="m-0 mb-2 font-semibold">{ label }</p>
+			{ url ? (
+				<FocalPointPicker
+					url={ url }
+					value={ value ?? CENTER }
+					onChange={ ( { x, y } ) => onChange( { x, y } ) }
+				/>
+			) : (
+				<Spinner />
+			) }
+		</div>
+	);
+};
+
 export default function Edit( { attributes, setAttributes } ) {
-	const { columns, image1, image2, image3 } = attributes;
+	const {
+		columns,
+		image1,
+		image2,
+		image3,
+		image1FocalPoint,
+		image2FocalPoint,
+		image3FocalPoint,
+	} = attributes;
+
+	// Focal points only for the images that are set and visible in this layout.
+	const focalPointImages = [
+		{ id: image1, key: 'image1', value: image1FocalPoint },
+		{ id: image2, key: 'image2', value: image2FocalPoint },
+		{ id: image3, key: 'image3', value: image3FocalPoint },
+	]
+		.slice( 0, slotCount( columns ) )
+		.map( ( image, index ) => ( { ...image, number: index + 1 } ) )
+		.filter( ( image ) => image.id );
 
 	if ( ! columns ) {
 		return (
@@ -232,6 +293,26 @@ export default function Edit( { attributes, setAttributes } ) {
 							</div>
 						</BaseControl>
 					</PanelBody>
+					{ focalPointImages.length > 0 && (
+						<PanelBody title={ __( 'Image focal points' ) }>
+							{ focalPointImages.map( ( image ) => (
+								<ImageFocalPoint
+									key={ image.key }
+									label={ `${ __( 'Image' ) } ${
+										image.number
+									}` }
+									imageId={ image.id }
+									value={ image.value }
+									onChange={ ( focalPoint ) =>
+										setAttributes( {
+											[ `${ image.key }FocalPoint` ]:
+												focalPoint,
+										} )
+									}
+								/>
+							) ) }
+						</PanelBody>
+					) }
 				</Panel>
 			</InspectorControls>
 			<div { ...useBlockProps() }>
@@ -239,37 +320,61 @@ export default function Edit( { attributes, setAttributes } ) {
 					<GalleryRow
 						columns={ columns }
 						slot1={
-							<MediaSelector
-								value={ image1 }
-								onSelect={ ( item ) => {
-									setAttributes( {
-										image1: item.id,
-									} );
+							<span
+								style={ {
+									'--tsb-position':
+										setFocalPoint( image1FocalPoint ),
 								} }
-								className="tsb-hero__image"
-							/>
+							>
+								<MediaSelector
+									value={ image1 }
+									onSelect={ ( item ) => {
+										setAttributes( {
+											image1: item.id,
+											image1FocalPoint: CENTER,
+										} );
+									} }
+									className="tsb-hero__image"
+								/>
+							</span>
 						}
 						slot2={
-							<MediaSelector
-								value={ image2 }
-								onSelect={ ( item ) => {
-									setAttributes( {
-										image2: item.id,
-									} );
+							<span
+								style={ {
+									'--tsb-position':
+										setFocalPoint( image2FocalPoint ),
 								} }
-								className="tsb-hero__image"
-							/>
+							>
+								<MediaSelector
+									value={ image2 }
+									onSelect={ ( item ) => {
+										setAttributes( {
+											image2: item.id,
+											image2FocalPoint: CENTER,
+										} );
+									} }
+									className="tsb-hero__image"
+								/>
+							</span>
 						}
 						slot3={
-							<MediaSelector
-								value={ image3 }
-								onSelect={ ( item ) => {
-									setAttributes( {
-										image3: item.id,
-									} );
+							<span
+								style={ {
+									'--tsb-position':
+										setFocalPoint( image3FocalPoint ),
 								} }
-								className="tsb-hero__image"
-							/>
+							>
+								<MediaSelector
+									value={ image3 }
+									onSelect={ ( item ) => {
+										setAttributes( {
+											image3: item.id,
+											image3FocalPoint: CENTER,
+										} );
+									} }
+									className="tsb-hero__image"
+								/>
+							</span>
 						}
 					/>
 				</div>
