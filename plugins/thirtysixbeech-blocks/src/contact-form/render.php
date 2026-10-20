@@ -16,15 +16,15 @@ set_transient(
     <div class="flex flex-col gap-tsb">
       <div>
         <label class="tsb-contact-form__label" for="<?php echo $id; ?>-name">Your name</label>
-        <input id="<?php echo $id; ?>-name" type="text" name="name" class="tsb-contact-form__field _text" />
+        <input id="<?php echo $id; ?>-name" type="text" name="name" class="tsb-contact-form__field _text" required />
       </div>
       <div>
         <label class="tsb-contact-form__label" for="<?php echo $id; ?>-email">Your email</label>
-        <input id="<?php echo $id; ?>-email" type="email" name="email" class="tsb-contact-form__field _email" />
+        <input id="<?php echo $id; ?>-email" type="email" name="email" class="tsb-contact-form__field _email" required />
       </div>
       <div>
         <label class="tsb-contact-form__label" for="<?php echo $id; ?>-message">Message</label>
-        <textarea id="<?php echo $id; ?>-message" name="message" class="tsb-contact-form__field _textarea"></textarea>
+        <textarea id="<?php echo $id; ?>-message" name="message" class="tsb-contact-form__field _textarea" required></textarea>
       </div>
       <input type="hidden" name="form_token" value="<?php echo esc_attr($token); ?>" />
       <div class="wp-block-button"><button class="wp-block-button__link wp-element-button">Send</button></div>
