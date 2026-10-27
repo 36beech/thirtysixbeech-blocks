@@ -14,9 +14,7 @@
 	},
 	"textdomain": "hero-carousel",
 	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
 	"viewScript": "file:./view.js",
-	"style": "file:./style-index.css",
 	"render": "file:./render.php",
 	"attributes": {}
 }
