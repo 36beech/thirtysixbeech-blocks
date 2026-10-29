@@ -26,6 +26,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"reversedMobile": {
+			"type": "boolean",
+			"default": false
+		},
 		"imageLayout": {
 			"type": "string",
 			"default": "1x1"

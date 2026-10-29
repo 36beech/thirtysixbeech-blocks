@@ -12,7 +12,7 @@
  */
 ?>
 <details <?php echo get_block_wrapper_attributes(); ?>>
-	<summary class="tsb-accordion-summary flex justify-between items-center">
+	<summary class="tsb-accordion-summary flex justify-between gap-tsb-half text-pretty items-center">
 		<span><?php echo $attributes["summary"]; ?></span>
 		<div class="tsb-accordion-summary-carat w-4.25 h-2.5 shrink-0 grow-0">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 10" class="h-full w-full fill-current">

@@ -16,6 +16,7 @@ $image2 = $attributes["image2"] ?? null;
 $image3 = $attributes["image3"] ?? null;
 $image4 = $attributes["image4"] ?? null;
 $reversed = $attributes["reversed"] ?? false;
+$reversed_mobile = $attributes["reversedMobile"] ?? false;
 $image_layout = $attributes["imageLayout"] ?? "1x1";
 
 $image_attr = array(
@@ -27,7 +28,7 @@ $attachment2 = !empty($image2) ? wp_get_attachment_image($image2, 'full', false,
 $attachment3 = !empty($image3) ? wp_get_attachment_image($image3, 'full', false, $image_attr) : null;
 $attachment4 = !empty($image4) ? wp_get_attachment_image($image4, 'full', false, $image_attr) : null;
 ?>
-<div <?php echo get_block_wrapper_attributes(array("class" => "flex flex-col-reverse md:grid md:items-center grid-cols-12 gap-tsb tsb-image-text" . ($reversed ? " reversed" : ""))); ?>>
+<div <?php echo get_block_wrapper_attributes(array("class" => "flex " . !$reversed_mobile ? "flex-col-reverse " : "" .  "md:grid md:items-center grid-cols-12 gap-tsb tsb-image-text" . ($reversed ? " reversed" : ""))); ?>>
 	<div class="col-span-5 lg:col-span-4 <?php if ($reversed) echo "col-start-8 lg:col-start-9 row-start-1 "; ?>tsb-image-text__text-column"><?php echo $content; ?></div>
 	<div class="col-span-7 lg:col-span-8 <?php if ($reversed) echo "col-start-1 lg:col-start-1 row-start-1 "; ?>tsb-image-text__image-column">
 		<?php if ($image_layout === "2x2") : ?><div class="grid grid-cols-2 grid-rows-2 gap-tsb-half lg:gap-tsb"><?php endif; ?>

@@ -51,6 +51,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const {
 		backgroundImage,
 		reversed,
+		reversedMobile,
 		imageLayout = '1x1',
 		image2,
 		image3,
@@ -69,6 +70,18 @@ export default function Edit( { attributes, setAttributes } ) {
 							) }
 							onChange={ () =>
 								setAttributes( { reversed: ! reversed } )
+							}
+						/>
+						<ToggleControl
+							label={ __( 'Flip on Mobile' ) }
+							checked={ reversedMobile }
+							help={ __(
+								'When selected, the text will appear above the image on mobile'
+							) }
+							onChange={ () =>
+								setAttributes( {
+									reversedMobile: ! reversedMobile,
+								} )
 							}
 						/>
 						<ToggleGroupControl
