@@ -1,0 +1,44 @@
+.wp-block-list {
+  padding-left: 1em;
+
+  > li {
+    position: relative;
+    &:before {
+      position: absolute;
+      left: 0;
+      transform: translateX(-100%);
+      padding-right: 0.5em;
+    }
+  }
+
+  .wp-block-list {
+    margin-top: 0;
+  }
+}
+
+ul.wp-block-list {
+  > li {
+    &::before {
+      content: "•";
+    }
+  }
+}
+
+ol.wp-block-list {
+  > li {
+    &::before {
+      content: counter(list-item) ".";
+    }
+  }
+}
+
+// Reversed lists count down from the number of items, which `counter(list-item)` can't do in
+// current browsers (it starts at 0), so use the browser's own numbering for those.
+ol.wp-block-list[reversed] {
+  list-style: decimal;
+  padding-left: 1.5em;
+
+  > li::before {
+    content: none;
+  }
+}

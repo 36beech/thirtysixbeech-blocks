@@ -1,0 +1,37 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/publication-card",
+	"version": "0.1.0",
+	"title": "Publication Card",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"attributes": {
+		"title": {
+			"type": "text"
+		},
+		"backgroundImage": {
+			"type": "number"
+		},
+		"logo": {
+			"type": "number"
+		},
+		"logoWidth": {
+			"type": "number",
+			"default": 100
+		},
+		"link": {
+			"type": "object",
+			"default": { "opensInNewTab": true }
+		}
+	},
+	"textdomain": "publication-card",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

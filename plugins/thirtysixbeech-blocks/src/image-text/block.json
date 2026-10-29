@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/image-text",
+	"version": "0.1.0",
+	"title": "Image + Text",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"spacing": {
+			"padding": [ "top", "bottom" ],
+			"margin": [ "top", "bottom" ],
+			"units": [ "px", "em", "rem" ]
+		}
+	},
+	"attributes": {
+		"backgroundImage": {
+			"type": "number",
+			"default": null
+		},
+		"reversed": {
+			"type": "boolean",
+			"default": false
+		},
+		"imageLayout": {
+			"type": "string",
+			"default": "1x1"
+		},
+		"image2": {
+			"type": "number",
+			"default": null
+		},
+		"image3": {
+			"type": "number",
+			"default": null
+		},
+		"image4": {
+			"type": "number",
+			"default": null
+		}
+	},
+	"textdomain": "image-text",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

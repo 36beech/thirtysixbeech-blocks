@@ -1,0 +1,42 @@
+{
+	"name": "thirtysixbeech-blocks",
+	"version": "0.1.0",
+	"description": "Example block scaffolded with Create Block tool.",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --blocks-manifest; postcss src/style.css -o build/assets/css/main.css && postcss src/editor.css -o build/assets/css/editor.css",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "NO_ZIP=1 ./package.sh && wp-scripts start --blocks-manifest",
+		"build:css": "postcss src/style.css -o build/assets/css/main.css && postcss src/editor.css -o build/assets/css/editor.css",
+		"watch:css": "postcss src/style.css -o build/assets/css/main.css --watch & postcss src/editor.css -o build/assets/css/editor.css --watch",
+		"nb": "node scripts/newblock.mjs",
+		"package": "./package.sh",
+		"start-css": "npm run build:css; npm run watch:css",
+		"check-types": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@tailwindcss/postcss": "^4.3.3",
+		"@wordpress/block-editor": "latest",
+		"@wordpress/blocks": "latest",
+		"@wordpress/i18n": "latest",
+		"@wordpress/ui": "^0.21.0",
+		"postcss": "^8.5.28",
+		"postcss-cli": "^12.0.0",
+		"sass": "^1.104.0",
+		"svg-spritemap-webpack-plugin": "^5.1.4",
+		"swiper": "^14.2.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.3.31",
+		"@types/react-dom": "^18.3.7",
+		"@types/wordpress__block-editor": "^15.0.6",
+		"@wordpress/scripts": "^34.2.0",
+		"typescript": "^7.0.2"
+	}
+}

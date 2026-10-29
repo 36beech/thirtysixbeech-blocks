@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/social-link",
+	"version": "0.1.0",
+	"title": "Social Link",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"textdomain": "social-link",
+	"editorScript": "file:./index.js",
+	"parent": [ "thirtysixbeech-blocks/social-links" ],
+	"attributes": {
+		"link": {
+			"type": "object",
+			"default": { "opensInNewTab": true }
+		}
+	}
+}

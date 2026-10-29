@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/gallery-row",
+	"version": "0.1.0",
+	"title": "Gallery Row",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"attributes": {
+		"columns": {
+			"type": "text"
+		},
+		"image1": {
+			"type": "number"
+		},
+		"image2": {
+			"type": "number"
+		},
+		"image3": {
+			"type": "number"
+		},
+		"image1FocalPoint": {
+			"type": "object",
+			"default": { "x": 0.5, "y": 0.5 }
+		},
+		"image2FocalPoint": {
+			"type": "object",
+			"default": { "x": 0.5, "y": 0.5 }
+		},
+		"image3FocalPoint": {
+			"type": "object",
+			"default": { "x": 0.5, "y": 0.5 }
+		}
+	},
+	"textdomain": "gallery-row",
+	"viewScript": "file:./view.js",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

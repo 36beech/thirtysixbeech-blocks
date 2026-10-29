@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "thirtysixbeech-blocks/hero-carousel",
+	"version": "0.1.0",
+	"title": "Hero Carousel",
+	"category": "thirtysixbeech-content",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"textdomain": "hero-carousel",
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php",
+	"attributes": {}
+}

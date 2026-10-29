@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * PHP file to use when rendering the block type on the server to show on the front end.
+ *
+ * The following variables are exposed to the file:
+ *     $attributes (array): The block attributes.
+ *     $content (string): The block default content.
+ *     $block (WP_Block): The block instance.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
+ */
+$flex_classes = array(
+	"all" => "flex",
+	"sm" => "sm:flex",
+	"md" => "md:flex",
+	"lg" => "lg:flex",
+	"xl" => "xl:flex",
+);
+
+$classes = array(
+	$flex_classes[$attributes["breakpoint"]],
+	$attributes["alignItems"],
+	$attributes["justifyContent"],
+	$attributes["reverse"] ? "flex-row-reverse" : "flex-row"
+);
+
+$block_gap = $attributes["blockGap"] ?? "var(--spacing-tsb)";
+
+$styles = "margin-left: calc(" . $block_gap . " * -1); margin-right: calc(" . $block_gap . " * -1);";
+?>
+<div <?php echo get_block_wrapper_attributes(array("class" => implode(" ", $classes), "style" => $styles)); ?>>
+	<?php echo $content; ?>
+</div>

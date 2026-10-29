@@ -1,0 +1,15 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-thirtysixbeech-blocks-grid-item {
+  border: 1px dotted #aaa;
+}
+
+.grid-item-icon {
+  --wp--preset--color--accent-1: #999;
+  --wp--preset--color--secondary: #999;
+  --wp--preset--color--primary: #999;
+}
