@@ -5,6 +5,7 @@
  */
 $id    = uniqid();
 $token = wp_generate_uuid4();
+$redirect = $attributes['redirect'];
 set_transient(
   'cfp_token_' . $token,
   ! empty($attributes['toAddress']) ? $attributes['toAddress'] : get_option('admin_email'),
@@ -27,6 +28,9 @@ set_transient(
         <textarea id="<?php echo $id; ?>-message" name="message" class="tsb-contact-form__field _textarea" required></textarea>
       </div>
       <input type="hidden" name="form_token" value="<?php echo esc_attr($token); ?>" />
+      <?php if (!empty($redirect["url"])): ?>
+        <input type="hidden" name="redirect" value="<?php echo esc_attr($redirect['url']); ?>" />
+      <?php endif; ?>
       <div class="wp-block-button"><button class="wp-block-button__link wp-element-button">Send</button></div>
     </div>
   </form>

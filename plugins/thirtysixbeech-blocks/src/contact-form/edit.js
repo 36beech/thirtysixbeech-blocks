@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,9 +11,14 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
-import { PanelBody, TextControl } from "@wordpress/components";
-import { useEntityProp } from "@wordpress/core-data";
+import {
+	useBlockProps,
+	InspectorControls,
+	LinkControl,
+} from '@wordpress/block-editor';
+import { PanelBody, TextControl, BaseControl } from '@wordpress/components';
+import { Stack } from '@wordpress/ui';
+import { useEntityProp } from '@wordpress/core-data';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -21,7 +26,7 @@ import { useEntityProp } from "@wordpress/core-data";
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import "./editor.scss";
+import './editor.scss';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -31,26 +36,46 @@ import "./editor.scss";
  *
  * @return {Element} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
-	const { toAddress } = attributes;
-	const [adminEmail] = useEntityProp("root", "site", "email");
+export default function Edit( { attributes, setAttributes } ) {
+	const { toAddress, redirect } = attributes;
+	const [ adminEmail ] = useEntityProp( 'root', 'site', 'email' );
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Contact Form Options", "thirtysix-beech")}>
-					<TextControl
-						label={__("To Email", "thirtysix-beech")}
-						type="email"
-						value={toAddress}
-						placeholder={adminEmail}
-						help={__(
-							"The form will default to the Administration Email Address.",
-						)}
-						onChange={(newValue) => setAttributes({ toAddress: newValue })}
-					/>
+				<PanelBody
+					title={ __( 'Contact Form Options', 'thirtysix-beech' ) }
+				>
+					<Stack gap="md" direction="column">
+						<TextControl
+							label={ __( 'To Email', 'thirtysix-beech' ) }
+							type="email"
+							value={ toAddress }
+							placeholder={ adminEmail }
+							help={ __(
+								'The form will default to the Administration Email Address.'
+							) }
+							onChange={ ( newValue ) =>
+								setAttributes( { toAddress: newValue } )
+							}
+						/>
+						<BaseControl
+							label={ __( 'Redirect', 'thirtysix-beech' ) }
+						>
+							<LinkControl
+								value={ redirect }
+								// hasTextControl={ hasTextControl }
+								onChange={ ( value ) =>
+									setAttributes( { redirect: value } )
+								}
+								onRemove={ () => {
+									setAttributes( { redirect: {} } );
+								} }
+							/>
+						</BaseControl>
+					</Stack>
 				</PanelBody>
 			</InspectorControls>
-			<div {...useBlockProps()}>
+			<div { ...useBlockProps() }>
 				<h2 className="text-center">Contact form</h2>
 			</div>
 		</>

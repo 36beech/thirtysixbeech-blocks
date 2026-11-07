@@ -13,15 +13,19 @@
 		"anchor": true,
 		"spacing": {
 			"padding": false,
-			"margin": ["top", "bottom"],
-			"units": ["px", "em", "rem"],
+			"margin": [ "top", "bottom" ],
+			"units": [ "px", "em", "rem" ],
 			"layout": true,
-			"blockGap": ["horizontal", "vertical"]
+			"blockGap": [ "horizontal", "vertical" ]
 		}
 	},
 	"attributes": {
 		"toAddress": {
 			"type": "string"
+		},
+		"redirect": {
+			"type": "object",
+			"default": { "opensInNewTab": false }
 		}
 	},
 	"textdomain": "contact-form",

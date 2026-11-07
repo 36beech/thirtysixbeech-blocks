@@ -24,6 +24,9 @@
 			const formToken =
 				form.querySelector( '[name="form_token"]' )?.value ?? '';
 
+			const redirect =
+				form.querySelector( '[name="redirect"]' )?.value.trim() ?? null;
+
 			clearStatus( form );
 
 			if ( ! name || ! email || ! message ) {
@@ -56,6 +59,9 @@
 					);
 					form.reset();
 					form.classList.add( 'hidden' );
+					if ( redirect ) {
+						window.location.href = redirect;
+					}
 				} else {
 					// WP REST API errors land in data.message
 					showStatus(
